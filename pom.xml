@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>main.application</groupId>
-    <artifactId>desktop-application</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>DesktopApplication</name>
+    <artifactId>passport</artifactId>
+    <version>0.3.0</version>
+    <name>PassPort</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,6 +19,7 @@
 
     <dependencyManagement>
         <dependencies>
+
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -26,8 +27,10 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
+
 
     <dependencies>
 
@@ -78,11 +81,13 @@
             <artifactId>javafx-graphics</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+
     </dependencies>
 
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -111,36 +116,40 @@
             <plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.5.1</version>
-                <configuration> 
-                    <includes> 
-                        <include>**/*Test.java</include> 
-                        <include>**/*Feature.java</include> 
-                    </includes> 
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*Feature.java</include>
+                    </includes>
                 </configuration>
 			</plugin>
 
-            <plugin> 
-                <groupId>org.apache.maven.plugins</groupId> 
-                <artifactId>maven-javadoc-plugin</artifactId> 
-                <version>3.4.0</version> 
-                <executions><execution> 
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions><execution>
                     <goals><goal>javadoc</goal></goals>
-                    <configuration> 
+                    <configuration>
                         <destDir>${project.basedir}/docs</destDir>
-                        <bottom>Copyright © 2024 RickBarretto. All rights reserved.</bottom> 
+                        <bottom>Copyright © 2024 RickBarretto. All rights reserved.</bottom>
                     </configuration>
                 </execution></executions>
             </plugin>
 
-            <plugin> 
-                <groupId>org.apache.maven.plugins</groupId> 
-                <artifactId>maven-site-plugin</artifactId> 
-                <version>3.9.1</version> 
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.9.1</version>
                 <configuration>
                     <outputDirectory>${project.basedir}/docs</outputDirectory>
                     <bottom>Copyright © 2024 RickBarretto. All rights reserved.</bottom>
-                </configuration> 
+                </configuration>
             </plugin>
+
         </plugins>
     </build>
+
 </project>
