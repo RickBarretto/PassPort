@@ -52,15 +52,7 @@ public class Logon extends VBox {
         setAlignment(Pos.CENTER);
         getStyleClass().add("form-container");
 
-        getChildren().addAll(
-                title,
-                username,
-                email,
-                password,
-                confirmPassword,
-                signupButton,
-                new Separator(),
-                switchToLogin);
+        getChildren().addAll( title, username, email, password, confirmPassword, signupButton, new Separator(), switchToLogin);
     }
 
     private void translate() {
