@@ -10,6 +10,7 @@ import passport.roles.repositories.Users;
 /**
  * Context for registering an admin user.
  */
+@SuppressWarnings("unused")
 public class AdminRegistering extends UserRegistering implements Context {
     private AccountInformation account = new AccountInformation();
     private Users repository;
