@@ -25,7 +25,7 @@ public class Translator {
     }
 
     public void language(Language language) {
-        Locale locale = new Locale(language.getCode());
+        Locale locale = Locale.of(language.code());
         ResourceBundle bundle = ResourceBundle.getBundle(
                 "passport.application.desktop.resources.messages", locale);
         resources.set(bundle);

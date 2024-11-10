@@ -14,7 +14,7 @@ public enum Language {
         this.displayName = displayName;
     }
 
-    public String getCode() { return code; }
+    public String code() { return code; }
 
     @Override
     public String toString() { return displayName; }
