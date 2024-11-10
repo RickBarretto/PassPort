@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
+import passport.domain.contexts.user.UserRegistering;
 import passport.infra.DisabledEmailService;
 import passport.infra.Session;
 import passport.infra.virtual.EventsInMemory;
@@ -11,6 +12,7 @@ import passport.infra.virtual.UsersInMemory;
 
 public class App extends Application {
     final Infra infra;
+    final UserRegistering userRegistering;
     
     public App() {
         infra = new Infra(
@@ -19,11 +21,12 @@ public class App extends Application {
             new DisabledEmailService(),
             new Session()
         );
+        userRegistering = new UserRegistering(infra.users());
     }
 
     @Override
     public void start(Stage root) {
-        WelcomeWindow welcomeWindow = new WelcomeWindow();
+        WelcomeWindow welcomeWindow = new WelcomeWindow(userRegistering);
         Scene scene = new Scene(welcomeWindow, 1200, 700);
 
         setupStyle(scene);
