@@ -1,1 +1,0 @@
-c:/Program\ Files/Java/jdk-22/bin/javadoc -d docs -classpath "lib/*" -sourcepath src -subpackages main
