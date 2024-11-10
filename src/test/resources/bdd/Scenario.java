@@ -1,9 +1,0 @@
-package test.resources.bdd;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
-
-@Target({
-        ElementType.TYPE, ElementType.METHOD
-})
-public @interface Scenario { String value(); }

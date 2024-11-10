@@ -9,7 +9,7 @@
     "testing.openTesting": "openOnTestStart",
     "testing.showCoverageInExplorer": true,
     "java.autobuild.enabled": true,
-    "java.project.outputPath": "bin",
+    "java.project.outputPath": "target",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
     ],
@@ -67,5 +67,6 @@
     },
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
-    "editor.formatOnType": true
+    "editor.formatOnType": true,
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
