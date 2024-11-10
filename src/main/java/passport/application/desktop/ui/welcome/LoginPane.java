@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import passport.application.desktop.Translator;
 
-public class Login extends VBox {
+public class LoginPane extends VBox {
     private final Label title;
     private final TextField username;
     private final PasswordField password;
@@ -15,7 +15,7 @@ public class Login extends VBox {
 
     private final WelcomeWindow parent;
 
-    public Login(WelcomeWindow parent) {
+    public LoginPane(WelcomeWindow parent) {
         this.parent = parent;
 
         title = new Label();
@@ -44,7 +44,8 @@ public class Login extends VBox {
         setAlignment(Pos.CENTER);
         getStyleClass().add("form-container");
 
-        getChildren().addAll(title, username, password, loginButton, new Separator(), switchToLogon);
+        getChildren().addAll(title, username, password, loginButton,
+                new Separator(), switchToLogon);
     }
 
     private void translate() {

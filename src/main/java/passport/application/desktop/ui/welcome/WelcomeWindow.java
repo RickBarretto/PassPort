@@ -9,15 +9,15 @@ import passport.domain.contexts.user.UserRegistering;
 
 public class WelcomeWindow extends HBox {
     private final Hero hero;
-    private final Login login;
-    private final Logon logon;
+    private final LoginPane login;
+    private final LogonPane logon;
     private final LanguageSelector languageSelector;
 
     public WelcomeWindow(UserRegistering userRegistering) {
 
         hero = new Hero();
-        login = new Login(this);
-        logon = new Logon(this, userRegistering);
+        login = new LoginPane(this);
+        logon = new LogonPane(this, userRegistering);
         languageSelector = new LanguageSelector();
 
         VBox mainContent = new VBox();

@@ -7,9 +7,15 @@ import javafx.scene.layout.VBox;
 import passport.application.desktop.Translator;
 import passport.domain.contexts.user.UserRegistering;
 import passport.domain.exceptions.EmailAlreadyExists;
+import passport.domain.models.users.Login;
 import passport.domain.models.users.Person;
+import java.util.regex.Pattern;
 
-public class Logon extends VBox {
+public class LogonPane extends VBox {
+    private static final String EMAIL_PATTERN = 
+        "^[A-Za-z0-9+_.-]+@(.+)$";
+    private static final int MIN_PASSWORD_LENGTH = 8;
+    
     private final Label title;
     private final TextField username;
     private final TextField email;
@@ -20,7 +26,7 @@ public class Logon extends VBox {
     private final WelcomeWindow parent;
     private final UserRegistering userRegistering;
 
-    public Logon(WelcomeWindow parent, UserRegistering userRegistering) {
+    public LogonPane(WelcomeWindow parent, UserRegistering userRegistering) {
         this.parent = parent;
         this.userRegistering = userRegistering;
 
@@ -77,48 +83,69 @@ public class Logon extends VBox {
                     .person(createPerson())
                     .register();
 
-            showSuccess("Registration successful!");
+            showSuccess("validation.registration.success");
             parent.switchToLogin();
         }
         catch (EmailAlreadyExists e) {
-            showError("Email already registered");
+            showError("validation.email.exists");
         }
         catch (Exception e) {
-            showError("Registration failed: " + e.getMessage());
+            showError("validation.registration.failed");
         }
     }
 
-    private passport.domain.models.users.Login createLogin() {
-        return new passport.domain.models.users.Login(
+    private Login createLogin() {
+        return new Login(
                 email.getText(),
                 password.getText());
     }
 
-    private Person createPerson() { return new Person(username.getText(), ""); }
+    private Person createPerson() { 
+        return new Person(username.getText(), ""); 
+    }
 
     private boolean validateInputs() {
+        // Username validation
         if (username.getText().trim().isEmpty()) {
-            showError("Username is required");
+            showError("validation.username.required");
             return false;
         }
 
-        if (!password.getText().equals(confirmPassword.getText())) {
-            showError("Passwords don't match");
+        // Email validation
+        String emailText = email.getText().trim();
+        if (emailText.isEmpty()) {
+            showError("validation.email.required");
+            return false;
+        }
+        if (!Pattern.compile(EMAIL_PATTERN).matcher(emailText).matches()) {
+            showError("validation.email.invalid");
+            return false;
+        }
+
+        // Password validation
+        String passwordText = password.getText();
+        if (passwordText.length() < MIN_PASSWORD_LENGTH) {
+            showError("validation.password.length");
+            return false;
+        }
+
+        if (!passwordText.equals(confirmPassword.getText())) {
+            showError("validation.password.mismatch");
             return false;
         }
 
         return true;
     }
 
-    private void showError(String message) {
+    private void showError(String messageKey) {
         var alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(message);
+        alert.setContentText(Translator.instance().translationOf(messageKey));
         alert.show();
     }
 
-    private void showSuccess(String message) {
+    private void showSuccess(String messageKey) {
         var alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText(message);
+        alert.setContentText(Translator.instance().translationOf(messageKey));
         alert.show();
     }
 
