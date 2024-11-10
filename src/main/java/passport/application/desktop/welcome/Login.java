@@ -37,7 +37,7 @@ public class Login extends VBox {
         loginButton.getStyleClass().add("primary-button");
         switchToLogon.getStyleClass().add("secondary-button");
 
-        switchToLogon.setOnAction(e -> parent.switchToLogon());
+        switchToLogon.setOnAction(_ -> parent.switchToLogon());
 
         setSpacing(15);
         setPadding(new Insets(50));

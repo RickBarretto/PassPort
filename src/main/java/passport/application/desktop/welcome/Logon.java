@@ -45,7 +45,7 @@ public class Logon extends VBox {
         signupButton.getStyleClass().add("primary-button");
         switchToLogin.getStyleClass().add("secondary-button");
 
-        switchToLogin.setOnAction(e -> parent.switchToLogin());
+        switchToLogin.setOnAction(_ -> parent.switchToLogin());
 
         setSpacing(15);
         setPadding(new Insets(50));
