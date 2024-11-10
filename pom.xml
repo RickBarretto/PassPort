@@ -81,7 +81,6 @@
     </dependencies>
 
 
-
     <build>
         <plugins>
             <plugin>
@@ -119,6 +118,29 @@
                     </includes> 
                 </configuration>
 			</plugin>
+
+            <plugin> 
+                <groupId>org.apache.maven.plugins</groupId> 
+                <artifactId>maven-javadoc-plugin</artifactId> 
+                <version>3.4.0</version> 
+                <executions><execution> 
+                    <goals><goal>javadoc</goal></goals>
+                    <configuration> 
+                        <destDir>${project.basedir}/docs</destDir>
+                        <bottom>Copyright © 2024 RickBarretto. All rights reserved.</bottom> 
+                    </configuration>
+                </execution></executions>
+            </plugin>
+
+            <plugin> 
+                <groupId>org.apache.maven.plugins</groupId> 
+                <artifactId>maven-site-plugin</artifactId> 
+                <version>3.9.1</version> 
+                <configuration>
+                    <outputDirectory>${project.basedir}/docs</outputDirectory>
+                    <bottom>Copyright © 2024 RickBarretto. All rights reserved.</bottom>
+                </configuration> 
+            </plugin>
         </plugins>
     </build>
 </project>
