@@ -11,6 +11,17 @@ public class App extends Application {
         WelcomeWindow welcomeWindow = new WelcomeWindow();
         Scene scene = new Scene(welcomeWindow, 1200, 700);
 
+        setupStyle(scene);
+        setupRoot(root, scene);
+        root.show();
+    }
+
+    private void setupRoot(Stage root, Scene scene) {
+        root.setTitle("PassPort");
+        root.setScene(scene);
+    }
+
+    private void setupStyle(Scene scene) {
         // @formatter:off
         var css = scene.getStylesheets();
         var mainCSS = getClass().getResource("/desktop/styles.css").toExternalForm();
@@ -19,10 +30,6 @@ public class App extends Application {
 
         css.add(mainCSS);
         css.add(languageSelectorCSS);
-
-        root.setTitle("PassPort");
-        root.setScene(scene);
-        root.show();
     }
 
     public static void main(String[] args) { launch(args); }
