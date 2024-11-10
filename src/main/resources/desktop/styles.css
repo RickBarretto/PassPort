@@ -1,0 +1,68 @@
+.welcome-window {
+    -fx-background-color: white;
+}
+
+.hero {
+    -fx-background-image: url('background.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+.app-name {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
+}
+
+.form-container {
+    -fx-background-color: white;
+}
+
+.form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+.text-field,
+.password-field {
+    -fx-pref-width: 300px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-padding: 5px 10px;
+}
+
+.primary-button {
+    -fx-pref-width: 300px;
+    -fx-pref-height: 40px;
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #1976D2;
+}
+
+.secondary-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #2196F3;
+    -fx-cursor: hand;
+    -fx-padding: 10px;
+}
+
+.secondary-button:hover {
+    -fx-text-fill: #1976D2;
+}
+
+.separator {
+    -fx-pref-width: 300px;
+    -fx-opacity: 0.5;
+}
