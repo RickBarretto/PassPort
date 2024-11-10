@@ -41,6 +41,10 @@ public class Translator {
         return this;
     }
 
+    public String translationOf(String property) {
+        return resources().getString(property);
+    }
+
     public ResourceBundle resources() { return resources.get(); }
 
     public ObjectProperty<ResourceBundle> resourcesProp() { return resources; }
