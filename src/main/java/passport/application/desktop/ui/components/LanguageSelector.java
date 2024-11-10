@@ -1,4 +1,4 @@
-package passport.application.desktop.components;
+package passport.application.desktop.ui.components;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;

@@ -1,10 +1,10 @@
-package passport.application.desktop.welcome;
+package passport.application.desktop.ui.welcome;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import passport.application.desktop.components.LanguageSelector;
+import passport.application.desktop.ui.components.LanguageSelector;
 
 public class WelcomeWindow extends HBox {
     private final Hero hero;

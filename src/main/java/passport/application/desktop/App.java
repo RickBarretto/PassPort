@@ -3,7 +3,7 @@ package passport.application.desktop;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import passport.application.desktop.welcome.WelcomeWindow;
+import passport.application.desktop.ui.welcome.WelcomeWindow;
 
 public class App extends Application {
     @Override

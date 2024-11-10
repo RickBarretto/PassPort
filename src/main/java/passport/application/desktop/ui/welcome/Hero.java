@@ -1,4 +1,4 @@
-package passport.application.desktop.welcome;
+package passport.application.desktop.ui.welcome;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
