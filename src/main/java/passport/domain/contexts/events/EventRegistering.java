@@ -24,7 +24,7 @@ public class EventRegistering implements Context {
     /**
      * Constructor with the specified events repository.
      *
-     * @param events the repository of events used for registering
+     * @param repository the repository of events used for registering
      */
     public EventRegistering(Events repository) {
         this.repository = repository;
