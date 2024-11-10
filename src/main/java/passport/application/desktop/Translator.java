@@ -25,9 +25,11 @@ public class Translator {
     }
 
     public void language(Language language) {
-        Locale locale = Locale.of(language.code());
-        ResourceBundle bundle = ResourceBundle.getBundle(
-                "passport.application.desktop.resources.messages", locale);
+        final var path = "passport.application.desktop.resources.messages";
+
+        var locale = Locale.of(language.code());
+        var bundle = ResourceBundle.getBundle(path, locale);
+
         resources.set(bundle);
         currentLanguage.set(language);
     }
