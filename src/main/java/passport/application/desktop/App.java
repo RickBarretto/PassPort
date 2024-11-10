@@ -4,8 +4,23 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
+import passport.infra.DisabledEmailService;
+import passport.infra.Session;
+import passport.infra.virtual.EventsInMemory;
+import passport.infra.virtual.UsersInMemory;
 
 public class App extends Application {
+    final Infra infra;
+    
+    public App() {
+        infra = new Infra(
+            new UsersInMemory(),
+            new EventsInMemory(),
+            new DisabledEmailService(),
+            new Session()
+        );
+    }
+
     @Override
     public void start(Stage root) {
         WelcomeWindow welcomeWindow = new WelcomeWindow();
