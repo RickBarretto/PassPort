@@ -1,0 +1,16 @@
+package passport.application.desktop.welcome;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+
+public class Hero extends StackPane {
+    public Hero() {
+        Label appName = new Label("PassPort");
+        appName.getStyleClass().add("app-name");
+
+        setAlignment(Pos.CENTER);
+        getStyleClass().add("hero");
+        getChildren().add(appName);
+    }
+}
