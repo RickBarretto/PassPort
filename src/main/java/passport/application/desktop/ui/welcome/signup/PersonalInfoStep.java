@@ -9,55 +9,42 @@ import passport.domain.models.users.Login;
 import passport.domain.models.users.Person;
 import java.util.regex.Pattern;
 
+class Components {
+    public final TextField fullName = new TextField();
+    public final TextField cpf = new TextField();
+    public final Button signupButton = new Button();
+    public final Button backButton = new Button();
+}
+
 public class PersonalInfoStep extends SignupStep {
     private static final String CPF_PATTERN = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
-
-    private final TextField fullName;
-    private final TextField cpf;
-    private final Button signupButton;
-    private final Button backButton;
+    final Components ui;
 
     public PersonalInfoStep(SignupForm form) {
         super(form);
-
-        fullName = new TextField();
-        cpf = new TextField();
-        signupButton = new Button();
-        backButton = new Button();
+        this.ui = new Components();
 
         setupUI();
         setupActions();
         translate();
     }
 
-    private void setupUI() {
-        signupButton.getStyleClass().add("primary-button");
-        backButton.getStyleClass().add("secondary-button");
-
-        HBox buttonContainer = new HBox(10, signupButton, backButton);
-        buttonContainer.setAlignment(Pos.CENTER);
-
-        setAlignment(Pos.CENTER);
-        getChildren().addAll(
-                fullName,
-                cpf,
-                buttonContainer);
-    }
+    // =~=~=~=~= =~=~=~=~= SETUP ACTIONS =~=~=~=~= =~=~=~=~=
 
     private void setupActions() {
-        backButton.setOnAction(
+        ui.backButton.setOnAction(
                 _ -> ((SignupStepManager) getParent()).prev());
-        signupButton.setOnAction(_ -> handleRegistration());
+        ui.signupButton.setOnAction(_ -> handleRegistration());
     }
 
     @Override
     protected boolean validate() {
-        if (fullName.getText().trim().isEmpty()) {
+        if (ui.fullName.getText().trim().isEmpty()) {
             showError("validation.fullname.required");
             return false;
         }
 
-        String cpfText = cpf.getText().trim();
+        String cpfText = ui.cpf.getText().trim();
         if (cpfText.isEmpty()) {
             showError("validation.cpf.required");
             return false;
@@ -79,10 +66,17 @@ public class PersonalInfoStep extends SignupStep {
             CredentialsStep credentialsStep = (CredentialsStep) getParent()
                     .getChildrenUnmodifiable().get(0);
 
+            final var login = new Login(
+                    credentialsStep.email(),
+                    credentialsStep.getPassword());
+
+            final var person = new Person(
+                    ui.fullName.getText(),
+                    ui.cpf.getText());
+
             form.registering()
-                    .login(new Login(credentialsStep.email(),
-                            credentialsStep.getPassword()))
-                    .person(new Person(fullName.getText(), cpf.getText()))
+                    .login(login)
+                    .person(person)
                     .register();
 
             showSuccess("validation.registration.success");
@@ -96,11 +90,29 @@ public class PersonalInfoStep extends SignupStep {
         }
     }
 
+    // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
+
+    private void setupUI() {
+        ui.signupButton.getStyleClass().add("primary-button");
+        ui.backButton.getStyleClass().add("secondary-button");
+
+        HBox buttonContainer = new HBox(10, ui.signupButton, ui.backButton);
+        buttonContainer.setAlignment(Pos.CENTER);
+
+        setAlignment(Pos.CENTER);
+        getChildren().addAll(
+                ui.fullName,
+                ui.cpf,
+                buttonContainer);
+    }
+
+    // =~=~=~=~= =~=~=~=~= SETUP TRANSLATIONS =~=~=~=~= =~=~=~=~=
+
     private void translate() {
         Translator translator = Translator.instance();
-        translator.translateFrom(fullName::setPromptText, "logon.fullname");
-        translator.translateFrom(cpf::setPromptText, "logon.cpf");
-        translator.translateFrom(signupButton::setText, "logon.button");
-        translator.translateFrom(backButton::setText, "logon.back");
+        translator.translateFrom(ui.fullName::setPromptText, "logon.fullname");
+        translator.translateFrom(ui.cpf::setPromptText, "logon.cpf");
+        translator.translateFrom(ui.signupButton::setText, "logon.button");
+        translator.translateFrom(ui.backButton::setText, "logon.back");
     }
 }
