@@ -32,7 +32,6 @@ public class LoginForm extends VBox {
 
         setupUI();
         setupActions();
-        setupTranslation();
         translate();
     }
 
@@ -105,12 +104,6 @@ public class LoginForm extends VBox {
 
     // =~=~=~=~= =~=~=~=~= SETUP TRANSLATION =~=~=~=~= =~=~=~=~=
 
-    private void setupTranslation() {
-        Translator translator = Translator.instance();
-        translator.resourcesProp()
-                .addListener((_, _, _) -> translate());
-    }
-
     private void translate() {
         // @formatter:off
         Translator.instance()
@@ -118,7 +111,9 @@ public class LoginForm extends VBox {
             .translateFrom(ui.email::setPromptText, "login.email")
             .translateFrom(ui.password::setPromptText, "login.password")
             .translateFrom(ui.loginButton::setText, "login.button")
-            .translateFrom(ui.switchToLogon::setText, "login.switch");
+            .translateFrom(ui.switchToLogon::setText, "login.switch")
+            .resourcesProp()
+                .addListener((_, _, _) -> translate());
         // @formatter:on
     }
 
