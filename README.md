@@ -38,11 +38,10 @@ Here's a look at the src/main structure:
 
 The workspace contains three main folders:
 - `docs`: the documentation generated from Javadocs 
-- `lib`: the necessary `.jar` dependencies
 - `src/main`: the source code
 - `src/test`: the test files
 
-## Documentation
+## Documentation (The 2nd version)
 
 * [Online Page](https://rickbarretto.github.io/events)
 * [Online Documentation](https://rickbarretto.github.io/events/docs)
