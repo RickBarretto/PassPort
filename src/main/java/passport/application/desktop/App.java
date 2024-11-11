@@ -3,6 +3,7 @@ package passport.application.desktop;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import passport.application.desktop.ui.main.MainWindow;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.user.SigningUp;
 import passport.domain.contexts.user.UserLogin;
@@ -13,6 +14,7 @@ import passport.infra.virtual.UsersInMemory;
 
 public class App extends Application {
     final Infra infra;
+    Stage root;
 
     public App() {
         infra = new Infra(
@@ -24,15 +26,25 @@ public class App extends Application {
 
     @Override
     public void start(Stage root) {
+        this.root = root;
+
         var signInUp = new SigningUp(infra.users());
         var logIn = new UserLogin(infra.session(), infra.users());
 
-        WelcomeWindow welcomeWindow = new WelcomeWindow(signInUp, logIn);
+        WelcomeWindow welcomeWindow = new WelcomeWindow(this, signInUp, logIn);
         Scene scene = new Scene(welcomeWindow, 1200, 700);
 
         setupStyle(scene);
         setupRoot(root, scene);
         root.show();
+    }
+
+    public void openMainWindow() {
+        Scene scene = new Scene(new MainWindow(infra), 1200, 700);
+        setupStyle(scene);
+
+        Stage currentStage = (Stage) root.getScene().getWindow();
+        currentStage.setScene(scene);
     }
 
     private void setupRoot(Stage root, Scene scene) {

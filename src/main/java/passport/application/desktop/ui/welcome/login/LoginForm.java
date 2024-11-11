@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import passport.application.desktop.App;
 import passport.application.desktop.Translator;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.user.UserLogin;
@@ -16,10 +17,12 @@ public class LoginForm extends VBox {
     private final Button loginButton;
     private final Button switchToLogon;
 
+    private final App application;
     private final WelcomeWindow parent;
     private final UserLogin login;
 
-    public LoginForm(WelcomeWindow parent, UserLogin login) {
+    public LoginForm(App application, WelcomeWindow parent, UserLogin login) {
+        this.application = application;
         this.parent = parent;
         this.login = login;
 
@@ -68,7 +71,7 @@ public class LoginForm extends VBox {
         }
 
         if (login.isLoggedAs(email.getText())) {
-            openMainWindow();
+            application.openMainWindow();
         }
         else {
             clearFields();
@@ -79,10 +82,6 @@ public class LoginForm extends VBox {
     private void clearFields() {
         this.email.setText("");
         this.password.setText("");
-    }
-
-    private void openMainWindow() {
-
     }
 
     protected void showError(String messageKey) {
