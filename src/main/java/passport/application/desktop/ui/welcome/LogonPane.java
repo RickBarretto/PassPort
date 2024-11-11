@@ -13,11 +13,16 @@ import java.util.regex.Pattern;
 
 public class LogonPane extends VBox {
     private static final String EMAIL_PATTERN = 
-        "^[A-Za-z0-9+_.-]+@(.+)$";
+        "^[A-Za-z0-9+_.-]+" // username
+        + "@"               // at (@)
+        + "(.+)$";          // anything
+    private static final String CPF_PATTERN = 
+            "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
     private static final int MIN_PASSWORD_LENGTH = 8;
-    
+
     private final Label title;
-    private final TextField username;
+    private final TextField fullName;
+    private final TextField cpf;
     private final TextField email;
     private final PasswordField password;
     private final PasswordField confirmPassword;
@@ -31,7 +36,8 @@ public class LogonPane extends VBox {
         this.userRegistering = userRegistering;
 
         title = new Label();
-        username = new TextField();
+        fullName = new TextField();
+        cpf = new TextField();
         email = new TextField();
         password = new PasswordField();
         confirmPassword = new PasswordField();
@@ -58,7 +64,8 @@ public class LogonPane extends VBox {
 
         getChildren().addAll(
                 title,
-                username,
+                fullName,
+                cpf,
                 email,
                 password,
                 confirmPassword,
@@ -100,14 +107,25 @@ public class LogonPane extends VBox {
                 password.getText());
     }
 
-    private Person createPerson() { 
-        return new Person(username.getText(), ""); 
+    private Person createPerson() {
+        return new Person(fullName.getText(), cpf.getText());
     }
 
     private boolean validateInputs() {
-        // Username validation
-        if (username.getText().trim().isEmpty()) {
-            showError("validation.username.required");
+        // Full Name validation
+        if (fullName.getText().trim().isEmpty()) {
+            showError("validation.fullname.required");
+            return false;
+        }
+
+        // CPF validation
+        String cpfText = cpf.getText().trim();
+        if (cpfText.isEmpty()) {
+            showError("validation.cpf.required");
+            return false;
+        }
+        if (!Pattern.compile(CPF_PATTERN).matcher(cpfText).matches()) {
+            showError("validation.cpf.invalid.format");
             return false;
         }
 
@@ -152,7 +170,8 @@ public class LogonPane extends VBox {
     private void translate() {
         Translator.instance()
                 .translateFrom(title::setText, "login.title")
-                .translateFrom(username::setPromptText, "logon.username")
+                .translateFrom(fullName::setPromptText, "logon.fullname")
+                .translateFrom(cpf::setPromptText, "logon.cpf")
                 .translateFrom(email::setPromptText, "logon.email")
                 .translateFrom(password::setPromptText, "logon.password")
                 .translateFrom(confirmPassword::setPromptText,
