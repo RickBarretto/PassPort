@@ -2,11 +2,11 @@ package passport.application.desktop.ui.welcome.signup;
 
 import javafx.scene.layout.StackPane;
 
-public class SignupStepManager extends StackPane {
+public class SignupStepPane extends StackPane {
     private final SignupStep[] steps;
     private int currentStep = 0;
 
-    public SignupStepManager(SignupStep... steps) {
+    public SignupStepPane(SignupStep... steps) {
         this.steps = steps;
         getChildren().addAll(steps);
         showCurrentStep();
