@@ -18,18 +18,23 @@
 
 .form-container {
     -fx-background-color: white;
+    -fx-alignment: center;
 }
 
 .form-title {
+    -fx-font-weight: bold;
     -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
+    -fx-padding: 0 0 20px 0;
 }
 
 .text-field,
 .password-field {
-    -fx-pref-width: 300px;
+    /* -fx-pref-width: 300px;*/
     -fx-pref-height: 40px;
+    -fx-max-width: 300px;
+    -fx-min-width: 300px;
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
     -fx-border-color: #cccccc;
@@ -65,4 +70,37 @@
 .separator {
     -fx-pref-width: 300px;
     -fx-opacity: 0.5;
+}
+
+.progress-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}
+
+.progress-bar {
+    -fx-max-width: 250px;
+    -fx-min-width: 250px;
+    -fx-accent: #2196F3;
+}
+
+.progress-bar>.track {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.progress-bar>.bar {
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.progress-bar > .track {
+    -fx-background-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+#next-button {
+    -fx-max-width: 300px;
+    -fx-min-width: 300px;
 }
