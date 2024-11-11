@@ -5,19 +5,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import passport.application.desktop.ui.components.LanguageSelector;
+import passport.application.desktop.ui.welcome.login.LoginForm;
 import passport.application.desktop.ui.welcome.signup.SignupForm;
 import passport.domain.contexts.user.SigningUp;
 
 public class WelcomeWindow extends HBox {
     private final Hero hero;
-    private final LoginPane login;
+    private final LoginForm login;
     private final SignupForm signUpForm;
     private final LanguageSelector languageSelector;
 
     public WelcomeWindow(SigningUp context) {
 
         hero = new Hero();
-        login = new LoginPane(this);
+        login = new LoginForm(this);
         signUpForm = new SignupForm(this, context);
         languageSelector = new LanguageSelector();
 

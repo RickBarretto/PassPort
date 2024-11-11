@@ -1,12 +1,13 @@
-package passport.application.desktop.ui.welcome;
+package passport.application.desktop.ui.welcome.login;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import passport.application.desktop.Translator;
+import passport.application.desktop.ui.welcome.WelcomeWindow;
 
-public class LoginPane extends VBox {
+public class LoginForm extends VBox {
     private final Label title;
     private final TextField email;
     private final PasswordField password;
@@ -15,7 +16,7 @@ public class LoginPane extends VBox {
 
     private final WelcomeWindow parent;
 
-    public LoginPane(WelcomeWindow parent) {
+    public LoginForm(WelcomeWindow parent) {
         this.parent = parent;
 
         title = new Label();
