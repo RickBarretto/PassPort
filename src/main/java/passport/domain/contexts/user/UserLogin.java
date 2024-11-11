@@ -47,6 +47,16 @@ public class UserLogin implements Context {
                 () -> new PermissionDenied("Wrong login credentials")));
     }
 
+    public boolean isLoggedAs(String email) {
+        if (session.loggedUser().isEmpty())
+            return false;
+
+        return session.loggedUser().get()
+                .login()
+                .email()
+                .equals(email);
+    }
+
     /**
      * Logs out the current session.
      */
