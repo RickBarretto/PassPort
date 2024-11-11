@@ -5,8 +5,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 public class Hero extends StackPane {
-    public Hero() {
+    public Hero() { setupUI(); }
+
+    // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
+
+    void setupUI() {
         Label appName = new Label("PassPort");
+        
         appName.getStyleClass().add("app-name");
 
         setAlignment(Pos.CENTER);
