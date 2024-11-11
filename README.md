@@ -55,6 +55,15 @@ Java(TM) SE Runtime Environment (build 22.0.2+9-70)
 Java HotSpot(TM) 64-Bit Server VM (build 22.0.2+9-70, mixed mode, sharing)
 ```
 
+### Dependencies
+
+```
+JavaFX SDK 23
+Maven 3.9.9
+Gson 2.11.0
+JUnit 5.11.3
+```
+
 ## Used VsCode Extensions
 
 ### Extension Pack for Java
