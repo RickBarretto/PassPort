@@ -89,12 +89,12 @@ public class CredentialsStep extends SignupStep {
     // =~=~=~=~= =~=~=~=~= SETUP TRANSLATION =~=~=~=~= =~=~=~=~=
 
     private void translate() {
-        Translator translator = Translator.instance();
-        translator.translateFrom(ui.email::setPromptText, "logon.email");
-        translator.translateFrom(ui.password::setPromptText, "logon.password");
-        translator.translateFrom(ui.confirmPassword::setPromptText,
-                "logon.confirmPassword");
-        translator.translateFrom(ui.nextButton::setText, "logon.next");
+        Translator.instance()
+            .translateFrom(ui.email::setPromptText, "logon.email")
+            .translateFrom(ui.password::setPromptText, "logon.password")
+            .translateFrom(ui.confirmPassword::setPromptText,
+                "logon.confirmPassword")
+            .translateFrom(ui.nextButton::setText, "logon.next");
     }
 
 }
