@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import passport.application.desktop.Translator;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
+import passport.domain.contexts.user.UserLogin;
+import passport.domain.models.users.Login;
 
 public class LoginForm extends VBox {
     private final Label title;
@@ -15,9 +17,11 @@ public class LoginForm extends VBox {
     private final Button switchToLogon;
 
     private final WelcomeWindow parent;
+    private final UserLogin login;
 
-    public LoginForm(WelcomeWindow parent) {
+    public LoginForm(WelcomeWindow parent, UserLogin login) {
         this.parent = parent;
+        this.login = login;
 
         title = new Label();
         email = new TextField();
@@ -25,20 +29,22 @@ public class LoginForm extends VBox {
         loginButton = new Button();
         switchToLogon = new Button();
 
+        setupUI();
+        setupActions();
+        setupTranslation();
+        translate();
+    }
+
+    private void setupTranslation() {
         Translator translator = Translator.instance();
         translator.resourcesProp()
                 .addListener((_, _, _) -> translate());
-
-        setupUI();
-        translate();
     }
 
     private void setupUI() {
         title.getStyleClass().add("form-title");
         loginButton.getStyleClass().add("primary-button");
         switchToLogon.getStyleClass().add("secondary-button");
-
-        switchToLogon.setOnAction(_ -> parent.switchToLogon());
 
         setSpacing(15);
         setPadding(new Insets(50));
@@ -47,6 +53,42 @@ public class LoginForm extends VBox {
 
         getChildren().addAll(title, email, password, loginButton,
                 new Separator(), switchToLogon);
+    }
+
+    private void setupActions() {
+        switchToLogon.setOnAction(_ -> parent.switchToLogon());
+        loginButton.setOnAction(_ -> this.loginWithForms());
+    }
+
+    private void loginWithForms() {
+        try {
+            login.logAs(new Login(email.getText(), password.getText()));
+        }
+        catch (Exception e) {
+        }
+
+        if (login.isLoggedAs(email.getText())) {
+            openMainWindow();
+        }
+        else {
+            clearFields();
+            showError("login.invalid");
+        }
+    }
+
+    private void clearFields() {
+        this.email.setText("");
+        this.password.setText("");
+    }
+
+    private void openMainWindow() {
+
+    }
+
+    protected void showError(String messageKey) {
+        var alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(Translator.instance().translationOf(messageKey));
+        alert.show();
     }
 
     private void translate() {
