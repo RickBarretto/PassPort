@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import passport.domain.contexts.user.UserRegistering;
+import passport.domain.contexts.user.SigningUp;
 import passport.domain.contexts.user.forms.LoginInformation;
 import passport.domain.contexts.user.forms.PersonalInformation;
 import passport.domain.exceptions.EmailAlreadyExists;
@@ -27,7 +27,7 @@ import passport.resources.bdd.When;
 import passport.roles.repositories.Users;
 
 @Feature("Registering a new user")
-public class UserRegisteringFeature {
+public class SigningUpFeature {
 
     Users repository;
 
@@ -62,7 +62,7 @@ public class UserRegisteringFeature {
             var login = validLogin();
             var person = validPerson();
 
-            new UserRegistering(repository)
+            new SigningUp(repository)
                     .login(login)
                     .person(person)
                     .register();
@@ -87,7 +87,7 @@ public class UserRegisteringFeature {
             var login = validLogin();
             var person = validPerson();
 
-            new UserRegistering(repository)
+            new SigningUp(repository)
                     .login(login)
                     .person(person)
                     .register();
@@ -115,7 +115,7 @@ public class UserRegisteringFeature {
             var login = validLogin();
             var person = validPerson();
 
-            var context = new UserRegistering(repository)
+            var context = new SigningUp(repository)
                     .login(login)
                     .person(person);
 

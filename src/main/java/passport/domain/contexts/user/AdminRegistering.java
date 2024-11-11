@@ -11,7 +11,7 @@ import passport.roles.repositories.Users;
  * Context for registering an admin user.
  */
 @SuppressWarnings("unused")
-public class AdminRegistering extends UserRegistering implements Context {
+public class AdminRegistering extends SigningUp implements Context {
     private AccountInformation account = new AccountInformation();
     private Users repository;
 
@@ -56,7 +56,7 @@ public class AdminRegistering extends UserRegistering implements Context {
     public void register() throws EmailAlreadyExists {
         account.shouldBeInitialized();
         this.emailShouldBeUnregistered();
-        
+
         var user = new User(account.login, account.person).asAdmin();
         this.repository.register(user);
     }

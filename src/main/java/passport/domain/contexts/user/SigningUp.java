@@ -29,9 +29,9 @@ class AccountInformation {
 }
 
 /**
- * Allows registering a User into a Repository.
+ * Allows sign-up a User into a Repository.
  */
-public class UserRegistering implements Context {
+public class SigningUp implements Context {
     private AccountInformation account = new AccountInformation();
     private Users repository;
 
@@ -40,17 +40,15 @@ public class UserRegistering implements Context {
      *
      * @param repository the users repository
      */
-    public UserRegistering(Users repository) {
-        this.repository = repository;
-    }
+    public SigningUp(Users repository) { this.repository = repository; }
 
     /**
      * Sets the login information for the user.
      *
      * @param login the login information
-     * @return the updated UserRegistering object
+     * @return the updated SigningUp object
      */
-    public UserRegistering login(Login login) {
+    public SigningUp login(Login login) {
         account.login = login;
         return this;
     }
@@ -59,9 +57,9 @@ public class UserRegistering implements Context {
      * Sets the personal information for the user.
      *
      * @param person the personal information
-     * @return the updated UserRegistering object
+     * @return the updated SigningUp object
      */
-    public UserRegistering person(Person person) {
+    public SigningUp person(Person person) {
         account.person = person;
         return this;
     }

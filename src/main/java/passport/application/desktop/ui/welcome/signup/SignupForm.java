@@ -9,19 +9,19 @@ import javafx.scene.control.Separator;
 import passport.application.desktop.Translator;
 import passport.application.desktop.ui.components.ProgressIndicator;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
-import passport.domain.contexts.user.UserRegistering;
+import passport.domain.contexts.user.SigningUp;
 
 public class SignupForm extends VBox {
     private final WelcomeWindow parent;
-    private final UserRegistering userRegistering;
+    private final SigningUp context;
     private final SignupStepManager stepManager;
     private final ProgressIndicator progressBar;
     private final Label title;
     private final Button switchToLogin;
 
-    public SignupForm(WelcomeWindow parent, UserRegistering userRegistering) {
+    public SignupForm(WelcomeWindow parent, SigningUp context) {
         this.parent = parent;
-        this.userRegistering = userRegistering;
+        this.context = context;
 
         this.title = new Label();
         this.switchToLogin = new Button();
@@ -64,9 +64,7 @@ public class SignupForm extends VBox {
         translator.resourcesProp().addListener((_, _, _) -> translate());
     }
 
-    public UserRegistering registering() { return userRegistering; }
+    public SigningUp registering() { return context; }
 
-    public WelcomeWindow parent() {
-        return parent;
-    }
+    public WelcomeWindow parent() { return parent; }
 }
