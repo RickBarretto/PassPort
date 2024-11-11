@@ -10,27 +10,25 @@ import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.user.UserLogin;
 import passport.domain.models.users.Login;
 
-public class LoginForm extends VBox {
-    private final Label title;
-    private final TextField email;
-    private final PasswordField password;
-    private final Button loginButton;
-    private final Button switchToLogon;
+class Components {
+    public final Label title = new Label();
+    public final TextField email = new TextField();
+    public final PasswordField password = new PasswordField();
+    public final Button loginButton = new Button();
+    public final Button switchToLogon = new Button();
+}
 
+public class LoginForm extends VBox {
+    private final Components ui;
     private final App application;
     private final WelcomeWindow parent;
     private final UserLogin login;
 
     public LoginForm(App application, WelcomeWindow parent, UserLogin login) {
+        this.ui = new Components();
         this.application = application;
         this.parent = parent;
         this.login = login;
-
-        title = new Label();
-        email = new TextField();
-        password = new PasswordField();
-        loginButton = new Button();
-        switchToLogon = new Button();
 
         setupUI();
         setupActions();
@@ -38,39 +36,23 @@ public class LoginForm extends VBox {
         translate();
     }
 
-    private void setupTranslation() {
-        Translator translator = Translator.instance();
-        translator.resourcesProp()
-                .addListener((_, _, _) -> translate());
-    }
-
-    private void setupUI() {
-        title.getStyleClass().add("form-title");
-        loginButton.getStyleClass().add("primary-button");
-        switchToLogon.getStyleClass().add("secondary-button");
-
-        setSpacing(15);
-        setPadding(new Insets(50));
-        setAlignment(Pos.CENTER);
-        getStyleClass().add("form-container");
-
-        getChildren().addAll(title, email, password, loginButton,
-                new Separator(), switchToLogon);
-    }
+    // =~=~=~=~= =~=~=~=~= SETUP ACTIONS =~=~=~=~= =~=~=~=~=
 
     private void setupActions() {
-        switchToLogon.setOnAction(_ -> parent.switchToLogon());
-        loginButton.setOnAction(_ -> this.loginWithForms());
+        ui.switchToLogon.setOnAction(_ -> parent.switchToLogon());
+        ui.loginButton.setOnAction(_ -> this.loginWithForms());
     }
 
     private void loginWithForms() {
         try {
-            login.logAs(new Login(email.getText(), password.getText()));
+            login.logAs(new Login(
+                    ui.email.getText(),
+                    ui.password.getText()));
         }
         catch (Exception e) {
         }
 
-        if (login.isLoggedAs(email.getText())) {
+        if (login.isLoggedAs(ui.email.getText())) {
             application.openMainWindow();
         }
         else {
@@ -80,8 +62,8 @@ public class LoginForm extends VBox {
     }
 
     private void clearFields() {
-        this.email.setText("");
-        this.password.setText("");
+        ui.email.setText("");
+        ui.password.setText("");
     }
 
     protected void showError(String messageKey) {
@@ -90,14 +72,54 @@ public class LoginForm extends VBox {
         alert.show();
     }
 
+    // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
+
+    private void setupUI() {
+        setupCssClasses();
+        setupAlignment();
+        applyChildren();
+    }
+
+    private void applyChildren() {
+        this.getChildren().addAll(
+                ui.title,
+                ui.email,
+                ui.password,
+                ui.loginButton,
+                new Separator(),
+                ui.switchToLogon);
+    }
+
+    private void setupCssClasses() {
+        ui.title.getStyleClass().add("form-title");
+        ui.loginButton.getStyleClass().add("primary-button");
+        ui.switchToLogon.getStyleClass().add("secondary-button");
+        this.getStyleClass().add("form-container");
+    }
+
+    private void setupAlignment() {
+        this.setSpacing(15);
+        this.setPadding(new Insets(50));
+        this.setAlignment(Pos.CENTER);
+    }
+
+    // =~=~=~=~= =~=~=~=~= SETUP TRANSLATION =~=~=~=~= =~=~=~=~=
+
+    private void setupTranslation() {
+        Translator translator = Translator.instance();
+        translator.resourcesProp()
+                .addListener((_, _, _) -> translate());
+    }
+
     private void translate() {
         // @formatter:off
         Translator.instance()
-            .translateFrom(title::setText, "login.title")
-            .translateFrom(email::setPromptText, "login.email")
-            .translateFrom(password::setPromptText, "login.password")
-            .translateFrom(loginButton::setText, "login.button")
-            .translateFrom(switchToLogon::setText, "login.switch");
+            .translateFrom(ui.title::setText, "login.title")
+            .translateFrom(ui.email::setPromptText, "login.email")
+            .translateFrom(ui.password::setPromptText, "login.password")
+            .translateFrom(ui.loginButton::setText, "login.button")
+            .translateFrom(ui.switchToLogon::setText, "login.switch");
         // @formatter:on
     }
+
 }
