@@ -1,9 +1,21 @@
 package passport.application.desktop.ui.main;
 
-public class MainWindow {
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import passport.application.desktop.Infra;
 
-    public MainWindow() {
-        System.out.println("Hi!");
+public class MainWindow extends VBox {
+    final Infra infra;
+    
+    public MainWindow(Infra infra) {
+        this.infra = infra;
+        setupUI();
     }
     
+    private void setupUI() {
+        Label welcomeLabel = new Label("Just a test");
+
+        getChildren().add(welcomeLabel);
+        getStyleClass().add("main-window");
+    }
 }
