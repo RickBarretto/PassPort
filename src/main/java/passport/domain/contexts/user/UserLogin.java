@@ -18,7 +18,12 @@ public class UserLogin implements Context {
      *
      * @param users the repository of users
      */
-    public UserLogin(Users users) { this.users = users; }
+    public UserLogin(Users users) { this(null, users); }
+
+    public UserLogin(Session session, Users users) {
+        this.session = session;
+        this.users = users;
+    }
 
     /**
      * Associates the current login context with a session.
