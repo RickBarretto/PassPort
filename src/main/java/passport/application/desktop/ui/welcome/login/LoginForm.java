@@ -10,19 +10,19 @@ import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.user.UserLogin;
 import passport.domain.models.users.Login;
 
-class Components {
-    public final Label title = new Label();
-    public final TextField email = new TextField();
-    public final PasswordField password = new PasswordField();
-    public final Button loginButton = new Button();
-    public final Button switchToLogon = new Button();
-}
-
 public class LoginForm extends VBox {
     private final Components ui;
     private final App application;
     private final WelcomeWindow parent;
     private final UserLogin login;
+
+    class Components {
+        public final Label title = new Label();
+        public final TextField email = new TextField();
+        public final PasswordField password = new PasswordField();
+        public final Button loginButton = new Button();
+        public final Button switchToLogon = new Button();
+    }
 
     public LoginForm(App application, WelcomeWindow parent, UserLogin login) {
         this.ui = new Components();

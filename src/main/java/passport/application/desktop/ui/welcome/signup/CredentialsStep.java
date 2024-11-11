@@ -6,17 +6,17 @@ import javafx.scene.layout.HBox;
 import passport.application.desktop.Translator;
 import java.util.regex.Pattern;
 
-class Components {
-    public final TextField email = new TextField();
-    public final PasswordField password = new PasswordField();
-    public final PasswordField confirmPassword = new PasswordField();
-    public final Button nextButton = new Button();
-}
-
 public class CredentialsStep extends SignupStep {
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
     private static final int MIN_PASSWORD_LENGTH = 8;
     private final Components ui;
+
+    class Components {
+        public final TextField email = new TextField();
+        public final PasswordField password = new PasswordField();
+        public final PasswordField confirmPassword = new PasswordField();
+        public final Button nextButton = new Button();
+    }
 
     public CredentialsStep(SignupForm form) {
         super(form);
@@ -36,7 +36,7 @@ public class CredentialsStep extends SignupStep {
     private void setupActions() {
         ui.nextButton.setOnAction(_ -> {
             if (validate()) {
-                ((SignupStepManager) getParent()).next();
+                ((SignupStepPane) getParent()).next();
             }
         });
     }

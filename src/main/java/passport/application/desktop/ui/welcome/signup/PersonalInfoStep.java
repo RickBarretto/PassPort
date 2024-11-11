@@ -9,16 +9,16 @@ import passport.domain.models.users.Login;
 import passport.domain.models.users.Person;
 import java.util.regex.Pattern;
 
-class Components {
-    public final TextField fullName = new TextField();
-    public final TextField cpf = new TextField();
-    public final Button signupButton = new Button();
-    public final Button backButton = new Button();
-}
-
 public class PersonalInfoStep extends SignupStep {
     private static final String CPF_PATTERN = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
     final Components ui;
+
+    class Components {
+        public final TextField fullName = new TextField();
+        public final TextField cpf = new TextField();
+        public final Button signupButton = new Button();
+        public final Button backButton = new Button();
+    }
 
     public PersonalInfoStep(SignupForm form) {
         super(form);
@@ -33,7 +33,7 @@ public class PersonalInfoStep extends SignupStep {
 
     private void setupActions() {
         ui.backButton.setOnAction(
-                _ -> ((SignupStepManager) getParent()).prev());
+                _ -> ((SignupStepPane) getParent()).prev());
         ui.signupButton.setOnAction(_ -> handleRegistration());
     }
 

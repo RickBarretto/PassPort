@@ -11,25 +11,24 @@ import passport.application.desktop.ui.components.ProgressIndicator;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.user.SigningUp;
 
-class Components {
-    public final Label title = new Label();
-    public final Button switchToLogin = new Button();
-    public final ProgressIndicator progressBar = new ProgressIndicator();
-}
-
 public class SignupForm extends VBox {
     private final WelcomeWindow parent;
     private final SigningUp context;
-    private final SignupStepManager stepManager;
+    private final SignupStepPane stepManager;
     private final Components ui;
     
+    class Components {
+        public final Label title = new Label();
+        public final Button switchToLogin = new Button();
+        public final ProgressIndicator progressBar = new ProgressIndicator();
+    }
 
     public SignupForm(WelcomeWindow parent, SigningUp context) {
         this.parent = parent;
         this.context = context;
 
         this.ui = new Components();
-        this.stepManager = new SignupStepManager(
+        this.stepManager = new SignupStepPane(
                 new CredentialsStep(this),
                 new PersonalInfoStep(this)
         );
