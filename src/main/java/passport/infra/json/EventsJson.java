@@ -59,7 +59,7 @@ public class EventsJson implements Events {
         }
         catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return List.of();
         }
     }
 

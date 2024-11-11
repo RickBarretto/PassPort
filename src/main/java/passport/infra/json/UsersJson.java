@@ -62,7 +62,7 @@ public class UsersJson implements Users {
         }
         catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return List.of();
         }
     }
 
