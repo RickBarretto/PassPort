@@ -11,60 +11,80 @@ import passport.application.desktop.ui.components.ProgressIndicator;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.user.SigningUp;
 
+class Components {
+    public final Label title = new Label();
+    public final Button switchToLogin = new Button();
+    public final ProgressIndicator progressBar = new ProgressIndicator();
+}
+
 public class SignupForm extends VBox {
     private final WelcomeWindow parent;
     private final SigningUp context;
     private final SignupStepManager stepManager;
-    private final ProgressIndicator progressBar;
-    private final Label title;
-    private final Button switchToLogin;
+    private final Components ui;
+    
 
     public SignupForm(WelcomeWindow parent, SigningUp context) {
         this.parent = parent;
         this.context = context;
 
-        this.title = new Label();
-        this.switchToLogin = new Button();
-        this.progressBar = new ProgressIndicator();
+        this.ui = new Components();
         this.stepManager = new SignupStepManager(
                 new CredentialsStep(this),
-                new PersonalInfoStep(this));
+                new PersonalInfoStep(this)
+        );
 
         setupUI();
         setupActions();
         translate();
     }
 
-    private void setupUI() {
-        title.getStyleClass().add("form-title");
-        switchToLogin.getStyleClass().add("secondary-button");
-
-        setSpacing(15);
-        setPadding(new Insets(50));
-        setAlignment(Pos.CENTER);
-        getStyleClass().add("form-container");
-
-        getChildren().addAll(
-                title,
-                stepManager,
-                new Separator(),
-                progressBar,
-                new Separator(),
-                switchToLogin);
-    }
-
-    private void setupActions() {
-        switchToLogin.setOnAction(_ -> parent.switchToLogin());
-    }
-
-    private void translate() {
-        Translator translator = Translator.instance();
-        translator.translateFrom(title::setText, "login.title");
-        translator.translateFrom(switchToLogin::setText, "logon.switch");
-        translator.resourcesProp().addListener((_, _, _) -> translate());
-    }
-
     public SigningUp registering() { return context; }
 
     public WelcomeWindow parent() { return parent; }
+
+    // =~=~=~=~= =~=~=~=~= SETUP ACTIONS =~=~=~=~= =~=~=~=~=
+
+    private void setupActions() {
+        ui.switchToLogin.setOnAction(_ -> parent.switchToLogin());
+    }
+    
+    // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
+
+    private void setupUI() {
+        setupCSS();
+        setupAlignment();
+        applyChildren();
+    }
+
+    private void applyChildren() {
+        getChildren().addAll(
+                ui.title,
+                stepManager,
+                new Separator(),
+                ui.progressBar,
+                new Separator(),
+                ui.switchToLogin);
+    }
+
+    private void setupAlignment() {
+        setSpacing(15);
+        setPadding(new Insets(50));
+        setAlignment(Pos.CENTER);
+    }
+
+    private void setupCSS() {
+        ui.title.getStyleClass().add("form-title");
+        ui.switchToLogin.getStyleClass().add("secondary-button");
+        getStyleClass().add("form-container");
+    }
+
+    // =~=~=~=~= =~=~=~=~= SETUP TRANSLATIONS =~=~=~=~= =~=~=~=~=
+
+    private void translate() {
+        Translator.instance()
+            .translateFrom(ui.title::setText, "login.title")
+            .translateFrom(ui.switchToLogin::setText, "logon.switch")
+            .resourcesProp().addListener((_, _, _) -> translate());
+    }
 }
