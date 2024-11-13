@@ -34,10 +34,7 @@ public class App extends Application {
     public void start(Stage root) {
         this.root = root;
 
-        var signInUp = new SigningUp(infra.users());
-        var logIn = new UserLogin(infra.session(), infra.users());
-
-        WelcomeWindow welcomeWindow = new WelcomeWindow(this, signInUp, logIn);
+        WelcomeWindow welcomeWindow = new WelcomeWindow(this, services.signup(), services.login());
         Scene scene = new Scene(welcomeWindow, 1200, 700);
 
         setupStyle(scene);
