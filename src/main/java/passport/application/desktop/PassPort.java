@@ -2,7 +2,6 @@ package passport.application.desktop;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import passport.application.desktop.ui.main.MainWindow;
 
@@ -26,7 +25,7 @@ public record PassPort(Stage stage, Services services) {
         currentStage.setScene(scene);
     }
 
-    class Warning {
+    public class Warning {
         public void error(String messageKey) {
             show(messageKey, Alert.AlertType.ERROR);
         } 
