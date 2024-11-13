@@ -15,6 +15,7 @@ import passport.infra.virtual.UsersInMemory;
 
 public class App extends Application {
     final Infra infra;
+    final Services services;
     Stage root;
 
     public App() {
@@ -23,6 +24,10 @@ public class App extends Application {
                 new EventsInMemory(),
                 new DisabledEmailService(),
                 new Session());
+
+        services = new Services(
+                new SigningUp(infra.users()),
+                new UserLogin(infra.session(), infra.users()));
     }
 
     @Override
@@ -54,7 +59,8 @@ public class App extends Application {
     }
 
     private void setupStyle(Scene scene) {
-        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+        Application.setUserAgentStylesheet(
+                new PrimerDark().getUserAgentStylesheet());
 
         // @formatter:off
         var css = scene.getStylesheets();
