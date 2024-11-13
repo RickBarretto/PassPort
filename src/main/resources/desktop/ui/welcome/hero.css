@@ -1,0 +1,6 @@
+.app-name {
+    -fx-font-size: 48px;
+    -fx-font-weight: bolder;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
+}

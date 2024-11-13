@@ -61,12 +61,25 @@ public class App extends Application {
 
         // @formatter:off
         var css = scene.getStylesheets();
-        var mainCSS = getClass().getResource("/desktop/styles.css").toExternalForm();
-        var languageSelectorCSS = getClass().getResource("/desktop/language-selector.css").toExternalForm();
+
+        var mainCSS = getClass()
+            .getResource("/desktop/styles.css")
+            .toExternalForm();
+        
+        var languageSelectorCSS = getClass()
+            .getResource("/desktop/language-selector.css")
+            .toExternalForm();
+            
+        var heroCSS = getClass()
+            .getResource("/desktop/ui/welcome/hero.css")
+            .toExternalForm();
+
+        
         // @formatter:on
 
         css.add(mainCSS);
         css.add(languageSelectorCSS);
+        css.add(heroCSS);
     }
 
     public static void main(String[] args) { launch(args); }
