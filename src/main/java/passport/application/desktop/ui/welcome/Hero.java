@@ -10,12 +10,21 @@ public class Hero extends StackPane {
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
 
     void setupUI() {
-        Label appName = new Label("PassPort");
-        
-        appName.getStyleClass().add("app-name");
+        setupCss();
+        var appName = appName();
+        addChildren(appName);
+    }
 
+    private void addChildren(Label appName) { getChildren().add(appName); }
+
+    private void setupCss() {
         setAlignment(Pos.CENTER);
         getStyleClass().add("hero");
-        getChildren().add(appName);
+    }
+
+    private Label appName() {
+        Label appName = new Label("PassPort");
+        appName.getStyleClass().add("app-name");
+        return appName;
     }
 }
