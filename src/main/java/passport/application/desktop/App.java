@@ -1,5 +1,6 @@
 package passport.application.desktop;
 
+import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -53,6 +54,8 @@ public class App extends Application {
     }
 
     private void setupStyle(Scene scene) {
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+
         // @formatter:off
         var css = scene.getStylesheets();
         var mainCSS = getClass().getResource("/desktop/styles.css").toExternalForm();
