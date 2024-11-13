@@ -51,19 +51,13 @@ public class LoginForm extends VBox {
         }
         else {
             clearFields();
-            showError("login.invalid");
+            app.warn().error("login.invalid");
         }
     }
 
     private void clearFields() {
         ui.email.setText("");
         ui.password.setText("");
-    }
-
-    protected void showError(String messageKey) {
-        var alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(Translator.instance().translationOf(messageKey));
-        alert.show();
     }
 
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
