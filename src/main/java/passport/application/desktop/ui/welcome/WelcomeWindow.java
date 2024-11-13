@@ -1,6 +1,7 @@
 package passport.application.desktop.ui.welcome;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -28,16 +29,18 @@ public class WelcomeWindow extends HBox {
 
     // =~=~=~=~= =~=~=~=~= SETUP ACTIONS =~=~=~=~= =~=~=~=~=
 
+    private void rightPaneWith(Node node) {
+        var rightPane = (VBox) getChildren().get(1);
+        var mainContent = (VBox) rightPane.getChildren().get(1);
+        mainContent.getChildren().set(0, node);
+    }
+
     public void switchToLogon() {
-        VBox rightPane = (VBox) getChildren().get(1);
-        VBox mainContent = (VBox) rightPane.getChildren().get(1);
-        mainContent.getChildren().set(0, signUpForm);
+        this.rightPaneWith(this.signUpForm);
     }
 
     public void switchToLogin() {
-        VBox rightPane = (VBox) getChildren().get(1);
-        VBox mainContent = (VBox) rightPane.getChildren().get(1);
-        mainContent.getChildren().set(0, login);
+        this.rightPaneWith(this.login);
     }
 
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
