@@ -38,7 +38,8 @@ public class App extends Application {
 
         WelcomeWindow welcomeWindow = new WelcomeWindow(
                 this, self.services().signup(),
-                self.services().login());
+                self.services().login(),
+                self);
 
         Scene scene = new Scene(welcomeWindow, 1200, 700);
 
