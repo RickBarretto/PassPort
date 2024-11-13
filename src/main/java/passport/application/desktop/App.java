@@ -14,27 +14,32 @@ import passport.infra.virtual.EventsInMemory;
 import passport.infra.virtual.UsersInMemory;
 
 public class App extends Application {
-    final Infra infra;
-    final Services services;
-    Stage root;
+    private PassPort self;
 
     public App() {
-        infra = new Infra(
+        var infra = new Infra(
                 new UsersInMemory(),
                 new EventsInMemory(),
                 new DisabledEmailService(),
                 new Session());
 
-        services = new Services(
+        var services = new Services(
                 new SigningUp(infra.users()),
                 new UserLogin(infra.session(), infra.users()));
+
+        self = new PassPort(
+                null,
+                services);
     }
 
     @Override
     public void start(Stage root) {
-        this.root = root;
+        this.self = self.withStage(root);
 
-        WelcomeWindow welcomeWindow = new WelcomeWindow(this, services.signup(), services.login());
+        WelcomeWindow welcomeWindow = new WelcomeWindow(
+                this, self.services().signup(),
+                self.services().login());
+
         Scene scene = new Scene(welcomeWindow, 1200, 700);
 
         setupStyle(scene);
@@ -43,10 +48,10 @@ public class App extends Application {
     }
 
     public void openMainWindow() {
-        Scene scene = new Scene(new MainWindow(infra), 1200, 700);
+        Scene scene = new Scene(new MainWindow(), 1200, 700);
         setupStyle(scene);
 
-        Stage currentStage = (Stage) root.getScene().getWindow();
+        Stage currentStage = (Stage) self.stage().getScene().getWindow();
         currentStage.setScene(scene);
     }
 
