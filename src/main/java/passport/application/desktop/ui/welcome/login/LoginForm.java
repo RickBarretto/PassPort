@@ -4,17 +4,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import passport.application.desktop.App;
+import passport.application.desktop.Action;
+import passport.application.desktop.PassPort;
 import passport.application.desktop.Translator;
-import passport.application.desktop.ui.welcome.WelcomeWindow;
-import passport.domain.contexts.user.UserLogin;
 import passport.domain.models.users.Login;
 
 public class LoginForm extends VBox {
     private final Components ui;
-    private final App application;
-    private final WelcomeWindow parent;
-    private final UserLogin login;
+    private final PassPort app;
 
     class Components {
         public final Label title = new Label();
@@ -24,35 +21,33 @@ public class LoginForm extends VBox {
         public final Button switchToLogon = new Button();
     }
 
-    public LoginForm(App application, WelcomeWindow parent, UserLogin login) {
+    public LoginForm(PassPort app, Action toSignupPane) {
+        this.app = app;
         this.ui = new Components();
-        this.application = application;
-        this.parent = parent;
-        this.login = login;
 
         setupUI();
-        setupActions();
+        setupActions(toSignupPane);
         translate();
     }
 
     // =~=~=~=~= =~=~=~=~= SETUP ACTIONS =~=~=~=~= =~=~=~=~=
 
-    private void setupActions() {
-        ui.switchToLogon.setOnAction(_ -> parent.switchToLogon());
+    private void setupActions(Action toSignupPane) {
+        ui.switchToLogon.setOnAction(_ -> toSignupPane.exec());
         ui.loginButton.setOnAction(_ -> this.loginWithForms());
     }
 
     private void loginWithForms() {
         try {
-            login.logAs(new Login(
+            app.services().login().logAs(new Login(
                     ui.email.getText(),
                     ui.password.getText()));
         }
         catch (Exception e) {
         }
 
-        if (login.isLoggedAs(ui.email.getText())) {
-            application.openMainWindow();
+        if (app.services().login().isLoggedAs(ui.email.getText())) {
+            app.toMain();
         }
         else {
             clearFields();
