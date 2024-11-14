@@ -7,10 +7,13 @@ import passport.application.desktop.PassPort;
 import java.util.regex.Pattern;
 
 public class CredentialsStep extends SignupStep {
-    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
-    private static final int MIN_PASSWORD_LENGTH = 8;
     private final PassPort app;
     private final Components ui;
+
+    static class Validation {
+        private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
+        private static final int MIN_PASSWORD_LENGTH = 8;
+    }
 
     class Components {
         public final TextField email = new TextField();
@@ -50,13 +53,14 @@ public class CredentialsStep extends SignupStep {
             app.warn().error("validation.email.required");
             return false;
         }
-        if (!Pattern.compile(EMAIL_PATTERN).matcher(emailText).matches()) {
+        if (!Pattern.compile(
+                Validation.EMAIL_PATTERN).matcher(emailText).matches()) {
             app.warn().error("validation.email.invalid");
             return false;
         }
 
         String passwordText = ui.password.getText();
-        if (passwordText.length() < MIN_PASSWORD_LENGTH) {
+        if (passwordText.length() < Validation.MIN_PASSWORD_LENGTH) {
             app.warn().error("validation.password.length");
             return false;
         }
@@ -92,12 +96,12 @@ public class CredentialsStep extends SignupStep {
 
     private void translate() {
         app.translator()
-            .translateFrom(ui.email::setPromptText, "logon.email")
-            .translateFrom(ui.password::setPromptText, "logon.password")
-            .translateFrom(ui.confirmPassword::setPromptText,
-                "logon.confirmPassword")
-            .translateFrom(ui.nextButton::setText, "logon.next")
-            .resourcesProp().addListener((_, _, _) -> translate());
+                .translateFrom(ui.email::setPromptText, "logon.email")
+                .translateFrom(ui.password::setPromptText, "logon.password")
+                .translateFrom(ui.confirmPassword::setPromptText,
+                        "logon.confirmPassword")
+                .translateFrom(ui.nextButton::setText, "logon.next")
+                .resourcesProp().addListener((_, _, _) -> translate());
     }
 
 }
