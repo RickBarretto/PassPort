@@ -14,7 +14,7 @@ public class SignupForm extends VBox {
     private final PassPort app;
     private final Components ui;
     private final SignupStepPane stepManager;
-    
+
     class Components {
         public final Label title = new Label();
         public final Button switchToLogin = new Button();
@@ -22,6 +22,12 @@ public class SignupForm extends VBox {
 
         public Components(PassPort app) {
             this.progressBar = new ProgressIndicator(app.translator());
+            setup();
+        }
+
+        private void setup() {
+            title.getStyleClass().add("title-1");
+            switchToLogin.getStyleClass().add("secondary-button");
         }
     }
 
@@ -30,8 +36,7 @@ public class SignupForm extends VBox {
         this.ui = new Components(app);
         this.stepManager = new SignupStepPane(
                 new CredentialsStep(app),
-                new PersonalInfoStep(app, toLogin)
-        );
+                new PersonalInfoStep(app, toLogin));
 
         setupUI();
         setupActions(toLogin);
@@ -43,43 +48,33 @@ public class SignupForm extends VBox {
     private void setupActions(Action toLogin) {
         ui.switchToLogin.setOnAction(_ -> toLogin.exec());
     }
-    
+
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
 
     private void setupUI() {
-        setupCSS();
-        setupAlignment();
-        applyChildren();
-    }
+        this.getStyleClass().add("form-container");
 
-    private void applyChildren() {
-        getChildren().addAll(
+        this.setSpacing(15);
+        this.setPadding(new Insets(50));
+        this.setAlignment(Pos.CENTER);
+
+        this.getChildren().addAll(
                 ui.title,
-                stepManager,
+                this.stepManager,
                 new Separator(),
                 ui.progressBar,
                 new Separator(),
-                ui.switchToLogin);
-    }
+                ui.switchToLogin
+        );
 
-    private void setupAlignment() {
-        setSpacing(15);
-        setPadding(new Insets(50));
-        setAlignment(Pos.CENTER);
-    }
-
-    private void setupCSS() {
-        ui.title.getStyleClass().add("title-1");
-        ui.switchToLogin.getStyleClass().add("secondary-button");
-        getStyleClass().add("form-container");
     }
 
     // =~=~=~=~= =~=~=~=~= SETUP TRANSLATIONS =~=~=~=~= =~=~=~=~=
 
     private void translate() {
         app.translator()
-            .translateFrom(ui.title::setText, "login.title")
-            .translateFrom(ui.switchToLogin::setText, "logon.switch")
-            .resourcesProp().addListener((_, _, _) -> translate());
+                .translateFrom(ui.title::setText, "login.title")
+                .translateFrom(ui.switchToLogin::setText, "logon.switch")
+                .resourcesProp().addListener((_, _, _) -> translate());
     }
 }
