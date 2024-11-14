@@ -17,17 +17,17 @@ public class SignupForm extends VBox {
 
     class Components {
         public final Label title = new Label();
-        public final Button switchToLogin = new Button();
-        public final ProgressIndicator progressBar;
+        public final Button goToLogin = new Button();
+        public final ProgressIndicator step;
 
         public Components(PassPort app) {
-            this.progressBar = new ProgressIndicator(app.translator());
+            this.step = new ProgressIndicator(app.translator());
             setup();
         }
 
         private void setup() {
             title.getStyleClass().add("title-1");
-            switchToLogin.getStyleClass().add("secondary-button");
+            goToLogin.getStyleClass().add("secondary-button");
         }
     }
 
@@ -46,7 +46,7 @@ public class SignupForm extends VBox {
     // =~=~=~=~= =~=~=~=~= SETUP ACTIONS =~=~=~=~= =~=~=~=~=
 
     private void setupActions(Action toLogin) {
-        ui.switchToLogin.setOnAction(_ -> toLogin.exec());
+        ui.goToLogin.setOnAction(_ -> toLogin.exec());
     }
 
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
@@ -62,9 +62,9 @@ public class SignupForm extends VBox {
                 ui.title,
                 this.stepManager,
                 new Separator(),
-                ui.progressBar,
+                ui.step,
                 new Separator(),
-                ui.switchToLogin
+                ui.goToLogin
         );
 
     }
@@ -74,7 +74,7 @@ public class SignupForm extends VBox {
     private void translate() {
         app.translator()
                 .translateFrom(ui.title::setText, "login.title")
-                .translateFrom(ui.switchToLogin::setText, "logon.switch")
+                .translateFrom(ui.goToLogin::setText, "logon.switch")
                 .resourcesProp().addListener((_, _, _) -> translate());
     }
 }
