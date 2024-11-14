@@ -78,7 +78,7 @@ public class LoginForm extends VBox {
     }
 
     private void setupCssClasses() {
-        ui.title.getStyleClass().add("form-title");
+        ui.title.getStyleClass().add("title-1");
         ui.loginButton.getStyleClass().add("primary-button");
         ui.switchToLogon.getStyleClass().add("secondary-button");
         this.getStyleClass().add("form-container");
