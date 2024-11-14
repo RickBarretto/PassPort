@@ -24,7 +24,7 @@ public class LanguageSelector extends HBox {
         languageComboBox.setOnAction(
             _ -> app.translator().language(languageComboBox.getValue())
         );
-        languageComboBox.getStyleClass().add("language-selector");
+        languageComboBox.getStyleClass().add("text");
         // @formatter:on
     }
 
