@@ -3,12 +3,14 @@ package passport.application.desktop.ui.welcome.signup;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import passport.application.desktop.PassPort;
 import passport.application.desktop.Translator;
 import java.util.regex.Pattern;
 
 public class CredentialsStep extends SignupStep {
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
     private static final int MIN_PASSWORD_LENGTH = 8;
+    private final PassPort app;
     private final Components ui;
 
     class Components {
@@ -18,8 +20,9 @@ public class CredentialsStep extends SignupStep {
         public final Button nextButton = new Button();
     }
 
-    public CredentialsStep(SignupForm form) {
-        super(form);
+    public CredentialsStep(PassPort app) {
+        super();
+        this.app = app;
         this.ui = new Components();
 
         setupUI();
@@ -45,22 +48,22 @@ public class CredentialsStep extends SignupStep {
     protected boolean validate() {
         String emailText = ui.email.getText().trim();
         if (emailText.isEmpty()) {
-            showError("validation.email.required");
+            app.warn().error("validation.email.required");
             return false;
         }
         if (!Pattern.compile(EMAIL_PATTERN).matcher(emailText).matches()) {
-            showError("validation.email.invalid");
+            app.warn().error("validation.email.invalid");
             return false;
         }
 
         String passwordText = ui.password.getText();
         if (passwordText.length() < MIN_PASSWORD_LENGTH) {
-            showError("validation.password.length");
+            app.warn().error("validation.password.length");
             return false;
         }
 
         if (!passwordText.equals(ui.confirmPassword.getText())) {
-            showError("validation.password.mismatch");
+            app.warn().error("validation.password.mismatch");
             return false;
         }
 

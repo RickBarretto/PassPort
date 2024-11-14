@@ -6,14 +6,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
+import passport.application.desktop.Action;
+import passport.application.desktop.PassPort;
 import passport.application.desktop.Translator;
 import passport.application.desktop.ui.components.ProgressIndicator;
-import passport.application.desktop.ui.welcome.WelcomeWindow;
-import passport.domain.contexts.user.SigningUp;
 
 public class SignupForm extends VBox {
-    private final WelcomeWindow parent;
-    private final SigningUp context;
     private final SignupStepPane stepManager;
     private final Components ui;
     
@@ -23,29 +21,22 @@ public class SignupForm extends VBox {
         public final ProgressIndicator progressBar = new ProgressIndicator();
     }
 
-    public SignupForm(WelcomeWindow parent, SigningUp context) {
-        this.parent = parent;
-        this.context = context;
-
+    public SignupForm(PassPort app, Action toLogin) {
         this.ui = new Components();
         this.stepManager = new SignupStepPane(
-                new CredentialsStep(this),
-                new PersonalInfoStep(this)
+                new CredentialsStep(app),
+                new PersonalInfoStep(app, toLogin)
         );
 
         setupUI();
-        setupActions();
+        setupActions(toLogin);
         translate();
     }
 
-    public SigningUp registering() { return context; }
-
-    public WelcomeWindow parent() { return parent; }
-
     // =~=~=~=~= =~=~=~=~= SETUP ACTIONS =~=~=~=~= =~=~=~=~=
 
-    private void setupActions() {
-        ui.switchToLogin.setOnAction(_ -> parent.switchToLogin());
+    private void setupActions(Action toLogin) {
+        ui.switchToLogin.setOnAction(_ -> toLogin.exec());
     }
     
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=

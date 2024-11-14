@@ -3,6 +3,8 @@ package passport.application.desktop.ui.welcome.signup;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import passport.application.desktop.Action;
+import passport.application.desktop.PassPort;
 import passport.application.desktop.Translator;
 import passport.domain.exceptions.EmailAlreadyExists;
 import passport.domain.models.users.Login;
@@ -11,6 +13,8 @@ import java.util.regex.Pattern;
 
 public class PersonalInfoStep extends SignupStep {
     private static final String CPF_PATTERN = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
+    final PassPort app;
+    final Action toLogin;
     final Components ui;
 
     class Components {
@@ -20,8 +24,11 @@ public class PersonalInfoStep extends SignupStep {
         public final Button backButton = new Button();
     }
 
-    public PersonalInfoStep(SignupForm form) {
-        super(form);
+    public PersonalInfoStep(PassPort app, Action toLogin) {
+        super();
+    
+        this.app = app;
+        this.toLogin = toLogin;
         this.ui = new Components();
 
         setupUI();
@@ -40,17 +47,17 @@ public class PersonalInfoStep extends SignupStep {
     @Override
     protected boolean validate() {
         if (ui.fullName.getText().trim().isEmpty()) {
-            showError("validation.fullname.required");
+            app.warn().error("validation.fullname.required");
             return false;
         }
 
         String cpfText = ui.cpf.getText().trim();
         if (cpfText.isEmpty()) {
-            showError("validation.cpf.required");
+            app.warn().error("validation.cpf.required");
             return false;
         }
         if (!Pattern.compile(CPF_PATTERN).matcher(cpfText).matches()) {
-            showError("validation.cpf.invalid.format");
+            app.warn().error("validation.cpf.invalid.format");
             return false;
         }
 
@@ -74,19 +81,19 @@ public class PersonalInfoStep extends SignupStep {
                     ui.fullName.getText(),
                     ui.cpf.getText());
 
-            form.registering()
+            app.services().signup()
                     .login(login)
                     .person(person)
                     .register();
 
-            showSuccess("validation.registration.success");
-            form.parent().switchToLogin();
+            app.warn().error("validation.registration.success");
+            toLogin.exec();
         }
         catch (EmailAlreadyExists e) {
-            showError("validation.email.exists");
+            app.warn().error("validation.email.exists");
         }
         catch (Exception e) {
-            showError("validation.registration.failed");
+            app.warn().error("validation.registration.failed");
         }
     }
 
