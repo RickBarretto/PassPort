@@ -34,11 +34,7 @@ public class App extends Application {
     public void start(Stage root) {
         this.self = self.withStage(root);
 
-        WelcomeWindow welcomeWindow = new WelcomeWindow(
-                this, self.services().signup(),
-                self.services().login(),
-                self);
-
+        WelcomeWindow welcomeWindow = new WelcomeWindow(self);
         Scene scene = new Scene(welcomeWindow, 1200, 700);
 
         setupStyle(scene);
