@@ -3,25 +3,17 @@ package passport.application.desktop;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class Translator {
-    private static Optional<Translator> instance = Optional.empty();
     private final ObjectProperty<ResourceBundle> resources;
     private final ObjectProperty<Language> currentLanguage;
 
-    private Translator() {
+    public Translator() {
         currentLanguage = new SimpleObjectProperty<>(Language.ENGLISH);
         resources = new SimpleObjectProperty<>();
         language(Language.ENGLISH);
-    }
-
-    public static Translator instance() {
-        if (instance.isEmpty())
-            instance = Optional.of(new Translator());
-        return instance.get();
     }
 
     public void language(Language language) {

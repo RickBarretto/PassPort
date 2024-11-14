@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import passport.application.desktop.Action;
 import passport.application.desktop.PassPort;
-import passport.application.desktop.Translator;
 import passport.domain.models.users.Login;
 
 public class LoginForm extends VBox {
@@ -95,14 +94,13 @@ public class LoginForm extends VBox {
 
     private void translate() {
         // @formatter:off
-        Translator.instance()
+        app.translator()
             .translateFrom(ui.title::setText, "login.title")
             .translateFrom(ui.email::setPromptText, "login.email")
             .translateFrom(ui.password::setPromptText, "login.password")
             .translateFrom(ui.loginButton::setText, "login.button")
             .translateFrom(ui.switchToLogon::setText, "login.switch")
-            .resourcesProp()
-                .addListener((_, _, _) -> translate());
+            .resourcesProp().addListener((_, _, _) -> translate());
         // @formatter:on
     }
 

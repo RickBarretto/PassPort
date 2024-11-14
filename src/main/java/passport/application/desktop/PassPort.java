@@ -5,12 +5,12 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import passport.application.desktop.ui.main.MainWindow;
 
-public record PassPort(Stage stage, Services services) {
+public record PassPort(Stage stage, Services services, Translator translator) {
 
-    public PassPort(Services services) { this(null, services); }
+    public PassPort(Services services) { this(null, services, new Translator()); }
 
     public PassPort withStage(Stage stage) {
-        return new PassPort(stage, services);
+        return new PassPort(stage, services, translator);
     }
 
     public Stage stage() {
@@ -36,7 +36,7 @@ public record PassPort(Stage stage, Services services) {
 
         private void show(String messageKey, Alert.AlertType type) {
             var alert = new Alert(type);
-            alert.setContentText(Translator.instance().translationOf(messageKey));
+            alert.setContentText(translator.translationOf(messageKey));
             alert.show();
         }
     }

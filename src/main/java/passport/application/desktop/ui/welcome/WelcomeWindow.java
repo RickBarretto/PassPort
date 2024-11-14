@@ -23,7 +23,7 @@ public class WelcomeWindow extends HBox {
         hero = new Hero();
         login = new LoginForm(app, this::switchToLogon);
         signUpForm = new SignupForm(app, this::switchToLogin);
-        languageSelector = new LanguageSelector();
+        languageSelector = new LanguageSelector(app);
 
         this.setupUI();
     }

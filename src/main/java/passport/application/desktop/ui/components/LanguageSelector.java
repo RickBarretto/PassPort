@@ -4,13 +4,15 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
 import passport.application.desktop.Language;
-import passport.application.desktop.Translator;
+import passport.application.desktop.PassPort;
 
 public class LanguageSelector extends HBox {
+    private final PassPort app;
     private final ComboBox<Language> languageComboBox;
 
-    public LanguageSelector() {
-        languageComboBox = new ComboBox<>();
+    public LanguageSelector(PassPort app) {
+        this.app = app;
+        this.languageComboBox = new ComboBox<>();
         setupComboBox();
         setupContainer();
     }
@@ -18,9 +20,9 @@ public class LanguageSelector extends HBox {
     private void setupComboBox() {
         // @formatter:off
         languageComboBox.getItems().addAll(Language.values());
-        languageComboBox.setValue(Translator.instance().language());
+        languageComboBox.setValue(app.translator().language());
         languageComboBox.setOnAction(
-            _ -> Translator.instance().language(languageComboBox.getValue())
+            _ -> app.translator().language(languageComboBox.getValue())
         );
         languageComboBox.getStyleClass().add("language-selector");
         // @formatter:on
@@ -36,7 +38,7 @@ public class LanguageSelector extends HBox {
 
     public void language(Language language) {
         languageComboBox.setValue(language);
-        Translator.instance().language(language);
+        app.translator().language(language);
     }
 
     public Language language() { return languageComboBox.getValue(); }

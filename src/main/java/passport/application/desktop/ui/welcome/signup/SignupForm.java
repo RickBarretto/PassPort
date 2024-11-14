@@ -8,21 +8,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import passport.application.desktop.Action;
 import passport.application.desktop.PassPort;
-import passport.application.desktop.Translator;
 import passport.application.desktop.ui.components.ProgressIndicator;
 
 public class SignupForm extends VBox {
-    private final SignupStepPane stepManager;
+    private final PassPort app;
     private final Components ui;
+    private final SignupStepPane stepManager;
     
     class Components {
         public final Label title = new Label();
         public final Button switchToLogin = new Button();
-        public final ProgressIndicator progressBar = new ProgressIndicator();
+        public final ProgressIndicator progressBar;
+
+        public Components(PassPort app) {
+            this.progressBar = new ProgressIndicator(app.translator());
+        }
     }
 
     public SignupForm(PassPort app, Action toLogin) {
-        this.ui = new Components();
+        this.app = app;
+        this.ui = new Components(app);
         this.stepManager = new SignupStepPane(
                 new CredentialsStep(app),
                 new PersonalInfoStep(app, toLogin)
@@ -72,7 +77,7 @@ public class SignupForm extends VBox {
     // =~=~=~=~= =~=~=~=~= SETUP TRANSLATIONS =~=~=~=~= =~=~=~=~=
 
     private void translate() {
-        Translator.instance()
+        app.translator()
             .translateFrom(ui.title::setText, "login.title")
             .translateFrom(ui.switchToLogin::setText, "logon.switch")
             .resourcesProp().addListener((_, _, _) -> translate());

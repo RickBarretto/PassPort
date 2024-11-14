@@ -7,25 +7,32 @@ import javafx.scene.layout.VBox;
 import passport.application.desktop.Translator;
 
 public class ProgressIndicator extends VBox {
+    private final Translator translator;
     private final ProgressBar progressBar;
     private final Label progressLabel;
     private int currentStep;
     private final int totalSteps;
 
-    private ProgressIndicator(int from, int to) {
-        this.currentStep = from;
-        this.totalSteps = to;
+    private ProgressIndicator(Translator translator, int currentStep,
+            int finalStep) {
+        this.translator = translator;
+        this.currentStep = currentStep;
+        this.totalSteps = finalStep;
         progressBar = new ProgressBar();
         progressLabel = new Label();
 
         setupUI();
-        updateProgress();
+        updateProgress(translator);
     }
 
-    public ProgressIndicator() { this(1, 2); }
-    
-    static public ProgressIndicator until(int step) {
-        return new ProgressIndicator(1, step);
+    public ProgressIndicator(Translator translator) { this(translator, 1, 2); }
+
+    public ProgressIndicator current(int first) {
+        return new ProgressIndicator(translator, first, totalSteps);
+    }
+
+    public ProgressIndicator of(int end) {
+        return new ProgressIndicator(translator, currentStep, end);
     }
 
     private void setupUI() {
@@ -41,10 +48,19 @@ public class ProgressIndicator extends VBox {
         getChildren().addAll(progressLabel, progressBar);
     }
 
-    private void updateProgress() {
+    private void updateProgress(Translator translator) {
         progressBar.setProgress((double) currentStep / totalSteps);
-        progressLabel.setText(String.format(
-                Translator.instance().translationOf("progress.step"),
-                currentStep, totalSteps));
+        this.translate();
+    }
+
+    private void translateLabel(String template) {
+        progressLabel.setText(
+                String.format(template, currentStep, totalSteps));
+    }
+
+    private void translate() {
+        translator
+                .translateFrom(this::translateLabel, "progress.step")
+                .resourcesProp().addListener((_, _, _) -> translate());
     }
 }

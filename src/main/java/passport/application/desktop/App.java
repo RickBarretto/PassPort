@@ -27,9 +27,7 @@ public class App extends Application {
                 new SigningUp(infra.users()),
                 new UserLogin(infra.session(), infra.users()));
 
-        self = new PassPort(
-                null,
-                services);
+        self = new PassPort(services);
     }
 
     @Override

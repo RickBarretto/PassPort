@@ -4,7 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import passport.application.desktop.PassPort;
-import passport.application.desktop.Translator;
 import java.util.regex.Pattern;
 
 public class CredentialsStep extends SignupStep {
@@ -92,12 +91,13 @@ public class CredentialsStep extends SignupStep {
     // =~=~=~=~= =~=~=~=~= SETUP TRANSLATION =~=~=~=~= =~=~=~=~=
 
     private void translate() {
-        Translator.instance()
+        app.translator()
             .translateFrom(ui.email::setPromptText, "logon.email")
             .translateFrom(ui.password::setPromptText, "logon.password")
             .translateFrom(ui.confirmPassword::setPromptText,
                 "logon.confirmPassword")
-            .translateFrom(ui.nextButton::setText, "logon.next");
+            .translateFrom(ui.nextButton::setText, "logon.next")
+            .resourcesProp().addListener((_, _, _) -> translate());
     }
 
 }

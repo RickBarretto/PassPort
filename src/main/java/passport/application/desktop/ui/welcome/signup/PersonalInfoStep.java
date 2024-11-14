@@ -116,10 +116,11 @@ public class PersonalInfoStep extends SignupStep {
     // =~=~=~=~= =~=~=~=~= SETUP TRANSLATIONS =~=~=~=~= =~=~=~=~=
 
     private void translate() {
-        Translator.instance()
+        app.translator()
             .translateFrom(ui.fullName::setPromptText, "logon.fullname")
             .translateFrom(ui.cpf::setPromptText, "logon.cpf")
             .translateFrom(ui.signupButton::setText, "logon.button")
-            .translateFrom(ui.backButton::setText, "logon.back");
+            .translateFrom(ui.backButton::setText, "logon.back")
+            .resourcesProp().addListener((_, _, _) -> translate());
     }
 }
