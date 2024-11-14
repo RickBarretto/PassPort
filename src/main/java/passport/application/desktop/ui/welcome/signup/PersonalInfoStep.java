@@ -86,7 +86,7 @@ public class PersonalInfoStep extends SignupStep {
                     .person(person)
                     .register();
 
-            app.warn().error("validation.registration.success");
+            app.warn().success("validation.registration.success");
             toLogin.exec();
         }
         catch (EmailAlreadyExists e) {
