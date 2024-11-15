@@ -3,7 +3,7 @@ package passport.application.desktop;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-import passport.application.desktop.ui.main.MainWindow;
+import passport.application.desktop.ui.main.Main;
 
 public record PassPort(Stage stage, Services services, Translator translator) {
 
@@ -18,7 +18,7 @@ public record PassPort(Stage stage, Services services, Translator translator) {
         return stage;
     }
 
-    public void toMain() { toScene(new Scene(new MainWindow(), 1200, 700)); }
+    public void toMain() { toScene(new Scene(new Main(this), 1200, 700)); }
 
     private void toScene(Scene scene) {
         Stage currentStage = (Stage) stage.getScene().getWindow();
