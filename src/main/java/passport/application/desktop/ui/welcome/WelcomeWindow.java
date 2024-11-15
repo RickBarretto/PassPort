@@ -50,7 +50,6 @@ public class WelcomeWindow extends HBox {
         HBox.setHgrow(hero, Priority.ALWAYS);
 
         getChildren().addAll(hero, rightPane);
-        getStyleClass().add("welcome-window");
     }
 
     private VBox rightPane(VBox mainContent) {
