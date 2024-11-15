@@ -1,0 +1,18 @@
+@font-face {
+    src: url('../fonts/DMSerifText/DMSerifText-Regular.ttf'); 
+}
+
+.hero {
+    -fx-background-image: url('../img/background.jpg');
+    -fx-background-size: cover;
+    -fx-background-position: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+.app-name {
+    -fx-font-family: 'DM Serif Text';
+    -fx-font-size: 48px;
+    -fx-font-weight: bolder;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
+}

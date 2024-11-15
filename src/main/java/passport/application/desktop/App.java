@@ -63,15 +63,15 @@ public class App extends Application {
         var css = scene.getStylesheets();
 
         var main = getClass()
-            .getResource("/desktop/styles.css")
+            .getResource("/desktop/styles/styles.css")
             .toExternalForm();
         
         var langSelector = getClass()
-            .getResource("/desktop/language-selector.css")
+            .getResource("/desktop/styles/language-selector.css")
             .toExternalForm();
             
         var WelcomesHero = getClass()
-            .getResource("/desktop/ui/welcome/hero.css")
+            .getResource("/desktop/styles/hero.css")
             .toExternalForm();
 
         
