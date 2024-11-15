@@ -24,6 +24,20 @@ public class PersonalInfoStep extends SignupStep {
         public final TextField cpf = new TextField();
         public final Button signupButton = new Button();
         public final Button backButton = new Button();
+        public final HBox actions;
+
+        public Components() {
+            signupButton.getStyleClass().addAll("text", "accent");
+            backButton.getStyleClass().add("text");
+
+            this.actions = new HBox(ui.signupButton, ui.backButton);
+            HBox.setHgrow(signupButton, Priority.ALWAYS);
+            
+            actions.setAlignment(Pos.BASELINE_CENTER);
+            signupButton.setMinWidth(200);
+            
+            SignupStep.setVgrow(actions, Priority.ALWAYS);
+        }
     }
 
     public PersonalInfoStep(PassPort app, Action toLogin) {
@@ -102,21 +116,11 @@ public class PersonalInfoStep extends SignupStep {
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
 
     private void setupUI() {
-        ui.signupButton.getStyleClass().add("text");
-        ui.signupButton.getStyleClass().add("accent");
-        ui.backButton.getStyleClass().add("text");
-
-        HBox buttonContainer = new HBox(ui.signupButton, ui.backButton);
-        buttonContainer.setAlignment(Pos.BASELINE_CENTER);
-        HBox.setHgrow(ui.signupButton, Priority.ALWAYS);
-        ui.signupButton.setMinWidth(200);
-        SignupStep.setVgrow(buttonContainer, Priority.ALWAYS);
-
         setAlignment(Pos.CENTER);
         getChildren().addAll(
                 ui.fullName,
                 ui.cpf,
-                buttonContainer);
+                ui.actions);
     }
 
     // =~=~=~=~= =~=~=~=~= SETUP TRANSLATIONS =~=~=~=~= =~=~=~=~=
