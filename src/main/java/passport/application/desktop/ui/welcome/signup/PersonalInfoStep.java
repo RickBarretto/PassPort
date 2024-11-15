@@ -28,7 +28,7 @@ public class PersonalInfoStep extends SignupStep {
             signupButton.getStyleClass().addAll("text", "accent");
             backButton.getStyleClass().add("text");
 
-            this.actions = new HBox(ui.signupButton, ui.backButton);
+            this.actions = new HBox(signupButton, backButton);
             HBox.setHgrow(signupButton, Priority.ALWAYS);
             
             actions.setAlignment(Pos.BASELINE_CENTER);
