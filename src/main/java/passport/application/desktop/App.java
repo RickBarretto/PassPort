@@ -42,14 +42,6 @@ public class App extends Application {
         root.show();
     }
 
-    public void openMainWindow() {
-        Scene scene = new Scene(new MainWindow(), 1200, 700);
-        setupStyle(scene);
-
-        Stage currentStage = (Stage) self.stage().getScene().getWindow();
-        currentStage.setScene(scene);
-    }
-
     private void setupRoot(Stage root, Scene scene) {
         root.setTitle("PassPort");
         root.setScene(scene);
