@@ -18,6 +18,16 @@ public class LoginForm extends VBox {
         public final PasswordField password = new PasswordField();
         public final Button loginButton = new Button();
         public final Button switchToLogon = new Button();
+
+        public Components() {
+            title.getStyleClass().add("title-1");
+            loginButton.getStyleClass().addAll(
+                "text",
+                "accent",
+                "primary-button"
+            );
+            switchToLogon.getStyleClass().add("text");
+        }
     }
 
     public LoginForm(PassPort app, Action toSignupPane) {
@@ -78,9 +88,6 @@ public class LoginForm extends VBox {
     }
 
     private void setupCssClasses() {
-        ui.title.getStyleClass().add("title-1");
-        ui.loginButton.getStyleClass().add("primary-button");
-        ui.switchToLogon.getStyleClass().add("secondary-button");
         this.getStyleClass().add("form-container");
     }
 

@@ -27,7 +27,7 @@ public class SignupForm extends VBox {
 
         private void setup() {
             title.getStyleClass().add("title-1");
-            goToLogin.getStyleClass().add("secondary-button");
+            goToLogin.getStyleClass().add("text");
         }
     }
 

@@ -78,8 +78,9 @@ public class CredentialsStep extends SignupStep {
     private void setupUI() {
         ui.nextButton.getStyleClass()
                 .addAll(
+                        "text",
                         "primary-button",
-                        "next-button");
+                        "accent");
 
         HBox buttonContainer = new HBox(ui.nextButton);
         buttonContainer.setAlignment(Pos.CENTER);
