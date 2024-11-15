@@ -3,6 +3,8 @@ package passport.application.desktop.ui.welcome.signup;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import passport.application.desktop.Action;
 import passport.application.desktop.PassPort;
 import passport.application.desktop.Translator;
@@ -100,12 +102,12 @@ public class PersonalInfoStep extends SignupStep {
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
 
     private void setupUI() {
-        ui.signupButton.getStyleClass().add("primary-button");
-        ui.backButton.getStyleClass().add("secondary-button");
+        ui.signupButton.getStyleClass().add("text");
+        ui.signupButton.getStyleClass().add("accent");
+        ui.backButton.getStyleClass().add("text");
 
         HBox buttonContainer = new HBox(10, ui.signupButton, ui.backButton);
-        buttonContainer.setAlignment(Pos.CENTER);
-
+        HBox.setHgrow(ui.signupButton, Priority.ALWAYS);
         setAlignment(Pos.CENTER);
         getChildren().addAll(
                 ui.fullName,
