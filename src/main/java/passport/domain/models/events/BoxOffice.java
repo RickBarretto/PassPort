@@ -52,6 +52,10 @@ public class BoxOffice {
     public Ticket ticket(Integer amount) {
         return sample.copy().packedFor(amount);
     }
+    
+    public Ticket ticket() {
+        return this.ticket(1);
+    }
 
     /**
      * Sells the specified ticket.
