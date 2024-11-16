@@ -34,10 +34,12 @@ public class App extends Application {
     public void start(Stage root) {
         this.self = self.withStage(root);
 
+        Application.setUserAgentStylesheet(
+                new PrimerDark().getUserAgentStylesheet());
+
         WelcomeWindow welcomeWindow = new WelcomeWindow(self);
         Scene scene = new Scene(welcomeWindow, 1200, 700);
 
-        setupStyle(scene);
         setupRoot(root, scene);
         root.show();
     }
@@ -45,6 +47,7 @@ public class App extends Application {
     private void setupRoot(Stage root, Scene scene) {
         root.setTitle("PassPort");
         root.setScene(scene);
+        self.toScene(scene);
     }
 
     private void setupStyle(Scene scene) {

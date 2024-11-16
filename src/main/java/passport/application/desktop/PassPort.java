@@ -20,9 +20,24 @@ public record PassPort(Stage stage, Services services, Translator translator) {
 
     public void toMain() { toScene(new Scene(new Main(this), 1200, 700)); }
 
-    private void toScene(Scene scene) {
+    public void toScene(Scene scene) {
         Stage currentStage = (Stage) stage.getScene().getWindow();
         currentStage.setScene(scene);
+        loadCss(scene);
+    }
+
+    private void loadCss(Scene scene) {
+        this.addCSS(scene, "styles");
+        this.addCSS(scene, "language-selector");
+        this.addCSS(scene, "hero");
+    }
+
+    private void addCSS(Scene scene, String file) {
+        var css = scene.getStylesheets();
+        var module = this.getClass()
+                .getResource("/desktop/styles/" + file + ".css")
+                .toExternalForm();
+        css.add(module);
     }
 
     public class Warning {
