@@ -6,8 +6,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
-import passport.application.desktop.Action;
 import passport.application.desktop.PassPort;
+import passport.application.desktop.contracts.Action;
 import passport.application.desktop.ui.components.ProgressIndicator;
 
 public class SignupForm extends VBox {

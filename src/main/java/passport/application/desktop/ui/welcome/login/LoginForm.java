@@ -4,8 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import passport.application.desktop.Action;
 import passport.application.desktop.PassPort;
+import passport.application.desktop.contracts.Action;
 import passport.domain.models.users.Login;
 
 public class LoginForm extends VBox {
