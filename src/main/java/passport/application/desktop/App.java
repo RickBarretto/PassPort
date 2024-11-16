@@ -10,6 +10,7 @@ import passport.application.desktop.system.Infra;
 import passport.application.desktop.system.PassPort;
 import passport.application.desktop.system.Services;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
+import passport.domain.contexts.events.AvailableEventsListing;
 import passport.domain.contexts.user.SigningUp;
 import passport.domain.contexts.user.UserLogin;
 import passport.infra.DisabledEmailService;
@@ -112,6 +113,7 @@ public class App extends Application {
     private Services servicesOf(Infra infra) {
         return new Services(
                 new SigningUp(infra.users()),
-                new UserLogin(infra.session(), infra.users()));
+                new UserLogin(infra.session(), infra.users()),
+                new AvailableEventsListing(infra.events()));
     }
 }
