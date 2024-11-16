@@ -1,36 +1,60 @@
 package passport.application.desktop.ui.main;
 
-import java.time.LocalDate;
-
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import passport.domain.models.events.Event;
-import passport.domain.models.events.Poster;
+import passport.infra.placeholders.ColdEvents;
 
 public class Content extends VBox {
 
+    private final ObservableList<Event> events;
+
     public Content() {
-        this.setSpacing(10);
-        this.setAlignment(Pos.TOP_CENTER);
-        this.getChildren().add(events());
+        this.events = FXCollections.observableArrayList();
+
+        setupLayout();
+        updateEvents(ColdEvents.list);
     }
 
-    private VBox events() {
+    private void setupLayout() {
+        this.setSpacing(10);
+        this.setAlignment(Pos.TOP_CENTER);
+        this.getChildren().add(eventsBox());
+    }
+
+    private VBox eventsBox() {
         var label = new Label("Available Events");
         label.getStyleClass().add("title-1");
 
-        var events = new VBox(10);
-        events.setAlignment(Pos.TOP_CENTER);
+        var eventsContainer = eventsContainer();
 
-        events.getChildren().addAll(
-                EventItem.of(new Event(new Poster("From Zero", "LP show",
-                        LocalDate.of(2024, 11, 15)))));
-        var box = new VBox(label, events);
+        var box = new VBox(label, eventsContainer);
         box.setAlignment(Pos.TOP_CENTER);
         box.setSpacing(20);
 
         return box;
     }
 
+    private VBox eventsContainer() {
+        var eventsContainer = new VBox(10);
+        eventsContainer.setAlignment(Pos.TOP_CENTER);
+
+        events.addListener(
+                (ListChangeListener.Change<? extends Event> change) -> {
+                    eventsContainer.getChildren().clear();
+                    events.stream().forEach((event) -> eventsContainer
+                            .getChildren()
+                            .add(EventItem.of(event)));
+                });
+        return eventsContainer;
+    }
+
+    public void updateEvents(List<Event> newEvents) {
+        events.setAll(newEvents);
+    }
 }
