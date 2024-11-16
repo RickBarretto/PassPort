@@ -15,6 +15,7 @@ import passport.infra.json.EventsJson;
 import passport.infra.json.JsonFile;
 import passport.infra.json.UsersJson;
 import passport.infra.placeholders.ColdEvents;
+import passport.infra.placeholders.ColdUsers;
 import passport.infra.virtual.EventsInMemory;
 import passport.infra.virtual.UsersInMemory;
 
@@ -81,14 +82,15 @@ public class App extends Application {
 
     private void setColdStartup() {
         System.out.println("Starting up with Cold mode...");
-        var noUsers = new UsersInMemory();
+
+        var coldUsers = new UsersInMemory(ColdUsers.list);
         var coldEvents = new EventsInMemory(ColdEvents.list);
         var usersJson = new JsonFile("data", "users");
         var eventsJson = new JsonFile("data", "events");
 
         this.self = new PassPort(servicesOf(
                 new Infra(
-                        new UsersJson(usersJson, noUsers),
+                        new UsersJson(usersJson, coldUsers),
                         new EventsJson(eventsJson, coldEvents),
                         new DisabledEmailService(),
                         new Session())));
