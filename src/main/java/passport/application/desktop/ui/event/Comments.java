@@ -1,49 +1,50 @@
 package passport.application.desktop.ui.event;
 
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import passport.application.desktop.system.PassPort;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Comments extends VBox {
-    private final List<Comment> comments = new ArrayList<>();
-    private final ListView<Comment> commentsList;
-    private final CommentForm commentForm;
+    private final List<Comment> commentsData = new ArrayList<>();
+    private final ListView<Comment> comments;
+    private final CommentForm form;
 
-    public Comments() {
+    public Comments(PassPort app) {
         super(10);
 
-        Label header = createHeader();
-        this.commentsList = createCommentsList();
-        this.commentForm = new CommentForm(this::addComment);
+        Label header = header();
+        this.comments = comments();
+        this.form = new CommentForm(this::add);
 
         getChildren().addAll(
                 header,
-                commentsList,
+                comments,
                 new Separator(),
-                commentForm);
+                form);
     }
 
-    private Label createHeader() {
+    private Label header() {
         Label header = new Label("Comments");
         header.getStyleClass().add("title-2");
         return header;
     }
 
-    private ListView<Comment> createCommentsList() {
+    private ListView<Comment> comments() {
         ListView<Comment> list = new ListView<>();
         list.setPrefHeight(150);
         return list;
     }
 
-    public void addComment(String username, String content) {
-        comments.add(new Comment(username, content));
-        updateCommentsList();
+    public void add(String username, String content) {
+        commentsData.add(new Comment(username, content));
+        update();
     }
 
-    private void updateCommentsList() {
-        commentsList.getItems().clear();
-        commentsList.getItems().addAll(comments);
+    private void update() {
+        comments.getItems().clear();
+        comments.getItems().addAll(commentsData);
     }
 }
