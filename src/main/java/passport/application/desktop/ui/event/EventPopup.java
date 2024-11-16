@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Separator;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -20,18 +20,42 @@ public class EventPopup {
     private final Components ui;
 
     class Components {
+        final VBox root;
         final EventDetails details;
         final Comments comments;
+        final Button buy;
 
-        public Components(PassPort app, Event event,
+        public Components(
+                PassPort app,
+                Event event,
                 Consumer<String> addComment) {
             details = new EventDetails(app, event);
+            this.comments = newComments(app, event, addComment);
+            this.buy = buyButton(app);
+            root = root();
+        }
 
+        private VBox root() {
+            var root = new VBox(10);
+            root.setPadding(new Insets(10));
+
+            root.getChildren().add(details);
+            return root;
+        }
+
+        private Button buyButton(PassPort app) {
+            var btn = new Button(app.translator().translationOf("events.buy"));
+            btn.getStyleClass().add("accent");
+            return btn;
+        }
+
+        private Comments newComments(PassPort app, Event event,
+                Consumer<String> addComment) {
             var comments = new Comments(app, addComment);
             if (!event.isAvailableFor(LocalDate.now())) {
                 comments = comments.withForms();
             }
-            this.comments = comments;
+            return comments;
         }
     }
 
@@ -39,22 +63,21 @@ public class EventPopup {
         this.app = app;
         this.event = event;
         this.ui = new Components(app, event, this::comment);
-
-        VBox root = root();
-        this.setupStage(root);
     }
 
-    private VBox root() {
-        VBox root = new VBox(10);
-        root.setPadding(new Insets(10));
-
-        root.getChildren().addAll(
-                ui.details,
-                new Separator(),
-                ui.comments);
-
-        return root;
+    public EventPopup forPurchasing() {
+        this.add(ui.buy);
+        this.setupStage(ui.root);
+        return this;
     }
+
+    public EventPopup forReviewing() {
+        this.add(ui.comments);
+        this.setupStage(ui.root);
+        return this;
+    }
+
+    private void add(Region child) { ui.root.getChildren().add(child); }
 
     private void setupStage(Region root) {
         Scene scene = new Scene(root, 800, 600);

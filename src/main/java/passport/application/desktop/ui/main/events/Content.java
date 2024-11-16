@@ -19,9 +19,7 @@ public class Content extends VBox {
     class Components {
         final Label eventsTitle = new Label();
 
-        public Components() {
-            this.eventsTitle.getStyleClass().add("title-1");
-        }
+        public Components() { this.eventsTitle.getStyleClass().add("title-1"); }
     }
 
     public Content(PassPort app) {
@@ -34,15 +32,13 @@ public class Content extends VBox {
         this.updateEvents(this.loadList());
     }
 
-    private void openEvent(Event event) {
-        app.toEvent(event);
-    }
+    private void openEvent(Event event) { app.toEventPurchase(event); }
 
     private List<Event> loadList() {
         return app.services()
-            .eventsListing()
-            .beingToday(LocalDate.now())
-            .availables();
+                .eventsListing()
+                .beingToday(LocalDate.now())
+                .availables();
     }
 
     private void setupLayout() {
@@ -81,7 +77,7 @@ public class Content extends VBox {
 
     private void translate() {
         app.translator()
-            .translateFrom(ui.eventsTitle::setText, "main.events.title")
-            .resourcesProp().addListener((_, _, _) -> this.translate());
+                .translateFrom(ui.eventsTitle::setText, "main.events.title")
+                .resourcesProp().addListener((_, _, _) -> this.translate());
     }
 }

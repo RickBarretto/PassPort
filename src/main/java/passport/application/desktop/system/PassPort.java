@@ -25,8 +25,12 @@ public record PassPort(Stage stage, Services services, Translator translator) {
 
     public void toMain() { toScene(new Scene(new Main(this), 1200, 700)); }
 
-    public void toEvent(Event event) {
-        new EventPopup(this, event);
+    public void toEventPurchase(Event event) {
+        new EventPopup(this, event).forPurchasing();
+    }
+    
+    public void toEventReview(Event event) {
+        new EventPopup(this, event).forReviewing();
     }
 
     public void toScene(Scene scene) {
