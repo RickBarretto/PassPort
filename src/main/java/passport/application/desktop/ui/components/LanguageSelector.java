@@ -3,8 +3,8 @@ package passport.application.desktop.ui.components;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
-import passport.application.desktop.Language;
-import passport.application.desktop.PassPort;
+import passport.application.desktop.system.Language;
+import passport.application.desktop.system.PassPort;
 
 public class LanguageSelector extends HBox {
     private final PassPort app;

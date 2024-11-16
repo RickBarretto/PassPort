@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import passport.application.desktop.PassPort;
+import passport.application.desktop.system.PassPort;
 import passport.application.desktop.ui.components.LanguageSelector;
 import passport.application.desktop.ui.welcome.login.LoginForm;
 import passport.application.desktop.ui.welcome.signup.SignupForm;

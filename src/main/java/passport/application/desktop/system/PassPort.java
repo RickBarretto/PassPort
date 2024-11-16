@@ -1,8 +1,9 @@
-package passport.application.desktop;
+package passport.application.desktop.system;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import passport.application.desktop.Translator;
 import passport.application.desktop.ui.main.Main;
 
 public record PassPort(Stage stage, Services services, Translator translator) {

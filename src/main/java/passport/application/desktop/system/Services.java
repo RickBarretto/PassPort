@@ -1,4 +1,4 @@
-package passport.application.desktop;
+package passport.application.desktop.system;
 
 import passport.domain.contexts.user.SigningUp;
 import passport.domain.contexts.user.UserLogin;

@@ -5,7 +5,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import passport.application.desktop.PassPort;
+import passport.application.desktop.system.PassPort;
 import passport.application.desktop.ui.components.LanguageSelector;
 
 public class Main extends HBox {

@@ -1,4 +1,4 @@
-package passport.application.desktop;
+package passport.application.desktop.system;
 
 import passport.infra.Session;
 import passport.roles.EmailService;

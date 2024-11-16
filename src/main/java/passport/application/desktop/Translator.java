@@ -2,6 +2,8 @@ package passport.application.desktop;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import passport.application.desktop.system.Language;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;

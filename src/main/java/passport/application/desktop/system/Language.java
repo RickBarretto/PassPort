@@ -1,4 +1,4 @@
-package passport.application.desktop;
+package passport.application.desktop.system;
 
 public enum Language {
     ENGLISH("en", "English"),
