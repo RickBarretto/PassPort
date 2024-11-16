@@ -26,8 +26,7 @@ public class Content extends VBox {
 
         events.getChildren().addAll(
                 EventItem.of(new Event(new Poster("From Zero", "LP show",
-                        LocalDate.of(2024, 11, 15))))
-        );
+                        LocalDate.of(2024, 11, 15)))));
         var box = new VBox(label, events);
         box.setAlignment(Pos.TOP_CENTER);
         box.setSpacing(20);
