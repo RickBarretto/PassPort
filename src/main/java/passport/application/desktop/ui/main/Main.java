@@ -13,13 +13,12 @@ public class Main extends HBox {
 
     class Components {
         public final Drawer drawer = new Drawer();
-        // public final Content content = new Content();
+        public final Content content = new Content();
         final LanguageSelector language;
 
         public Components(PassPort app) {
             this.language = new LanguageSelector(app);
         }
-
     }
 
     public Main(PassPort app) {
@@ -29,17 +28,19 @@ public class Main extends HBox {
     }
 
     private void setup() {
+        var right = rightPane(ui.content);
         this.getChildren().addAll(
                 ui.drawer,
                 new Separator(),
-                rightPane(new Content()));
+                right);
+        HBox.setHgrow(right, Priority.ALWAYS);
     }
 
     private VBox rightPane(VBox mainContent) {
         VBox rightPane = new VBox();
         VBox.setVgrow(mainContent, Priority.ALWAYS);
         rightPane.getChildren().addAll(ui.language, mainContent);
-        
+
         return rightPane;
     }
 
