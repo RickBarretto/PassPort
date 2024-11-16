@@ -11,7 +11,7 @@ import passport.roles.Entity;
  * Represents an event with its poster, box office details, and evaluations.
  */
 public class Event implements Entity<EventId> {
-    private final EventId id = new EventId();
+    private final EventId id;
     private final Poster poster;
     private BoxOffice boxOffice;
     private ArrayList<Evaluation> evaluations;
@@ -31,6 +31,18 @@ public class Event implements Entity<EventId> {
      * @param price  the ticket price
      */
     public Event(Poster poster, Double price) {
+        this(new EventId(), poster, price);
+    }
+    
+    /**
+     * Constructs a new Event with the specified poster and ticket price.
+     *
+     * @param id     the event id
+     * @param poster the event poster
+     * @param price  the ticket price
+     */
+    public Event(EventId id, Poster poster, Double price) {
+        this.id = id;
         this.poster = poster;
         this.boxOffice = new BoxOffice(new Ticket(id, price));
         this.evaluations = new ArrayList<>();
