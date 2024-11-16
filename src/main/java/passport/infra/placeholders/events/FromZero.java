@@ -20,15 +20,15 @@ public class FromZero {
 
             Junte-se ao Linkin Park no Allianz Parque para uma noite inesquecível como parte da sua turnê From Zero. Este show altamente aguardado apresentará uma mistura dinâmica de seus clássicos e novas músicas do último álbum, "From Zero". Não perca a oportunidade de experimentar a performance eletrizante da banda e testemunhar a evolução musical ao vivo no palco. É uma celebração de música e memórias que você não vai querer perder. 🎤🎸🔥
             Pronto para curtir? 🎶
-                """; }
+            """
+            .stripIndent(); }
 
     public static Double price() { return 820.00; }
-    
+
     public static Event event() {
         return new Event(
-            id,
-            new Poster(title(), description(), date()),
-            price()
-        );
+                id,
+                new Poster(title(), description(), date()),
+                price());
     }
 }

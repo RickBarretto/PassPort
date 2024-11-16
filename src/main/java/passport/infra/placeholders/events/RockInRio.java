@@ -25,7 +25,8 @@ public class RockInRio {
                 * Sustentabilidade: Rock in Rio também é conhecido por suas iniciativas de sustentabilidade, promovendo práticas ecológicas e responsabilidade social.
 
                 Prepare-se para uma jornada musical extraordinária no Rock in Rio 2025, onde a magia da música e a paixão dos fãs se unem para criar um evento verdadeiramente espetacular. 🎸🎤🌟
-            """; }
+            """
+            .stripIndent(); }
 
     public static Double price() { return 795.50; }
 

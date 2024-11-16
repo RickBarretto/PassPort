@@ -19,7 +19,8 @@ public class JohnWick4 {
             Sinopse: John Wick (Keanu Reeves) retorna para enfrentar seus maiores desafios até agora. Com uma recompensa crescente por sua cabeça, ele precisa lutar contra os assassinos mais letais do submundo enquanto busca vingança contra a Alta Cúpula. Repleto de ação intensa, coreografias de luta impressionantes e uma trama de tirar o fôlego, John Wick: Capítulo 4 promete ser uma experiência cinematográfica inesquecível.
 
             Esteja preparado para uma noite eletrizante no Cinema Central! 🍿🎬
-            """; }
+            """
+            .stripIndent(); }
 
     public static LocalDate date() { return LocalDate.of(2023, 3, 24); }
 
