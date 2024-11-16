@@ -1,5 +1,6 @@
 package passport.application.desktop;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import atlantafx.base.theme.PrimerDark;
@@ -11,6 +12,7 @@ import passport.application.desktop.system.PassPort;
 import passport.application.desktop.system.Services;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.events.AvailableEventsListing;
+import passport.domain.contexts.events.EventEvaluation;
 import passport.domain.contexts.user.SigningUp;
 import passport.domain.contexts.user.UserLogin;
 import passport.infra.DisabledEmailService;
@@ -114,6 +116,7 @@ public class App extends Application {
         return new Services(
                 new SigningUp(infra.users()),
                 new UserLogin(infra.session(), infra.users()),
-                new AvailableEventsListing(infra.events()));
+                new AvailableEventsListing(infra.events()),
+                new EventEvaluation(infra.events(), LocalDate.now()));
     }
 }

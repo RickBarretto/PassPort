@@ -1,32 +1,44 @@
 package passport.application.desktop.ui.event;
 
+import java.time.LocalDate;
+import java.util.function.Consumer;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 import passport.application.desktop.system.PassPort;
+import passport.domain.exceptions.TryingToEvaluateActiveEvent;
 import passport.domain.models.events.Event;
 
 public class EventPopup {
     private final PassPort app;
+    private final Event event;
     private final Components ui;
 
     class Components {
         final EventDetails details;
         final Comments comments;
 
-        public Components(Event event) {
+        public Components(PassPort app, Event event,
+                Consumer<String> addComment) {
             details = new EventDetails(event);
-            comments = new Comments();
+
+            var comments = new Comments(app, addComment);
+            if (!event.isAvailableFor(LocalDate.now())) {
+                comments = comments.withForms();
+            }
+            this.comments = comments;
         }
     }
 
     public EventPopup(PassPort app, Event event) {
         this.app = app;
-        this.ui = new Components(event);
+        this.event = event;
+        this.ui = new Components(app, event, this::comment);
 
         VBox root = root();
         this.setupStage(root);
@@ -59,7 +71,22 @@ public class EventPopup {
         return newStage;
     }
 
-    public void comment(String username, String content) {
-        ui.comments.addComment(username, content);
+    public void comment(String content) {
+        var author = app.services()
+                .login()
+                .current()
+                .get();
+
+        try {
+            app.services().evaluation()
+                    .of(event.id())
+                    .by(author.id())
+                    .evaluateWith(content);
+
+            ui.comments.add(author.person().name(), content);
+        }
+        catch (TryingToEvaluateActiveEvent e) {
+            e.printStackTrace();
+        }
     }
 }

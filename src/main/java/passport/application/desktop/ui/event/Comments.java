@@ -6,24 +6,31 @@ import passport.application.desktop.system.PassPort;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Comments extends VBox {
     private final List<Comment> commentsData = new ArrayList<>();
     private final ListView<Comment> comments;
     private final CommentForm form;
 
-    public Comments(PassPort app) {
+    public Comments(PassPort app, Consumer<String> addComment) {
         super(10);
 
         Label header = header();
         this.comments = comments();
-        this.form = new CommentForm(this::add);
+        this.form = new CommentForm(addComment);
 
         getChildren().addAll(
                 header,
-                comments,
-                new Separator(),
-                form);
+                comments);
+    }
+
+    public Comments withForms() {
+        this.getChildren().addAll(
+            new Separator(),
+            form
+        );
+        return this;
     }
 
     private Label header() {
