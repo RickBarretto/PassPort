@@ -34,6 +34,10 @@ public class Content extends VBox {
         this.updateEvents(this.loadList());
     }
 
+    private void openEvent(Event event) {
+        app.toEvent(event);
+    }
+
     private List<Event> loadList() {
         return app.services()
             .eventsListing()
@@ -66,7 +70,7 @@ public class Content extends VBox {
                     eventsContainer.getChildren().clear();
                     events.stream().forEach((event) -> eventsContainer
                             .getChildren()
-                            .add(EventItem.of(event)));
+                            .add(EventItem.of(event, this::openEvent)));
                 });
         return eventsContainer;
     }

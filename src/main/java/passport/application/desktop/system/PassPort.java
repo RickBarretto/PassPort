@@ -4,11 +4,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import passport.application.desktop.Translator;
+import passport.application.desktop.ui.event.EventPopup;
 import passport.application.desktop.ui.main.Main;
+import passport.domain.models.events.Event;
 
 public record PassPort(Stage stage, Services services, Translator translator) {
 
-    public PassPort(Services services) { this(null, services, new Translator()); }
+    public PassPort(Services services) {
+        this(null, services, new Translator());
+    }
 
     public PassPort withStage(Stage stage) {
         return new PassPort(stage, services, translator);
@@ -20,6 +24,10 @@ public record PassPort(Stage stage, Services services, Translator translator) {
     }
 
     public void toMain() { toScene(new Scene(new Main(this), 1200, 700)); }
+
+    public void toEvent(Event event) {
+        new EventPopup(this.stage, event).show();
+    }
 
     public void toScene(Scene scene) {
         Stage currentStage = (Stage) stage.getScene().getWindow();
@@ -44,8 +52,8 @@ public record PassPort(Stage stage, Services services, Translator translator) {
     public class Warning {
         public void error(String messageKey) {
             show(messageKey, Alert.AlertType.ERROR);
-        } 
-        
+        }
+
         public void success(String messageKey) {
             show(messageKey, Alert.AlertType.INFORMATION);
         }
@@ -57,7 +65,5 @@ public record PassPort(Stage stage, Services services, Translator translator) {
         }
     }
 
-    public Warning warn() {
-        return new Warning();
-    }
+    public Warning warn() { return new Warning(); }
 }
