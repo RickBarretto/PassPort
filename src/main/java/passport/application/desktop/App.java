@@ -78,7 +78,7 @@ public class App extends Application {
     private void setDryrunStartup() {
         System.out.println("Starting up with Dry-run mode...");
         this.self = new PassPort(servicesOf(new Infra(
-                new UsersInMemory(),
+                new UsersInMemory(ColdUsers.list),
                 new EventsInMemory(ColdEvents.list),
                 new DisabledEmailService(),
                 new Session())));
