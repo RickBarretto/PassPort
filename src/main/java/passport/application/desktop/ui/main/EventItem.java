@@ -34,7 +34,7 @@ public class EventItem extends Button {
 
         this.setGraphic(container);
         this.setMinWidth(300);
-        this.setPrefWidth(450);
+        this.setPrefWidth(500);
     }
 
     private VBox eventInfo() {
