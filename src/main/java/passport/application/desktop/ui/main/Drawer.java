@@ -1,7 +1,5 @@
 package passport.application.desktop.ui.main;
 
-import java.util.Objects;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
