@@ -31,7 +31,7 @@ public class EventPopup {
                 Consumer<String> addComment) {
             details = new EventDetails(app, event);
             this.comments = newComments(app, event, addComment);
-            this.buy = buyButton(app);
+            this.buy = buyButton(app, event);
             root = root();
         }
 
@@ -43,9 +43,10 @@ public class EventPopup {
             return root;
         }
 
-        private Button buyButton(PassPort app) {
+        private Button buyButton(PassPort app, Event event) {
             var btn = new Button(app.translator().translationOf("events.buy"));
             btn.getStyleClass().add("accent");
+            btn.setOnAction(_ -> app.toPurchaseOf(event));
             return btn;
         }
 
@@ -92,6 +93,11 @@ public class EventPopup {
         newStage.initModality(Modality.APPLICATION_MODAL);
         newStage.initOwner(app.stage());
         return newStage;
+    }
+
+
+    public void buy() {
+        app.toPurchaseOf(event);
     }
 
     public void comment(String content) {

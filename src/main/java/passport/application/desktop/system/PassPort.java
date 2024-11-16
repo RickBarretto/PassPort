@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import passport.application.desktop.Translator;
 import passport.application.desktop.ui.event.EventPopup;
 import passport.application.desktop.ui.main.Main;
+import passport.application.desktop.ui.purchase.PurchaseWindow;
 import passport.domain.models.events.Event;
 
 public record PassPort(Stage stage, Services services, Translator translator) {
@@ -25,10 +26,17 @@ public record PassPort(Stage stage, Services services, Translator translator) {
 
     public void toMain() { toScene(new Scene(new Main(this), 1200, 700)); }
 
+    public void toPurchaseOf(Event event) {
+        new PurchaseWindow(
+                this,
+                event,
+                this.services().login().current().get());
+    }
+
     public void toEventPurchase(Event event) {
         new EventPopup(this, event).forPurchasing();
     }
-    
+
     public void toEventReview(Event event) {
         new EventPopup(this, event).forReviewing();
     }
