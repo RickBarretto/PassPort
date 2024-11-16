@@ -1,7 +1,10 @@
 package passport.domain.contexts.user;
 
+import java.util.Optional;
+
 import passport.domain.exceptions.PermissionDenied;
 import passport.domain.models.users.Login;
+import passport.domain.models.users.User;
 import passport.infra.Session;
 import passport.roles.Context;
 import passport.roles.repositories.Users;
@@ -55,6 +58,10 @@ public class UserLogin implements Context {
                 .login()
                 .email()
                 .equals(email);
+    }
+
+    public Optional<User> current() {
+        return session.loggedUser();
     }
 
     /**
