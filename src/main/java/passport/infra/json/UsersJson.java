@@ -61,9 +61,14 @@ public class UsersJson implements Users {
                     new TypeToken<List<User>>() {}.getType());
         }
         catch (IOException e) {
-            e.printStackTrace();
+            informDatabaseCreation(filepath);
             return List.of();
         }
+    }
+
+    private static void informDatabaseCreation(JsonFile filepath) {
+        System.out.println(
+                "Creating new database: " + filepath.toPath().toString());
     }
 
     /**
@@ -74,7 +79,7 @@ public class UsersJson implements Users {
             new Gson().toJson(users.list(), writer);
         }
         catch (IOException e) {
-            e.printStackTrace();
+            informDatabaseCreation(file);
         }
     }
 
@@ -94,9 +99,7 @@ public class UsersJson implements Users {
     public Optional<User> byId(UserId id) { return users.byId(id); }
 
     @Override
-    public Optional<User> ownerOf(Login login) {
-        return users.ownerOf(login);
-    }
+    public Optional<User> ownerOf(Login login) { return users.ownerOf(login); }
 
     @Override
     public boolean has(EmailAddress email) { return users.has(email); }

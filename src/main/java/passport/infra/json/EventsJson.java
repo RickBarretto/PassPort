@@ -58,9 +58,14 @@ public class EventsJson implements Events {
                     new TypeToken<List<Event>>() {}.getType());
         }
         catch (IOException e) {
-            e.printStackTrace();
+            informDatabaseCreation(file);
             return List.of();
         }
+    }
+
+    private static void informDatabaseCreation(JsonFile file) {
+        System.out
+                .println("Creating new database: " + file.toPath().toString());
     }
 
     /**
@@ -71,7 +76,7 @@ public class EventsJson implements Events {
             new Gson().toJson(events.list(), writer);
         }
         catch (IOException e) {
-            e.printStackTrace();
+            informDatabaseCreation(file);
         }
     }
 
