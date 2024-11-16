@@ -1,39 +1,31 @@
 package passport.application.desktop;
 
+import java.util.List;
+
 import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import passport.application.desktop.ui.main.MainWindow;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.user.SigningUp;
 import passport.domain.contexts.user.UserLogin;
 import passport.infra.DisabledEmailService;
 import passport.infra.Session;
+import passport.infra.json.EventsJson;
+import passport.infra.json.JsonFile;
+import passport.infra.json.UsersJson;
+import passport.infra.placeholders.ColdEvents;
 import passport.infra.virtual.EventsInMemory;
 import passport.infra.virtual.UsersInMemory;
 
 public class App extends Application {
     private PassPort self;
 
-    public App() {
-        var infra = new Infra(
-                new UsersInMemory(),
-                new EventsInMemory(),
-                new DisabledEmailService(),
-                new Session());
-
-        var services = new Services(
-                new SigningUp(infra.users()),
-                new UserLogin(infra.session(), infra.users()));
-
-        self = new PassPort(services);
-    }
-
     @Override
     public void start(Stage root) {
-        this.self = self.withStage(root);
+        startupFromCLI();
 
+        this.self = self.withStage(root);
         Application.setUserAgentStylesheet(
                 new PrimerDark().getUserAgentStylesheet());
 
@@ -44,38 +36,77 @@ public class App extends Application {
         root.show();
     }
 
+    private void startupFromCLI() {
+        List<String> args = this.getParameters().getRaw();
+
+        if (args.size() > 0) {
+            switch (args.get(0)) {
+            case "--dry" -> this.setDryrunStartup();
+            case "--cold" -> this.setColdStartup();
+            default -> this.help();
+            }
+        }
+        else {
+            this.setDefaultStartup();
+        }
+    }
+
     private void setupRoot(Stage root, Scene scene) {
         root.setTitle("PassPort");
         root.setScene(scene);
         self.toScene(scene);
     }
 
-    private void setupStyle(Scene scene) {
-        Application.setUserAgentStylesheet(
-                new PrimerDark().getUserAgentStylesheet());
+    public static void main(String[] args) { launch(args); }
 
-        // @formatter:off
-        var css = scene.getStylesheets();
+    private void help() { System.out.println("""
+            PassPort
 
-        var main = getClass()
-            .getResource("/desktop/styles/styles.css")
-            .toExternalForm();
-        
-        var langSelector = getClass()
-            .getResource("/desktop/styles/language-selector.css")
-            .toExternalForm();
-            
-        var WelcomesHero = getClass()
-            .getResource("/desktop/styles/hero.css")
-            .toExternalForm();
+            Arguments:
+                --dry-run   Run with a virtual database.
+                            So, nothing will be stored.
+                --cold      Run with default cold Database.
+                            All custom data, will be removed.
+                --help      Show this
+            """); }
 
-        
-        // @formatter:on
-
-        css.add(main);
-        css.add(langSelector);
-        css.add(WelcomesHero);
+    private void setDryrunStartup() {
+        System.out.println("Starting up with Dry-run mode...");
+        this.self = new PassPort(servicesOf(new Infra(
+                new UsersInMemory(),
+                new EventsInMemory(ColdEvents.list),
+                new DisabledEmailService(),
+                new Session())));
     }
 
-    public static void main(String[] args) { launch(args); }
+    private void setColdStartup() {
+        System.out.println("Starting up with Cold mode...");
+        var noUsers = new UsersInMemory();
+        var coldEvents = new EventsInMemory(ColdEvents.list);
+        var usersJson = new JsonFile("data", "users");
+        var eventsJson = new JsonFile("data", "events");
+
+        this.self = new PassPort(servicesOf(
+                new Infra(
+                        new UsersJson(usersJson, noUsers),
+                        new EventsJson(eventsJson, coldEvents),
+                        new DisabledEmailService(),
+                        new Session())));
+    }
+
+    private void setDefaultStartup() {
+        System.out.println("Starting up with Default mode...");
+        this.self = new PassPort(servicesOf(
+                new Infra(
+                        new UsersJson(new JsonFile("data", "users")),
+                        new EventsJson(new JsonFile("data", "events")),
+                        new DisabledEmailService(),
+                        new Session())));
+    }
+
+    private Services servicesOf(Infra infra) {
+        return new Services(
+                new SigningUp(infra.users()),
+                new UserLogin(infra.session(), infra.users()));
+    }
 }
