@@ -1,4 +1,4 @@
-package passport.application.desktop.ui.main;
+package passport.application.desktop.ui.main.events;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
