@@ -12,7 +12,8 @@ import passport.domain.models.events.Poster;
 public class Content extends VBox {
 
     public Content() {
-        this.setAlignment(Pos.TOP_CENTER); 
+        this.setSpacing(10);
+        this.setAlignment(Pos.TOP_CENTER);
         this.getChildren().add(events());
     }
 
@@ -29,6 +30,8 @@ public class Content extends VBox {
         );
         var box = new VBox(label, events);
         box.setAlignment(Pos.TOP_CENTER);
+        box.setSpacing(20);
+
         return box;
     }
 

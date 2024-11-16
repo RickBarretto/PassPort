@@ -97,7 +97,7 @@ public class Drawer extends VBox {
 
     private void setupLayout() {
         this.setAlignment(Pos.CENTER);
-        this.setPrefWidth(150);
+        this.setMaxWidth(150);
         this.setSpacing(10);
         this.setPadding(new Insets(0, 20, 0, 20));
     }

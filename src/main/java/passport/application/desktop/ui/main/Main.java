@@ -1,5 +1,6 @@
 package passport.application.desktop.ui.main;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -31,8 +32,9 @@ public class Main extends HBox {
         var right = rightPane(ui.content);
         this.getChildren().addAll(
                 ui.drawer,
-                new Separator(),
                 right);
+            
+        HBox.setHgrow(ui.drawer, Priority.NEVER);
         HBox.setHgrow(right, Priority.ALWAYS);
     }
 
