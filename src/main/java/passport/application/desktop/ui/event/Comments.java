@@ -16,9 +16,9 @@ public class Comments extends VBox {
     public Comments(PassPort app, Consumer<String> addComment) {
         super(10);
 
-        Label header = header();
+        Label header = header(app);
         this.comments = comments();
-        this.form = new CommentForm(addComment);
+        this.form = new CommentForm(app, addComment);
 
         getChildren().addAll(
                 header,
@@ -33,8 +33,8 @@ public class Comments extends VBox {
         return this;
     }
 
-    private Label header() {
-        Label header = new Label("Comments");
+    private Label header(PassPort app) {
+        Label header = new Label(app.translator().translationOf("events.comments"));
         header.getStyleClass().add("title-2");
         return header;
     }

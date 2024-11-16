@@ -25,7 +25,7 @@ public class EventPopup {
 
         public Components(PassPort app, Event event,
                 Consumer<String> addComment) {
-            details = new EventDetails(event);
+            details = new EventDetails(app, event);
 
             var comments = new Comments(app, addComment);
             if (!event.isAvailableFor(LocalDate.now())) {
@@ -59,7 +59,7 @@ public class EventPopup {
     private void setupStage(Region root) {
         Scene scene = new Scene(root, 800, 600);
         var stage = this.newStageFromCurrent();
-        stage.setTitle("Event Information");
+        stage.setTitle(app.translator().translationOf("events.title"));
         stage.setScene(scene);
         stage.show();
     }
