@@ -8,7 +8,6 @@ import java.util.Locale;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -39,18 +38,27 @@ public class EventItem extends Button {
     }
 
     private VBox eventInfo() {
+        var title = titleLabel();
+        var date = dateLabel();
+
+        var contentBox = new VBox(title, date);
+        contentBox.setAlignment(Pos.CENTER_LEFT);
+        return contentBox;
+    }
+
+    private Label titleLabel() {
         var title = new Label(this.title);
         title.getStyleClass().add("title-3");
+        return title;
+    }
 
+    private Label dateLabel() {
         var date = new Label(
                 DateTimeFormatter
                         .ofPattern("MMM d, yyyy")
                         .format(this.date));
         date.getStyleClass().add("text-small");
-
-        var contentBox = new VBox(title, date);
-        contentBox.setAlignment(Pos.CENTER_LEFT);
-        return contentBox;
+        return date;
     }
 
     private HBox container(VBox contentBox, VBox priceBox) {
