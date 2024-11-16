@@ -1,5 +1,6 @@
 package passport.application.desktop.ui.main;
 
+import java.time.LocalDate;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -7,18 +8,26 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import passport.application.desktop.system.PassPort;
 import passport.domain.models.events.Event;
-import passport.infra.placeholders.ColdEvents;
 
 public class Content extends VBox {
-
+    private final PassPort app;
     private final ObservableList<Event> events;
 
-    public Content() {
+    public Content(PassPort app) {
+        this.app = app;
         this.events = FXCollections.observableArrayList();
 
         setupLayout();
-        updateEvents(ColdEvents.list);
+        updateEvents(this.loadList());
+    }
+
+    private List<Event> loadList() {
+        return app.services()
+            .eventsListing()
+            .beingToday(LocalDate.now())
+            .availables();
     }
 
     private void setupLayout() {
