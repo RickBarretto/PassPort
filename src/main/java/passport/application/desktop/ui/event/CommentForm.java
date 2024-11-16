@@ -39,7 +39,7 @@ public class CommentForm extends VBox {
 
     private void handleSubmit(Consumer<String> onSubmit) {
         if (comment.getText().isEmpty()) {
-            app.warn().error("events.warn.empty-comment");;
+            app.warn().error("events.warn.empty-comment");
             return;
         }
 
