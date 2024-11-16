@@ -1,77 +1,74 @@
 package passport.application.desktop.ui.main;
 
+import java.util.Objects;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import passport.application.desktop.system.PassPort;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
 class DrawerButton extends Button {
-    // private final PassPort app;
-    private final String iconName;
-    private final String propertyName;
+    private final Components ui;
+    private final String icon;
 
-    public DrawerButton(String iconName, String propertyName) {
-        // this.app = app;
-        this.iconName = iconName;
-        this.propertyName = propertyName;
-        setup();
+    class Components {
+        final VBox content = new VBox(5);
+        final Label description = new Label();
+        final Node icon;
+
+        public Components(String iconName) { 
+            this.icon = icon(iconName);
+            setupLayout(); 
+        }
+
+        private Node icon(String name) {
+            try {
+                var icon = loadImageIcon(name);
+                icon.setFitHeight(24);
+                icon.setFitWidth(24);
+                return icon;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return new Label("•");
+            }
+        }
+
+        private ImageView loadImageIcon(String name) { return new ImageView(
+                new Image(getClass().getResourceAsStream(
+                        "/desktop/icons/" + name))); }
+
+        private void setupLayout() {
+            content.setAlignment(Pos.CENTER);
+            content.getChildren().add(icon);
+            content.getChildren().add(description);
+        }
+    }
+
+    public DrawerButton(String icon, String description) {
+        this.ui = new Components(icon);
+        this.icon = icon;
+        this.setGraphic(ui.content);
+        this.setPrefWidth(200);
+    }
+
+    public void setDescription(String description) {
+        ui.description.setText(description);
     }
 
     public DrawerButton selected() {
         this.getStyleClass().add("accent");
         return this;
     }
-
-    private void setup() {
-        VBox buttonContent = new VBox(5);
-        buttonContent.setAlignment(Pos.CENTER);
-
-        try {
-            putIcon(buttonContent);
-        }
-        catch (Exception e) {
-            System.err.println("Could not load icon: " + iconName);
-            this.putPlaceholderIcon(buttonContent);
-        }
-
-        this.putLabel(buttonContent);
-        this.setGraphic(buttonContent);
-        this.setPrefWidth(200);
-    }
-
-    private void putLabel(VBox buttonContent) {
-        Label label = new Label(propertyName);
-        buttonContent.getChildren().add(label);
-    }
-
-    private void putIcon(VBox buttonContent) {
-        ImageView icon = loadIcon();
-        this.setIconTo24px(icon);
-        buttonContent.getChildren().add(icon);
-    }
-
-    private void putPlaceholderIcon(VBox buttonContent) {
-        Label placeholder = new Label("•");
-        buttonContent.getChildren().add(placeholder);
-    }
-
-    private void setIconTo24px(ImageView icon) {
-        icon.setFitHeight(24);
-        icon.setFitWidth(24);
-    }
-
-    private ImageView loadIcon() {
-        ImageView icon = new ImageView(
-                new Image(getClass().getResourceAsStream(
-                        "/desktop/icons/" + iconName)));
-        return icon;
-    }
 }
 
 public class Drawer extends VBox {
+    private final PassPort app;
     private final Components ui;
 
     class Components {
@@ -82,9 +79,11 @@ public class Drawer extends VBox {
                 "My Events");
     }
 
-    public Drawer() {
+    public Drawer(PassPort app) {
+        this.app = app;
         this.ui = new Components();
         this.setup();
+        this.translate();
     }
 
     private void setup() {
@@ -104,5 +103,15 @@ public class Drawer extends VBox {
 
     public Button getButtonByIndex(int index) {
         return (Button) this.getChildren().get(index);
+    }
+
+    private void translate() {
+        app.translator()
+                .translateFrom(ui.profile::setDescription,
+                        "main.drawer.profile")
+                .translateFrom(ui.events::setDescription, "main.drawer.events")
+                .translateFrom(ui.tickets::setDescription,
+                        "main.drawer.tickets")
+                .resourcesProp().addListener((_, _, _) -> translate());
     }
 }

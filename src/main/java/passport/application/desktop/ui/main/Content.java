@@ -13,14 +13,25 @@ import passport.domain.models.events.Event;
 
 public class Content extends VBox {
     private final PassPort app;
+    private final Components ui;
     private final ObservableList<Event> events;
+
+    class Components {
+        final Label eventsTitle = new Label();
+
+        public Components() {
+            this.eventsTitle.getStyleClass().add("title-1");
+        }
+    }
 
     public Content(PassPort app) {
         this.app = app;
+        this.ui = new Components();
         this.events = FXCollections.observableArrayList();
 
-        setupLayout();
-        updateEvents(this.loadList());
+        this.setupLayout();
+        this.translate();
+        this.updateEvents(this.loadList());
     }
 
     private List<Event> loadList() {
@@ -37,12 +48,9 @@ public class Content extends VBox {
     }
 
     private VBox eventsBox() {
-        var label = new Label("Available Events");
-        label.getStyleClass().add("title-1");
-
         var eventsContainer = eventsContainer();
 
-        var box = new VBox(label, eventsContainer);
+        var box = new VBox(ui.eventsTitle, eventsContainer);
         box.setAlignment(Pos.TOP_CENTER);
         box.setSpacing(20);
 
@@ -65,5 +73,11 @@ public class Content extends VBox {
 
     public void updateEvents(List<Event> newEvents) {
         events.setAll(newEvents);
+    }
+
+    private void translate() {
+        app.translator()
+            .translateFrom(ui.eventsTitle::setText, "main.events.title")
+            .resourcesProp().addListener((_, _, _) -> this.translate());
     }
 }

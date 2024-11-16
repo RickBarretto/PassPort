@@ -11,13 +11,14 @@ public class Main extends HBox {
     private final Components ui;
 
     class Components {
-        public final Drawer drawer = new Drawer();
+        public final Drawer drawer;
         public final Content content;
         final LanguageSelector language;
 
         public Components(PassPort app) {
-            this.language = new LanguageSelector(app);
+            this.drawer = new Drawer(app);
             this.content = new Content(app);
+            this.language = new LanguageSelector(app);
         }
     }
 
