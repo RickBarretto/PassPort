@@ -3,7 +3,6 @@ package passport.application.desktop.ui.main;
 import java.time.LocalDate;
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import passport.domain.models.events.Event;
