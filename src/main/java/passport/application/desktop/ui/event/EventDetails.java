@@ -16,35 +16,36 @@ public class EventDetails extends VBox {
         super(10);
 
         this.app = app;
-        this.titleLabel = createTitle(event);
-        this.descriptionArea = createDescription(event);
-        this.priceLabel = createPrice(event);
+        this.titleLabel = title(event);
+        this.descriptionArea = description(event);
+        this.priceLabel = price(event);
 
         getChildren().addAll(titleLabel, descriptionArea, priceLabel);
     }
 
-    private Label createTitle(Event event) {
-        Label label = new Label(event.poster().title());
-        label.getStyleClass().add("title-1");
-        return label;
+    private Label title(Event event) {
+        Label title = new Label(event.poster().title());
+        title.getStyleClass().add("title-1");
+        return title;
     }
 
-    private TextArea createDescription(Event event) {
-        TextArea area = new TextArea(event.poster().description());
-        area.setWrapText(true);
-        area.setEditable(false);
-        area.setPrefRowCount(3);
-        return area;
+    private TextArea description(Event event) {
+        TextArea description = new TextArea(event.poster().description());
+        description.setWrapText(true);
+        description.setEditable(false);
+        description.setPrefRowCount(10);
+        description.setFocusTraversable(false);
+        return description;
     }
 
-    private Label createPrice(Event event) {
-        Label label = new Label(String.format(
+    private Label price(Event event) {
+        Label price = new Label(String.format(
                 app.translator().translationOf("events.price"),
                 event.boxOffice()
                         .ticket()
                         .price()));
 
-        label.getStyleClass().add("title-3");
-        return label;
+        price.getStyleClass().add("title-3");
+        return price;
     }
 }
