@@ -59,7 +59,7 @@ public class EventPopup {
 
         private Comments newComments(PassPort app, Event event,
                 Consumer<String> addComment) {
-            var comments = new Comments(app, addComment);
+            var comments = new Comments(app, event, addComment);
             if (!event.isAvailableFor(LocalDate.now())) {
                 comments = comments.withForms();
             }
