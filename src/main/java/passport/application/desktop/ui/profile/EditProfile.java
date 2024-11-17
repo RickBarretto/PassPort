@@ -1,10 +1,11 @@
 package passport.application.desktop.ui.profile;
 
+import java.util.regex.Pattern;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -17,10 +18,21 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import passport.application.desktop.contracts.Action;
 import passport.application.desktop.system.PassPort;
+import passport.domain.contexts.user.UserEditing.EditingWithTarget;
+import passport.domain.exceptions.EmailAlreadyExists;
+import passport.domain.exceptions.InexistentUser;
+import passport.domain.models.users.values.Password;
 
 public class EditProfile {
     final PassPort app;
     final Components ui;
+    private Stage stage;
+
+    static class Validation {
+        private static final String CPF_PATTERN = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
+        private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
+        private static final int MIN_PASSWORD_LENGTH = 8;
+    }
 
     class Components {
         // New Attributes
@@ -55,7 +67,109 @@ public class EditProfile {
         setup();
     }
 
-    private void save() { System.out.println("Saved!"); }
+    private void save() {
+
+        if (!isValid()) {
+            return;
+        }
+
+        var user = app.services()
+                .login()
+                .current()
+                .get();
+
+        try {
+            this.changeFromFieldss(app.services().profileEditing()
+                    .of(user)
+                    .changing())
+                    .edit();
+
+            var translator = app.translator();
+            this.close();
+            app.toWelcome();
+            app.warn().notify(
+                    translator.translationOf("profile.notify.title"),
+                    translator.translationOf("profile.notify.msg"));
+        }
+        catch (EmailAlreadyExists e) {
+            app.warn().error("validation.email.exists");
+        }
+        catch (InexistentUser e) {
+            System.err.println("User must exists. This should never happen.");
+        }
+    }
+
+    private boolean isValid() {
+        if (ui.confirmation.getText().isEmpty()) {
+            app.warn().error("profile.confirmation.missing");
+            return false;
+        }
+
+        var user = app.services().login().current().get();
+        var samePassword = user.isOwnerOf(
+                user.login().with(new Password(ui.confirmation.getText())));
+
+        if (!samePassword) {
+            app.warn().error("profile.confirmation.wrong");
+            return false;
+        }
+
+        var email = ui.email.getText();
+        var filledEmail = !email.isEmpty();
+        var invalidEmailPattern = !this.hasPattern(ui.email,
+                Validation.EMAIL_PATTERN);
+        if (filledEmail && invalidEmailPattern) {
+            app.warn().error("validation.email.invalid");
+            return false;
+        }
+
+        var cpf = ui.cpf.getText();
+        var filledCPF = !cpf.isEmpty();
+        var invalidCpfPattern = !this.hasPattern(ui.cpf,
+                Validation.CPF_PATTERN);
+        if (filledCPF && invalidCpfPattern) {
+            app.warn().error("validation.cpf.invalid.format");
+            return false;
+        }
+
+        var password = ui.password.getText();
+        var filledPassword = !password.isEmpty();
+        var isPasswordTooSmall = password
+                .length() < Validation.MIN_PASSWORD_LENGTH;
+        if (filledPassword && isPasswordTooSmall) {
+            app.warn().error("validation.password.length");
+            return false;
+        }
+
+        if (email.isEmpty() && cpf.isEmpty() && password.isEmpty()
+                && ui.name.getText().isEmpty()) {
+            app.warn().error("profile.missing-fields");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean hasPattern(TextField field, String pattern) {
+        return Pattern.matches(pattern, field.getText());
+    }
+
+    private EditingWithTarget changeFromFieldss(EditingWithTarget change)
+            throws EmailAlreadyExists {
+        if (this.isFilled(ui.email))
+            change = change.email(ui.email.getText());
+        if (this.isFilled(ui.password))
+            change = change.password(ui.password.getText());
+        if (this.isFilled(ui.name))
+            change = change.name(ui.name.getText());
+        if (this.isFilled(ui.cpf))
+            change = change.cpf(ui.cpf.getText());
+        return change;
+    }
+
+    private boolean isFilled(TextField field) {
+        return !field.getText().isEmpty();
+    }
 
     private void setup() {
         var top = $("profile.edit");
@@ -74,7 +188,10 @@ public class EditProfile {
                 ui.confirmation,
                 ui.save);
 
-        var main = new VBox(20, top, middle, bottom);
+        var main = new VBox(20,
+                top,
+                middle,
+                bottom);
 
         top.getStyleClass().add("title-1");
         middle.setAlignment(Pos.CENTER);
@@ -102,6 +219,10 @@ public class EditProfile {
         editProfile.initOwner(app.stage());
         editProfile.setTitle(app.translator().translationOf("profile.edit"));
         editProfile.setScene(new Scene(root, 500, 400));
+        this.stage = editProfile;
         editProfile.show();
     }
+
+    void close() { stage.close(); }
+
 }
