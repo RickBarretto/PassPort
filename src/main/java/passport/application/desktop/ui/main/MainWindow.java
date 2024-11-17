@@ -16,7 +16,7 @@ public class MainWindow extends HBox {
         public final Content content;
         final LanguageSelector language;
 
-        public Components(PassPort app) {
+        public Components() {
             this.drawer = new Drawer(app);
             this.content = new Content(app);
             this.language = new LanguageSelector(app);
@@ -25,7 +25,7 @@ public class MainWindow extends HBox {
 
     public MainWindow(PassPort app) {
         this.app = app;
-        this.ui = new Components(app);
+        this.ui = new Components();
         setup();
     }
 
