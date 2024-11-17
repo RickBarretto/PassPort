@@ -2,7 +2,6 @@ package passport.application.desktop.ui.main.events;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.rmi.dgc.Lease;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -13,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import passport.application.desktop.system.PassPort;
 import passport.domain.models.events.Event;
