@@ -33,7 +33,7 @@ public class Event implements Entity<EventId> {
     public Event(Poster poster, Double price) {
         this(new EventId(), poster, price);
     }
-    
+
     /**
      * Constructs a new Event with the specified poster and ticket price.
      *
@@ -42,9 +42,15 @@ public class Event implements Entity<EventId> {
      * @param price  the ticket price
      */
     public Event(EventId id, Poster poster, Double price) {
+        this(id, poster, new BoxOffice(new Ticket(id, price)),
+                new ArrayList<>());
+    }
+
+    public Event(EventId id, Poster poster, BoxOffice box, 
+            List<Evaluation> evaluations) {
         this.id = id;
         this.poster = poster;
-        this.boxOffice = new BoxOffice(new Ticket(id, price));
+        this.boxOffice = box;
         this.evaluations = new ArrayList<>();
     }
 

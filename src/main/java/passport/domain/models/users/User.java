@@ -49,13 +49,13 @@ public class User implements Entity<UserId> {
      * @param admin   whether the user is an admin
      * @param tickets the list of bought tickets
      */
-    private User(UserId id, Login login, Person person, boolean admin,
-            ArrayList<Ticket> tickets) {
+    public User(UserId id, Login login, Person person, boolean admin,
+            List<Ticket> tickets) {
         this.id = id;
         this.login = login;
         this.person = person;
         this.admin = admin;
-        this.boughtTickets = tickets;
+        this.boughtTickets = new ArrayList<>(tickets);
     }
 
     /**

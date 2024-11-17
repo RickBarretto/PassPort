@@ -26,7 +26,7 @@ public class BoxOffice {
      * @param capacity the maximum capacity of tickets
      * @param sales    the number of tickets sold
      */
-    private BoxOffice(Ticket ticket, Integer capacity, Integer sales) {
+    public BoxOffice(Ticket ticket, Integer capacity, Integer sales) {
         this.sample = ticket;
         this.capacity = capacity;
         this.sales = sales;
