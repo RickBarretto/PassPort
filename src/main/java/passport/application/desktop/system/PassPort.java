@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import passport.application.desktop.Translator;
+import passport.application.desktop.ui.components.Notification;
 import passport.application.desktop.ui.event.EventPopup;
 import passport.application.desktop.ui.main.Main;
 import passport.application.desktop.ui.purchase.PurchaseWindow;
@@ -68,6 +69,12 @@ public record PassPort(Stage stage, Services services, Translator translator) {
 
         public void success(String messageKey) {
             show(messageKey, Alert.AlertType.INFORMATION);
+        }
+
+        public void notify(String titleKey, String messageKey) {
+            var title = translator.translationOf(titleKey);
+            var message = translator.translationOf(messageKey);
+            new Notification(title, message);
         }
 
         private void show(String messageKey, Alert.AlertType type) {
