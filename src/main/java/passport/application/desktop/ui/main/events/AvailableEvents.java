@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import passport.application.desktop.system.PassPort;
 import passport.domain.models.events.Event;
 
-public class Content extends VBox {
+public class AvailableEvents extends VBox {
     private final PassPort app;
     private final Components ui;
     private final ObservableList<Event> events;
@@ -22,7 +22,7 @@ public class Content extends VBox {
         public Components() { this.eventsTitle.getStyleClass().add("title-1"); }
     }
 
-    public Content(PassPort app) {
+    public AvailableEvents(PassPort app) {
         this.app = app;
         this.ui = new Components();
         this.events = FXCollections.observableArrayList();

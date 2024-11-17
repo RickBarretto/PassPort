@@ -5,7 +5,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import passport.application.desktop.system.PassPort;
 import passport.application.desktop.ui.components.LanguageSelector;
-import passport.application.desktop.ui.main.events.Content;
+import passport.application.desktop.ui.main.events.AvailableEvents;
 
 public class MainWindow extends HBox {
     private final PassPort app;
@@ -13,12 +13,12 @@ public class MainWindow extends HBox {
 
     class Components {
         public final Drawer drawer;
-        public final Content content;
+        public final AvailableEvents content;
         final LanguageSelector language;
 
         public Components() {
             this.drawer = new Drawer(app);
-            this.content = new Content(app);
+            this.content = new AvailableEvents(app);
             this.language = new LanguageSelector(app);
         }
     }
