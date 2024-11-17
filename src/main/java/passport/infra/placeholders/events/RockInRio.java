@@ -31,10 +31,12 @@ public class RockInRio {
     public static Double price() { return 795.50; }
 
     public static Event event() {
-        return new Event(
+        var event = new Event(
                 id,
                 new Poster(title(), description(), date()),
                 price());
+        event.addCapacity(200);
+        return event;
     }
 
 }
