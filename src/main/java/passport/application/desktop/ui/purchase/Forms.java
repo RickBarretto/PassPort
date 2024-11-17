@@ -3,7 +3,6 @@ package passport.application.desktop.ui.purchase;
 import java.util.Arrays;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -16,7 +15,7 @@ import passport.application.desktop.system.PassPort;
 
 public class Forms {
 
-    public static VBox createCreditCardForm(PassPort app,
+    public static VBox creditCardForm(PassPort app,
             PurchaseWindow purchaseWindow, Double ticketPrice) {
 
         var translator = app.translator();
@@ -46,7 +45,7 @@ public class Forms {
                 cvv);
 
         // Amount
-        var amount = createAmountSpinner();
+        var amount = amountSpinner();
         inject(form,
                 new Label(translator.translationOf("purchase.amount.label")),
                 amount);
@@ -76,7 +75,7 @@ public class Forms {
         return form;
     }
 
-    public static VBox createPixForm(PassPort app,
+    public static VBox pixForm(PassPort app,
             PurchaseWindow purchaseWindow, Double price) {
         var translator = app.translator();
 
@@ -90,7 +89,7 @@ public class Forms {
                 pixKey);
 
         // Amount
-        var amount = createAmountSpinner();
+        var amount = amountSpinner();
         inject(form,
                 new Label(translator.translationOf("purchase.amount.label")),
                 amount);
@@ -138,7 +137,7 @@ public class Forms {
         parent.getChildren().addAll(a, b);
     }
 
-    private static Spinner<Integer> createAmountSpinner() {
+    private static Spinner<Integer> amountSpinner() {
         var amountSpinner = new Spinner<Integer>();
         amountSpinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 1));

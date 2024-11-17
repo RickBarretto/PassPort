@@ -26,7 +26,7 @@ public class PurchaseWindow {
         this.props = new Properties(event.id(), user.id(),
                 event.boxOffice().ticket().price());
         this.ui = new Components(app, this, props.price);
-        this.stage = this.newStage(ui.getRoot());
+        this.stage = this.newStage(ui.root());
         this.stage.show();
     }
 
@@ -59,7 +59,7 @@ public class PurchaseWindow {
                             translator.translationOf("purchase.success.msg"),
                             amount * props.price));
             stage.close();
-            
+
         }
         catch (SoldOut e) {
             app.warn().error("purchase.soldout");
