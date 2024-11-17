@@ -30,21 +30,21 @@ public class MainWindow extends HBox {
     }
 
     private void setup() {
-        var right = rightPane(ui.content);
+        var main = centralPane(ui.content);
         this.getChildren().addAll(
                 ui.drawer,
-                right);
+                main);
 
         HBox.setHgrow(ui.drawer, Priority.NEVER);
-        HBox.setHgrow(right, Priority.ALWAYS);
+        HBox.setHgrow(main, Priority.ALWAYS);
     }
 
-    private VBox rightPane(VBox mainContent) {
-        VBox rightPane = new VBox();
-        VBox.setVgrow(mainContent, Priority.ALWAYS);
-        rightPane.getChildren().addAll(ui.language, mainContent);
+    private VBox centralPane(VBox content) {
+        var central = new VBox();
+        VBox.setVgrow(content, Priority.ALWAYS);
+        central.getChildren().addAll(ui.language, content);
 
-        return rightPane;
+        return central;
     }
 
 }
