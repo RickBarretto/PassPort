@@ -39,12 +39,15 @@ public class EventDetails extends VBox {
     }
 
     private Label price(Event event) {
+        final boolean isSoldOut = event.boxOffice().isSoldOut();
+        
         String priceContent = app.translator().translationOf(
-                (event.boxOffice().isSoldOut()) ? "events.sold-out"
+                isSoldOut ? "events.sold-out"
                         : "events.price");
 
-        if (event.boxOffice().isSoldOut()) {
-            priceContent = String.format(priceContent);
+        if (!isSoldOut) {
+            priceContent = String.format(
+                    priceContent, event.boxOffice().ticket().price());
         }
 
         var price = new Label(priceContent);

@@ -49,7 +49,7 @@ public class PurchaseWindow {
                     .by(props.userId())
                     .via(new PaymentMethod(paymentMethod, details))
                     .buy(amount);
-            app.warn().error("purchase.success");
+            app.warn().success("purchase.success");
         }
         catch (SoldOut | PurchaseForInactiveEvent e) {
             System.err

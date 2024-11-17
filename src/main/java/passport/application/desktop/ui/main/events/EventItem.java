@@ -43,7 +43,8 @@ public class EventItem extends Button {
         this.openEvent = openEvent;
 
         this.setup();
-        app.translator().resourcesProp().addListener((_, _, _) -> this.translate());
+        app.translator().resourcesProp()
+                .addListener((_, _, _) -> this.translate());
         this.setOnAction(_ -> openEvent.accept(event));
         this.translate();
     }
@@ -101,7 +102,9 @@ public class EventItem extends Button {
         if (!event.boxOffice().isSoldOut()) {
             this.setContent(this.formattedPrice());
         }
-        this.setContent(app.translator().translationOf("events.sold-out"));
+        else {
+            this.setContent(app.translator().translationOf("events.sold-out"));
+        }
     }
 
     private void setContent(String priceContent) {
