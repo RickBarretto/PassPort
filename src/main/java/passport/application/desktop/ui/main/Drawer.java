@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import passport.application.desktop.contracts.Action;
 import passport.application.desktop.system.PassPort;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -70,6 +71,8 @@ class DrawerButton extends Button {
 public class Drawer extends VBox {
     private final PassPort app;
     private final Components ui;
+    private final Action openAllEvents;
+    private final Action openMyEvents;
 
     class Components {
         final DrawerButton profile = profile();
@@ -83,19 +86,31 @@ public class Drawer extends VBox {
         }
 
         private DrawerButton events() {
-            return new DrawerButton("event.png", "Events")
+            var btn = new DrawerButton("event.png", "Events")
                     .selected();
+            btn.setOnAction((_) -> {
+                this.tickets.getStyleClass().remove("accent");
+                btn.getStyleClass().add("accent");
+                openAllEvents.exec();
+            });
+            return btn;
         }
 
         private DrawerButton tickets() {
-            return new DrawerButton("ticket.png",
-                    "My Events");
+            var btn = new DrawerButton("ticket.png", "My Events");
+            btn.setOnAction((_) -> {
+                this.events.getStyleClass().remove("accent");
+                btn.getStyleClass().add("accent");
+                openMyEvents.exec();});
+            return btn;
         }
     }
 
-    public Drawer(PassPort app) {
+    public Drawer(PassPort app, Action openAllEvents, Action openMyEvents) {
         this.app = app;
         this.ui = new Components();
+        this.openAllEvents = openAllEvents;
+        this.openMyEvents = openMyEvents;
         this.setup();
         this.translate();
     }
