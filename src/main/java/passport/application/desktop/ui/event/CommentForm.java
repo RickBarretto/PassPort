@@ -33,7 +33,7 @@ public class CommentForm extends VBox {
 
     private Button submit(Consumer<String> onSubmit) {
         Button button = new Button("Comment");
-        button.setOnAction(e -> handleSubmit(onSubmit));
+        button.setOnAction(_ -> handleSubmit(onSubmit));
         return button;
     }
 

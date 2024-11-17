@@ -62,7 +62,7 @@ public class AvailableEvents extends VBox {
         eventsContainer.setAlignment(Pos.TOP_CENTER);
 
         events.addListener(
-                (ListChangeListener.Change<? extends Event> change) -> {
+                (ListChangeListener.Change<? extends Event> _) -> {
                     eventsContainer.getChildren().clear();
                     events.stream().forEach((event) -> eventsContainer
                             .getChildren()

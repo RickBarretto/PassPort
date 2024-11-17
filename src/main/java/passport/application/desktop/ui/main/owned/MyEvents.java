@@ -1,6 +1,5 @@
 package passport.application.desktop.ui.main.owned;
 
-import java.time.LocalDate;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -62,7 +61,7 @@ public class MyEvents extends VBox {
         eventsContainer.setAlignment(Pos.TOP_CENTER);
 
         events.addListener(
-                (ListChangeListener.Change<? extends Event> change) -> {
+                (ListChangeListener.Change<? extends Event> _) -> {
                     eventsContainer.getChildren().clear();
                     events.stream().forEach((event) -> eventsContainer
                             .getChildren()

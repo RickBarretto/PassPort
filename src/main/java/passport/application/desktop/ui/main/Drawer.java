@@ -13,7 +13,6 @@ import javafx.scene.image.Image;
 
 class DrawerButton extends Button {
     private final Components ui;
-    private final String icon;
 
     class Components {
         final VBox content = new VBox(5);
@@ -53,7 +52,6 @@ class DrawerButton extends Button {
 
     public DrawerButton(String icon, String description) {
         this.ui = new Components(icon);
-        this.icon = icon;
         this.setGraphic(ui.content);
         this.setPrefWidth(200);
     }
