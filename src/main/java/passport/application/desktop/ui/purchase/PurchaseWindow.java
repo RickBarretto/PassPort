@@ -43,17 +43,24 @@ public class PurchaseWindow {
     }
 
     void purchase(String paymentMethod, String details, int amount) {
+        var translator = app.translator();
         try {
             app.services().purchasing()
                     .of(props.eventId())
                     .by(props.userId())
                     .via(new PaymentMethod(paymentMethod, details))
                     .buy(amount);
-            app.warn().success("purchase.success");
+
+            app.warn().notify(translator.translationOf(
+                    "purchase.success.title"),
+                    String.format(
+                            translator.translationOf("purchase.success.msg"),
+                            amount * props.price));
         }
-        catch (SoldOut | PurchaseForInactiveEvent e) {
-            System.err
-                    .println("User should not access this for Inactive events");
+        catch (SoldOut e) {
+            app.warn().error("purchase.soldout");
+        }
+        catch (PurchaseForInactiveEvent e) {
             System.err
                     .println("User should not access this for Sold Out events");
             e.printStackTrace();

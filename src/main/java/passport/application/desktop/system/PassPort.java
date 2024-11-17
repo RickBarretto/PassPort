@@ -71,9 +71,7 @@ public record PassPort(Stage stage, Services services, Translator translator) {
             show(messageKey, Alert.AlertType.INFORMATION);
         }
 
-        public void notify(String titleKey, String messageKey) {
-            var title = translator.translationOf(titleKey);
-            var message = translator.translationOf(messageKey);
+        public void notify(String title, String message) {
             new Notification(title, message);
         }
 
