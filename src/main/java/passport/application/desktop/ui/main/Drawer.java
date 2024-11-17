@@ -19,9 +19,9 @@ class DrawerButton extends Button {
         final Label description = new Label();
         final Node icon;
 
-        public Components(String iconName) { 
+        public Components(String iconName) {
             this.icon = icon(iconName);
-            setupLayout(); 
+            setupLayout();
         }
 
         private Node icon(String name) {
@@ -37,9 +37,11 @@ class DrawerButton extends Button {
             }
         }
 
-        private ImageView loadImageIcon(String name) { return new ImageView(
-                new Image(getClass().getResourceAsStream(
-                        "/desktop/icons/" + name))); }
+        private ImageView loadImageIcon(String name) {
+            return new ImageView(
+                    new Image(getClass().getResourceAsStream(
+                            "/desktop/icons/" + name)));
+        }
 
         private void setupLayout() {
             content.setAlignment(Pos.CENTER);
@@ -70,11 +72,25 @@ public class Drawer extends VBox {
     private final Components ui;
 
     class Components {
-        final DrawerButton profile = new DrawerButton("profile.png", "Profile");
-        final DrawerButton events = new DrawerButton("event.png", "Events")
-                .selected();
-        final DrawerButton tickets = new DrawerButton("ticket.png",
-                "My Events");
+        final DrawerButton profile = profile();
+        final DrawerButton events = events();
+        final DrawerButton tickets = tickets();
+
+        private DrawerButton profile() {
+            var btn = new DrawerButton("profile.png", "Profile");
+            btn.setOnAction((_) -> app.toProfileEditing());
+            return btn;
+        }
+
+        private DrawerButton events() {
+            return new DrawerButton("event.png", "Events")
+                    .selected();
+        }
+
+        private DrawerButton tickets() {
+            return new DrawerButton("ticket.png",
+                    "My Events");
+        }
     }
 
     public Drawer(PassPort app) {
@@ -97,10 +113,6 @@ public class Drawer extends VBox {
         this.setMaxWidth(150);
         this.setSpacing(10);
         this.setPadding(new Insets(0, 20, 0, 20));
-    }
-
-    public Button getButtonByIndex(int index) {
-        return (Button) this.getChildren().get(index);
     }
 
     private void translate() {
