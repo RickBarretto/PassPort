@@ -12,6 +12,7 @@ import passport.application.desktop.system.PassPort;
 import passport.application.desktop.system.Services;
 import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.contexts.events.AvailableEventsListing;
+import passport.domain.contexts.events.EvaluationListing;
 import passport.domain.contexts.events.EventEvaluation;
 import passport.domain.contexts.purchases.TicketBuying;
 import passport.domain.contexts.user.SigningUp;
@@ -121,6 +122,7 @@ public class App extends Application {
                 new UserLogin(infra.session(), infra.users()),
                 new AvailableEventsListing(infra.events()),
                 new SubscribedEventsListing(infra.events()),
+                new EvaluationListing(infra.users()),
                 new EventEvaluation(infra.events(), LocalDate.now()),
                 new TicketBuying(infra.events(), infra.users(), LocalDate.now()),
                 new UserEditing(infra.users()));
