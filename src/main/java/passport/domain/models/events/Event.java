@@ -51,7 +51,7 @@ public class Event implements Entity<EventId> {
         this.id = id;
         this.poster = poster;
         this.boxOffice = box;
-        this.evaluations = new ArrayList<>();
+        this.evaluations = new ArrayList<>(evaluations);
     }
 
     /**
