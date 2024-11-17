@@ -7,7 +7,7 @@ import passport.application.desktop.system.PassPort;
 import passport.application.desktop.ui.components.LanguageSelector;
 import passport.application.desktop.ui.main.events.Content;
 
-public class Main extends HBox {
+public class MainWindow extends HBox {
     private final PassPort app;
     private final Components ui;
 
@@ -23,7 +23,7 @@ public class Main extends HBox {
         }
     }
 
-    public Main(PassPort app) {
+    public MainWindow(PassPort app) {
         this.app = app;
         this.ui = new Components(app);
         setup();
@@ -34,7 +34,7 @@ public class Main extends HBox {
         this.getChildren().addAll(
                 ui.drawer,
                 right);
-            
+
         HBox.setHgrow(ui.drawer, Priority.NEVER);
         HBox.setHgrow(right, Priority.ALWAYS);
     }
