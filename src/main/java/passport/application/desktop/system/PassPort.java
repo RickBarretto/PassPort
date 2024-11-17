@@ -7,9 +7,9 @@ import passport.application.desktop.Translator;
 import passport.application.desktop.ui.components.Notification;
 import passport.application.desktop.ui.event.EventPopup;
 import passport.application.desktop.ui.main.Main;
-import passport.application.desktop.ui.profile.AccountEditor;
 import passport.application.desktop.ui.profile.EditProfile;
 import passport.application.desktop.ui.purchase.PurchaseWindow;
+import passport.application.desktop.ui.welcome.WelcomeWindow;
 import passport.domain.models.events.Event;
 
 public record PassPort(Stage stage, Services services, Translator translator) {
@@ -44,8 +44,10 @@ public record PassPort(Stage stage, Services services, Translator translator) {
         new EventPopup(this, event).forReviewing();
     }
 
-    public void toProfileEditing() {
-        new EditProfile(this);
+    public void toProfileEditing() { new EditProfile(this); }
+    
+    public void toWelcome() {
+        toScene(new Scene(new WelcomeWindow(this), 1200, 700));
     }
 
     public void toScene(Scene scene) {
