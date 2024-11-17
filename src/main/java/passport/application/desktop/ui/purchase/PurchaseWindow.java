@@ -17,6 +17,7 @@ public class PurchaseWindow {
     private final PassPort app;
     private final Properties props;
     private final Components ui;
+    private final Stage stage;
 
     public record Properties(EventId eventId, UserId userId, Double price) {}
 
@@ -25,14 +26,15 @@ public class PurchaseWindow {
         this.props = new Properties(event.id(), user.id(),
                 event.boxOffice().ticket().price());
         this.ui = new Components(app.translator(), this, props.price);
-        this.setupStage(ui.getRoot());
+        this.stage = this.newStage(ui.getRoot());
+        this.stage.show();
     }
 
-    private void setupStage(Region root) {
+    private Stage newStage(Region root) {
         Scene scene = new Scene(root, 800, 600);
         var stage = this.newStageFromCurrent();
         stage.setScene(scene);
-        stage.show();
+        return stage;
     }
 
     private Stage newStageFromCurrent() {
@@ -56,6 +58,8 @@ public class PurchaseWindow {
                     String.format(
                             translator.translationOf("purchase.success.msg"),
                             amount * props.price));
+            stage.close();
+            
         }
         catch (SoldOut e) {
             app.warn().error("purchase.soldout");
