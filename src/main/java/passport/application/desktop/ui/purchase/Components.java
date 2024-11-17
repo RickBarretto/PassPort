@@ -8,10 +8,13 @@ import passport.application.desktop.Translator;
 
 public class Components {
     private final PurchaseWindow purchaseWindow;
+    private final Double price;
     private final VBox root;
 
-    public Components(Translator translator, PurchaseWindow purchaseWindow) {
+    public Components(Translator translator, PurchaseWindow purchaseWindow,
+            Double price) {
         this.purchaseWindow = purchaseWindow;
+        this.price = price;
         this.root = createRoot(translator);
     }
 
@@ -30,11 +33,12 @@ public class Components {
         var creditCardTab = new Tab(
                 translator.translationOf("purchase.credit-card"));
         creditCardTab.setContent(Forms.createCreditCardForm(
-                        translator, purchaseWindow));
+                translator, purchaseWindow, price));
         creditCardTab.setClosable(false);
 
         var pixTab = new Tab("PIX");
-        pixTab.setContent(Forms.createPixForm(translator, purchaseWindow));
+        pixTab.setContent(Forms.createPixForm(translator, this.purchaseWindow,
+                this.price));
         pixTab.setClosable(false);
 
         tabPane.getTabs().addAll(creditCardTab, pixTab);

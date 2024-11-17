@@ -13,7 +13,7 @@ import passport.application.desktop.Translator;
 public class Forms {
 
     public static VBox createCreditCardForm(Translator translator,
-            PurchaseWindow purchaseWindow) {
+            PurchaseWindow purchaseWindow, Double ticketPrice) {
         VBox form = new VBox(10);
         form.setPadding(new Insets(10));
 
@@ -41,19 +41,22 @@ public class Forms {
                 translator.translationOf("purchase.amount.label")), amount);
 
         // Submit Button
-        var submit = new Button(translator.translationOf("purchase.submit"));
+        var submit = new Button(totalPrice(translator, ticketPrice, amount.getValue()));
+        inject(form, submit);
+
         submit.setOnAction(_ -> purchaseWindow.purchase(
                 translator.translationOf("purchase.credit-card"),
                 cardNumber.getText(),
                 amount.getValue()));
 
-        inject(form, submit);
+        amount.setOnMouseReleased((_) -> submit
+                .setText(totalPrice(translator, ticketPrice, amount.getValue())));
 
         return form;
     }
 
     public static VBox createPixForm(Translator translator,
-            PurchaseWindow purchaseWindow) {
+            PurchaseWindow purchaseWindow, Double price) {
         VBox form = new VBox(10);
         form.setPadding(new Insets(10));
 
@@ -68,12 +71,21 @@ public class Forms {
                 translator.translationOf("purchase.amount.label")), amount);
 
         // Submit Button
-        var submit = new Button(translator.translationOf("purchase.submit"));
-        submit.setOnAction(_ -> purchaseWindow.purchase("PIX", pixKey.getText(),
-                amount.getValue()));
+        var submit = new Button(totalPrice(translator, price, amount.getValue()));
         inject(form, submit);
 
+        submit.setOnAction(_ -> purchaseWindow.purchase("PIX", pixKey.getText(),
+                amount.getValue()));
+        amount.setOnMouseReleased((_) -> submit
+                .setText(totalPrice(translator, price, amount.getValue())));
+
         return form;
+    }
+
+    private static String totalPrice(Translator translator, Double price,
+            Integer amount) {
+        return translator.translationOf("purchase.submit")
+                + String.format(": R$%.2f", price * amount);
     }
 
     private static void inject(VBox parent, Region child) {
