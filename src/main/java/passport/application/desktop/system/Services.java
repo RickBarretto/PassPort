@@ -4,6 +4,7 @@ import passport.domain.contexts.events.AvailableEventsListing;
 import passport.domain.contexts.events.EventEvaluation;
 import passport.domain.contexts.purchases.TicketBuying;
 import passport.domain.contexts.user.SigningUp;
+import passport.domain.contexts.user.UserEditing;
 import passport.domain.contexts.user.UserLogin;
 
 public record Services(
@@ -11,4 +12,5 @@ public record Services(
         UserLogin login,
         AvailableEventsListing eventsListing,
         EventEvaluation evaluation,
-        TicketBuying purchasing) {}
+        TicketBuying purchasing,
+        UserEditing profileEditing) {}

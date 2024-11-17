@@ -15,6 +15,7 @@ import passport.domain.contexts.events.AvailableEventsListing;
 import passport.domain.contexts.events.EventEvaluation;
 import passport.domain.contexts.purchases.TicketBuying;
 import passport.domain.contexts.user.SigningUp;
+import passport.domain.contexts.user.UserEditing;
 import passport.domain.contexts.user.UserLogin;
 import passport.infra.DisabledEmailService;
 import passport.infra.Session;
@@ -119,6 +120,7 @@ public class App extends Application {
                 new UserLogin(infra.session(), infra.users()),
                 new AvailableEventsListing(infra.events()),
                 new EventEvaluation(infra.events(), LocalDate.now()),
-                new TicketBuying(infra.events(), infra.users(), LocalDate.now()));
+                new TicketBuying(infra.events(), infra.users(), LocalDate.now()),
+                new UserEditing(infra.users()));
     }
 }
