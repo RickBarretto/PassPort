@@ -45,8 +45,15 @@ public class EventPopup {
 
         private Button buyButton(PassPort app, Event event) {
             var btn = new Button(app.translator().translationOf("events.buy"));
-            btn.getStyleClass().add("accent");
-            btn.setOnAction(_ -> app.toPurchaseOf(event));
+            
+            if (event.boxOffice().isSoldOut()) {
+                btn.setDisable(true);
+            }
+            else {
+                btn.getStyleClass().add("accent");
+                btn.setOnAction(_ -> app.toPurchaseOf(event));
+            }
+          
             return btn;
         }
 
@@ -66,7 +73,7 @@ public class EventPopup {
         this.ui = new Components(app, event, this::comment);
     }
 
-    public EventPopup forPurchasing() {
+    public EventPopup forPurchasing() {        
         this.add(ui.buy);
         this.setupStage(ui.root);
         return this;
