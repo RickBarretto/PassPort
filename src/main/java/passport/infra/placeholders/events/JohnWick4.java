@@ -3,6 +3,7 @@ package passport.infra.placeholders.events;
 import java.time.LocalDate;
 
 import passport.domain.models.events.Event;
+import passport.domain.models.events.EventCategory;
 import passport.domain.models.events.EventId;
 import passport.domain.models.events.Poster;
 
@@ -24,12 +25,14 @@ public class JohnWick4 {
 
     public static LocalDate date() { return LocalDate.of(2023, 3, 24); }
 
+    public static EventCategory category() { return EventCategory.CINE; }
+
     public static Double price() { return 30.00; }
 
     public static Event event() {
         return new Event(
                 id,
-                new Poster(title(), description(), date()),
+                new Poster(title(), description(), date(), category()),
                 price());
     }
 
