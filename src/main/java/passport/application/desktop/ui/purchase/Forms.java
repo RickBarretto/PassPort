@@ -1,6 +1,9 @@
 package passport.application.desktop.ui.purchase;
 
+import java.util.Arrays;
+
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -9,77 +12,116 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import passport.application.desktop.Translator;
+import passport.application.desktop.system.PassPort;
 
 public class Forms {
 
-    public static VBox createCreditCardForm(Translator translator,
+    public static VBox createCreditCardForm(PassPort app,
             PurchaseWindow purchaseWindow, Double ticketPrice) {
+
+        var translator = app.translator();
         VBox form = new VBox(10);
         form.setPadding(new Insets(10));
 
         // Card Number
         var cardNumber = new TextField();
-        inject(form, new Label(
-                translator.translationOf("purchase.card.number.label")),
+        inject(form,
+                new Label(
+                        translator.translationOf("purchase.card.number.label")),
                 cardNumber);
 
         // Expiry Date
         var expiryDate = new TextField();
         expiryDate.setPromptText(
                 translator.translationOf("purchase.card.expiry.promp"));
-        inject(form, new Label(translator
-                .translationOf("purchase.card.expiry.label")), expiryDate);
+        inject(form,
+                new Label(
+                        translator.translationOf("purchase.card.expiry.label")),
+                expiryDate);
 
         // CVV
         var cvv = new TextField();
-        inject(form, new Label(
-                translator.translationOf("purchase.card.cvv.label")), cvv);
+        inject(form,
+                new Label(translator.translationOf("purchase.card.cvv.label")),
+                cvv);
 
         // Amount
         var amount = createAmountSpinner();
-        inject(form, new Label(
-                translator.translationOf("purchase.amount.label")), amount);
+        inject(form,
+                new Label(translator.translationOf("purchase.amount.label")),
+                amount);
 
         // Submit Button
-        var submit = new Button(totalPrice(translator, ticketPrice, amount.getValue()));
+        var submit = new Button(
+                totalPrice(translator, ticketPrice, amount.getValue()));
         inject(form, submit);
 
-        submit.setOnAction(_ -> purchaseWindow.purchase(
-                translator.translationOf("purchase.credit-card"),
-                cardNumber.getText(),
-                amount.getValue()));
+        // Set Button Action
+        submit.setOnAction(_ -> {
+            if (isFormValid(cardNumber, expiryDate, cvv)) {
+                purchaseWindow.purchase(
+                        translator.translationOf("purchase.credit-card"),
+                        cardNumber.getText(),
+                        amount.getValue());
+            }
+            else {
+                warnEmptyFields(app);
+            }
+        });
 
-        amount.setOnMouseReleased((_) -> submit
-                .setText(totalPrice(translator, ticketPrice, amount.getValue())));
+        // Update Button Text on Amount Change
+        amount.setOnMouseReleased((_) -> submit.setText(
+                totalPrice(translator, ticketPrice, amount.getValue())));
 
         return form;
     }
 
-    public static VBox createPixForm(Translator translator,
+    public static VBox createPixForm(PassPort app,
             PurchaseWindow purchaseWindow, Double price) {
+        var translator = app.translator();
+
         VBox form = new VBox(10);
         form.setPadding(new Insets(10));
 
         // PIX Key
         var pixKey = new TextField();
-        inject(form, new Label(
-                translator.translationOf("purchase.pix.key.label")), pixKey);
+        inject(form,
+                new Label(translator.translationOf("purchase.pix.key.label")),
+                pixKey);
 
         // Amount
         var amount = createAmountSpinner();
-        inject(form, new Label(
-                translator.translationOf("purchase.amount.label")), amount);
+        inject(form,
+                new Label(translator.translationOf("purchase.amount.label")),
+                amount);
 
         // Submit Button
-        var submit = new Button(totalPrice(translator, price, amount.getValue()));
+        var submit = new Button(
+                totalPrice(translator, price, amount.getValue()));
         inject(form, submit);
 
-        submit.setOnAction(_ -> purchaseWindow.purchase("PIX", pixKey.getText(),
-                amount.getValue()));
+        // Set Button Action
+        submit.setOnAction(_ -> {
+            if (isFormValid(pixKey)) {
+                purchaseWindow.purchase(
+                        "PIX",
+                        pixKey.getText(),
+                        amount.getValue());
+            }
+            else {
+                warnEmptyFields(app);
+            }
+        });
+
+        // Update Button Text on Amount Change
         amount.setOnMouseReleased((_) -> submit
                 .setText(totalPrice(translator, price, amount.getValue())));
 
         return form;
+    }
+
+    private static void warnEmptyFields(PassPort app) {
+        app.warn().error("purchase.error.empty-fields");
     }
 
     private static String totalPrice(Translator translator, Double price,
@@ -101,5 +143,10 @@ public class Forms {
         amountSpinner.setValueFactory(
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 1));
         return amountSpinner;
+    }
+
+    private static boolean isFormValid(TextField... fields) {
+        return Arrays.stream(fields)
+                .noneMatch(field -> field.getText().isEmpty());
     }
 }

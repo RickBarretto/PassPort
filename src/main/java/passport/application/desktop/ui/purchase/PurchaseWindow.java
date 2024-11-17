@@ -25,7 +25,7 @@ public class PurchaseWindow {
         this.app = app;
         this.props = new Properties(event.id(), user.id(),
                 event.boxOffice().ticket().price());
-        this.ui = new Components(app.translator(), this, props.price);
+        this.ui = new Components(app, this, props.price);
         this.stage = this.newStage(ui.getRoot());
         this.stage.show();
     }
