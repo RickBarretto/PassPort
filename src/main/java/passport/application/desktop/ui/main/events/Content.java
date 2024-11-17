@@ -66,7 +66,7 @@ public class Content extends VBox {
                     eventsContainer.getChildren().clear();
                     events.stream().forEach((event) -> eventsContainer
                             .getChildren()
-                            .add(EventItem.of(event, this::openEvent)));
+                            .add(EventItem.of(app, event, this::openEvent)));
                 });
         return eventsContainer;
     }

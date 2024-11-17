@@ -2,6 +2,7 @@ package passport.application.desktop.ui.main.events;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.rmi.dgc.Lease;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -18,6 +19,8 @@ import passport.application.desktop.system.PassPort;
 import passport.domain.models.events.Event;
 
 public class EventItem extends Button {
+    final PassPort app;
+    final Event event;
     final Consumer<Event> openEvent;
     final Properties props;
 
@@ -33,23 +36,24 @@ public class EventItem extends Button {
         }
     }
 
-    private EventItem(Event event, Consumer<Event> openEvent) {
+    private EventItem(PassPort app, Event event, Consumer<Event> openEvent) {
+        this.app = app;
+        this.event = event;
         this.props = new Properties(event);
         this.openEvent = openEvent;
-        this.setup();
 
+        this.setup();
+        app.translator().resourcesProp().addListener((_, _, _) -> this.translate());
         this.setOnAction(_ -> openEvent.accept(event));
+        this.translate();
     }
 
-    static EventItem of(Event event, Consumer<Event> openEvent) {
-        return new EventItem(event, openEvent);
+    static EventItem of(PassPort app, Event event, Consumer<Event> openEvent) {
+        return new EventItem(app, event, openEvent);
     }
 
     private void setup() {
-        var info = eventInfo();
-        var container = container(info, priceBox(priceLabel()));
-
-        this.setGraphic(container);
+        this.setContent(formattedPrice());
         this.setMinWidth(300);
         this.setPrefWidth(500);
     }
@@ -87,11 +91,25 @@ public class EventItem extends Button {
         return container;
     }
 
-    private Label priceLabel() {
-        NumberFormat currencyFormatter = NumberFormat
+    private String formattedPrice() {
+        NumberFormat currency = NumberFormat
                 .getCurrencyInstance(Locale.getDefault());
+        return currency.format(props.price);
+    }
 
-        return new Label(currencyFormatter.format(props.price));
+    private void translate() {
+        if (!event.boxOffice().isSoldOut()) {
+            this.setContent(this.formattedPrice());
+        }
+        this.setContent(app.translator().translationOf("events.sold-out"));
+    }
+
+    private void setContent(String priceContent) {
+        var info = eventInfo();
+        var price = new Label(priceContent);
+        var container = container(info, priceBox(price));
+
+        this.setGraphic(container);
     }
 
     private VBox priceBox(Label priceLabel) {
@@ -102,4 +120,5 @@ public class EventItem extends Button {
 
         return priceBox;
     }
+
 }
