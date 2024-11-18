@@ -26,11 +26,13 @@ public class EventItem extends Button {
         final String title;
         final LocalDate date;
         final Double price;
+        final String category;
 
         public Properties(Event event) {
             this.title = event.poster().title();
             this.date = event.poster().date();
             this.price = event.boxOffice().ticket().price();
+            this.category = event.poster().category().toString();
         }
     }
 
@@ -60,8 +62,9 @@ public class EventItem extends Button {
     private VBox eventInfo() {
         var title = titleLabel();
         var date = dateLabel();
+        var category = category();
 
-        var contentBox = new VBox(title, date);
+        var contentBox = new VBox(title, date, category);
         contentBox.setAlignment(Pos.CENTER_LEFT);
         return contentBox;
     }
@@ -80,6 +83,15 @@ public class EventItem extends Button {
         date.getStyleClass().add("text-small");
 
         return date;
+    }
+
+    private Label category() {
+        var category = new Label(app.translator().translationOf(
+                props.category));
+        category.getStyleClass().add("text-small");
+        category.setPadding(new Insets(5, 0, 0, 0));
+
+        return category;
     }
 
     private HBox container(VBox contentBox, VBox priceBox) {
@@ -121,5 +133,4 @@ public class EventItem extends Button {
 
         return priceBox;
     }
-
 }

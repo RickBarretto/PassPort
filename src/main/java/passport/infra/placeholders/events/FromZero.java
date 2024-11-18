@@ -6,6 +6,7 @@ import java.util.List;
 import passport.domain.models.evaluations.Evaluation;
 import passport.domain.models.events.BoxOffice;
 import passport.domain.models.events.Event;
+import passport.domain.models.events.EventCategory;
 import passport.domain.models.events.EventId;
 import passport.domain.models.events.Poster;
 import passport.domain.models.events.Ticket;
@@ -21,6 +22,8 @@ public class FromZero {
 
     public static LocalDate date() { return LocalDate.of(2024, 11, 15); }
 
+    public static EventCategory category() { return EventCategory.MUSIC; }
+
     public static String description() { return """
             Local: Allianz Parque, São Paulo, Brasil
 
@@ -32,7 +35,7 @@ public class FromZero {
     public static Double price() { return 820.00; }
 
     public static Poster poster() {
-        return new Poster(title(), description(), date());
+        return new Poster(title(), description(), date(), category());
     }
 
     public static List<Evaluation> evaluations() {

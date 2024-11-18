@@ -3,6 +3,7 @@ package passport.infra.placeholders.events;
 import java.time.LocalDate;
 
 import passport.domain.models.events.Event;
+import passport.domain.models.events.EventCategory;
 import passport.domain.models.events.EventId;
 import passport.domain.models.events.Poster;
 
@@ -30,10 +31,12 @@ public class RockInRio {
 
     public static Double price() { return 795.50; }
 
+    public static EventCategory category() { return EventCategory.MUSIC; }
+
     public static Event event() {
         var event = new Event(
                 id,
-                new Poster(title(), description(), date()),
+                new Poster(title(), description(), date(), category()),
                 price());
         event.addCapacity(200);
         return event;
