@@ -22,19 +22,25 @@ public class AvailableEventsListing implements Context {
     private Events events;
     private LocalDate eventDate;
 
+    static class DefaultModifiers {
+        static final Predicate<Event> acceptAll = _ -> true;
+        static final Comparator<Event> byDate = Comparator.comparing(
+                (event) -> event.poster().date());
+    }
+
     /**
      * Constructor with the specified events repository.
      *
      * @param events the repository of events used for listing
      */
     public AvailableEventsListing(Events events) {
-        final Predicate<Event> acceptAll = event -> true;
-        final Comparator<Event> byDate = Comparator.comparing(
-                (event) -> event.poster().date());
-
-        this.filter = acceptAll;
-        this.sorter = byDate;
+        setDefaultModifiers();
         this.events = events;
+    }
+
+    private void setDefaultModifiers() {
+        this.filter = DefaultModifiers.acceptAll;
+        this.sorter = DefaultModifiers.byDate;
     }
 
     /**
@@ -56,11 +62,12 @@ public class AvailableEventsListing implements Context {
      */
     public AvailableEventsListing including(String sample) {
         this.filter = this.filter.and(
-            event -> {
-                final String caselessTitle = event.poster().title().toLowerCase();
-                final String caselessSample = sample.toLowerCase();
-                return caselessTitle.contains(caselessSample);
-            });
+                event -> {
+                    final String caselessTitle = event.poster().title()
+                            .toLowerCase();
+                    final String caselessSample = sample.toLowerCase();
+                    return caselessTitle.contains(caselessSample);
+                });
         return this;
     }
 
@@ -138,9 +145,12 @@ public class AvailableEventsListing implements Context {
     public List<Event> availables() {
         Objects.requireNonNull(today, "Today date cannot be null");
         Objects.requireNonNull(events, "Events repository cannot be null");
-        return events.availableOn(today).stream()
+        var filteredEvents = events.availableOn(today).stream()
                 .filter(filter)
                 .sorted(sorter)
                 .collect(Collectors.toList());
+
+        this.setDefaultModifiers();
+        return filteredEvents;
     }
 }
