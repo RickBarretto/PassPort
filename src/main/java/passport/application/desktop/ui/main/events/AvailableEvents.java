@@ -33,7 +33,7 @@ public class AvailableEvents extends VBox {
         final DatePicker startDatePicker = new DatePicker();
         final DatePicker endDatePicker = new DatePicker();
         final ChoiceBox<String> sortSelector = new ChoiceBox<>();
-        final Button filterButton = new Button("Filter");
+        final Button filterButton = new Button();
 
         public Components() { this.eventsTitle.getStyleClass().add("title-1"); }
     }
@@ -66,7 +66,8 @@ public class AvailableEvents extends VBox {
     }
 
     private VBox searchBox() {
-        ui.searchBar.setPromptText("Search...");
+        ui.searchBar
+                .setPromptText(app.translator().translationOf("prompt.search"));
         ui.searchBar.setMinWidth(500);
         ui.searchBar.setPrefWidth(850);
         var searchBox = new VBox(ui.searchBar);
@@ -107,7 +108,9 @@ public class AvailableEvents extends VBox {
             listing = listing.including(ui.searchBar.getText());
         }
 
-        if (ui.categoryFilter.getValue() != null) {
+        if (ui.categoryFilter.getValue() != null
+                && !ui.categoryFilter.getValue().equals(
+                        app.translator().translationOf("category.all"))) {
             EventCategory selectedCategory = Stream.of(EventCategory.values())
                     .filter(category -> app.translator()
                             .translationOf(
@@ -182,14 +185,29 @@ public class AvailableEvents extends VBox {
                 .translateFrom(ui.eventsTitle::setText, "main.events.title")
                 .resourcesProp().addListener((_, _, _) -> this.translate());
 
+        ui.searchBar
+                .setPromptText(app.translator().translationOf("prompt.search"));
+        ui.filterButton
+                .setText(app.translator().translationOf("button.filter"));
+
         ui.categoryFilter.getItems().clear();
+        ui.categoryFilter.getItems()
+                .add(app.translator().translationOf("category.all"));
         Stream.of(EventCategory.values())
                 .map(category -> app.translator().translationOf(
                         "category." + category.name().toLowerCase()))
                 .forEach(ui.categoryFilter.getItems()::add);
+        ui.categoryFilter
+                .setValue(app.translator().translationOf("category.all"));
 
         ui.sortSelector.setItems(FXCollections.observableArrayList(
                 app.translator().translationOf("sort.title"),
                 app.translator().translationOf("sort.date")));
+        ui.sortSelector.setValue(app.translator().translationOf("sort.date"));
+
+        ui.startDatePicker.setPromptText(
+                app.translator().translationOf("prompt.start_date"));
+        ui.endDatePicker.setPromptText(
+                app.translator().translationOf("prompt.end_date"));
     }
 }
