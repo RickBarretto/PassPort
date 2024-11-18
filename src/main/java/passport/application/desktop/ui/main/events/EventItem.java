@@ -32,7 +32,7 @@ public class EventItem extends Button {
             this.title = event.poster().title();
             this.date = event.poster().date();
             this.price = event.boxOffice().ticket().price();
-            this.category = event.poster().category().name();
+            this.category = event.poster().category().toString();
         }
     }
 
@@ -86,7 +86,8 @@ public class EventItem extends Button {
     }
 
     private Label category() {
-        var category = new Label(props.category);
+        var category = new Label(app.translator().translationOf(
+                props.category));
         category.getStyleClass().add("text-small");
         category.setPadding(new Insets(5, 0, 0, 0));
 
