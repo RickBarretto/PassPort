@@ -5,8 +5,10 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import passport.application.desktop.system.PassPort;
 import passport.domain.models.events.Event;
@@ -44,13 +46,14 @@ public class AvailableEvents extends VBox {
     private void setupLayout() {
         this.setSpacing(10);
         this.setAlignment(Pos.TOP_CENTER);
+        this.setPadding(new Insets(10, 10, 20, 10));
         this.getChildren().add(eventsBox());
     }
 
     private VBox eventsBox() {
         var eventsContainer = eventsContainer();
 
-        var box = new VBox(ui.eventsTitle, eventsContainer);
+        var box = new VBox(ui.eventsTitle, eventsScroll(eventsContainer));
         box.setAlignment(Pos.TOP_CENTER);
         box.setSpacing(20);
 
@@ -69,6 +72,16 @@ public class AvailableEvents extends VBox {
                             .add(EventItem.of(app, event, this::openEvent)));
                 });
         return eventsContainer;
+    }
+
+    private ScrollPane eventsScroll(VBox eventsContainer) {
+        var scrollPane = new ScrollPane(eventsContainer);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        return scrollPane;
     }
 
     public void updateEvents(List<Event> newEvents) {
