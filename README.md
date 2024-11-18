@@ -18,6 +18,15 @@ The requirements are:
 - **Refund Management:** The project also supports ticket refunds.
 - **Database Integration:** All the event and user data is stored in a Json database.
 
+
+## ScreenShots
+
+![Login Screen](./.github/assets/login.png)
+![Signup Screen](./.github/assets/signup.png)
+![Main Screen](./.github/assets/main.png)
+![Event Window](./.github/assets/event.png)
+![Profile Editing Window](./.github/assets/profile.png)
+
 ## Project's Structure
 
 This project uses Clean Architecture and Domain-Driven Design (DDD) for learning purposes. 
