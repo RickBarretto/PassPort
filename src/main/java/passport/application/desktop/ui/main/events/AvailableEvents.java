@@ -67,7 +67,7 @@ public class AvailableEvents extends VBox {
 
     private VBox searchBox() {
         ui.searchBar.setPromptText("Search...");
-        ui.searchBar.setMinWidth(400);
+        ui.searchBar.setMinWidth(500);
         ui.searchBar.setPrefWidth(850);
         var searchBox = new VBox(ui.searchBar);
         searchBox.setAlignment(Pos.CENTER);
@@ -83,31 +83,22 @@ public class AvailableEvents extends VBox {
                 ui.sortSelector,
                 ui.filterButton);
 
-        Stream.of(EventCategory.values())
-                .map(category -> app.translator().translationOf(
-                        "category." + category.name().toLowerCase()))
-                .forEach(ui.categoryFilter.getItems()::add);
-
         ui.categoryFilter.setPrefWidth(150);
         ui.startDatePicker.setPrefWidth(150);
         ui.endDatePicker.setPrefWidth(150);
         ui.sortSelector.setPrefWidth(150);
         ui.filterButton.setPrefWidth(100);
 
-        ui.sortSelector.setItems(FXCollections.observableArrayList(
-                app.translator().translationOf("sort.title"),
-                app.translator().translationOf("sort.date")));
-
-        ui.filterButton.setOnAction(e -> filter());
+        ui.filterButton.setOnAction(e -> applyFilters());
 
         filtersBox.setAlignment(Pos.CENTER);
         filtersBox.setPadding(new Insets(10));
-        filtersBox.setMaxWidth(850); // Make the filters box wider
+        filtersBox.setPrefWidth(850);
 
         return filtersBox;
     }
 
-    private void filter() {
+    private void applyFilters() {
         var listing = app.services()
                 .eventsListing()
                 .beingToday(LocalDate.now());
@@ -117,8 +108,13 @@ public class AvailableEvents extends VBox {
         }
 
         if (ui.categoryFilter.getValue() != null) {
-            EventCategory selectedCategory = EventCategory
-                    .valueOf(ui.categoryFilter.getValue().toUpperCase());
+            EventCategory selectedCategory = Stream.of(EventCategory.values())
+                    .filter(category -> app.translator()
+                            .translationOf(
+                                    "category." + category.name().toLowerCase())
+                            .equals(ui.categoryFilter.getValue()))
+                    .findFirst()
+                    .orElse(null);
             listing = listing.withCategory(selectedCategory);
         }
 
@@ -131,7 +127,7 @@ public class AvailableEvents extends VBox {
         String selectedSort = ui.sortSelector.getValue();
         if (selectedSort != null) {
             if (selectedSort
-                    .equals(app.translator().translationOf("sort.name"))) {
+                    .equals(app.translator().translationOf("sort.title"))) {
                 listing = listing.sortedByTitle();
             }
             else if (selectedSort
@@ -185,5 +181,15 @@ public class AvailableEvents extends VBox {
         app.translator()
                 .translateFrom(ui.eventsTitle::setText, "main.events.title")
                 .resourcesProp().addListener((_, _, _) -> this.translate());
+
+        ui.categoryFilter.getItems().clear();
+        Stream.of(EventCategory.values())
+                .map(category -> app.translator().translationOf(
+                        "category." + category.name().toLowerCase()))
+                .forEach(ui.categoryFilter.getItems()::add);
+
+        ui.sortSelector.setItems(FXCollections.observableArrayList(
+                app.translator().translationOf("sort.title"),
+                app.translator().translationOf("sort.date")));
     }
 }
