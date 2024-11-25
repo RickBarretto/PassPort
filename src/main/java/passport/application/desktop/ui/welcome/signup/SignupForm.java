@@ -74,7 +74,9 @@ public class SignupForm extends VBox {
     private void translate() {
         app.translator()
                 .translateFrom(ui.title::setText, "login.title")
+                .translateFrom(ui.title::setAccessibleText, "login.title")
                 .translateFrom(ui.goToLogin::setText, "logon.switch")
+                .translateFrom(ui.goToLogin::setAccessibleText, "logon.switch")
                 .resourcesProp().addListener((_, _, _) -> translate());
     }
 }
