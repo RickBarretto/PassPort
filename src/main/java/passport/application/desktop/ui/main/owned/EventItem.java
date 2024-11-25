@@ -66,9 +66,11 @@ public class EventItem extends Button {
     }
 
     private Label dateLabel() {
-        var date = new Label(DateTimeFormatter
+        final String dateContent = DateTimeFormatter
                 .ofPattern("MMM d, yyyy")
-                .format(props.date));
+                .format(props.date);
+        var date = new Label(dateContent);
+        date.setAccessibleText(dateContent);
         date.getStyleClass().add("text-small");
 
         return date;

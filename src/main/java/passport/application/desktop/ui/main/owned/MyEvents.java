@@ -90,6 +90,7 @@ public class MyEvents extends VBox {
     private void translate() {
         app.translator()
                 .translateFrom(ui.eventsTitle::setText, "main.events.title")
+                .translateFrom(ui.eventsTitle::setAccessibleText, "main.events.title")
                 .resourcesProp().addListener((_, _, _) -> this.translate());
     }
 }
