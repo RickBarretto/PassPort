@@ -45,7 +45,8 @@ public class EventPopup {
 
         private Button buyButton(PassPort app, Event event) {
             var btn = new Button(app.translator().translationOf("events.buy"));
-            
+            btn.setAccessibleText(app.translator().translationOf("events.buy"));
+
             if (event.boxOffice().isSoldOut()) {
                 btn.setDisable(true);
             }

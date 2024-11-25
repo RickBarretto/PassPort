@@ -44,6 +44,8 @@ public class Comments extends VBox {
     private Label header(PassPort app) {
         Label header = new Label(
                 app.translator().translationOf("events.comments"));
+        header.setAccessibleText(
+                app.translator().translationOf("events.comments"));
         header.getStyleClass().add("title-2");
         return header;
     }

@@ -51,6 +51,7 @@ public class EventDetails extends VBox {
         }
 
         var price = new Label(priceContent);
+        price.setAccessibleText(priceContent);
         price.getStyleClass().add("title-3");
         return price;
     }

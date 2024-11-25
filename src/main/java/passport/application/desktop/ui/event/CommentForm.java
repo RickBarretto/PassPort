@@ -25,7 +25,10 @@ public class CommentForm extends VBox {
 
     private TextArea commentField() {
         TextArea area = new TextArea();
-        area.setPromptText(app.translator().translationOf("events.comment-here"));
+        area.setPromptText(
+                app.translator().translationOf("events.comment-here"));
+        area.setAccessibleText(
+                app.translator().translationOf("events.comment-here"));
         area.setPrefRowCount(1);
         area.setWrapText(true);
         return area;
@@ -33,6 +36,7 @@ public class CommentForm extends VBox {
 
     private Button submit(Consumer<String> onSubmit) {
         Button button = new Button("Comment");
+        button.setAccessibleText("Comment");
         button.setOnAction(_ -> handleSubmit(onSubmit));
         return button;
     }
