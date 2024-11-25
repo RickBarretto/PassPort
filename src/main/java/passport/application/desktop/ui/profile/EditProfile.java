@@ -223,7 +223,11 @@ public class EditProfile {
         editProfile.initModality(Modality.APPLICATION_MODAL);
         editProfile.initOwner(app.stage());
         editProfile.setTitle(app.translator().translationOf("profile.edit"));
-        editProfile.setScene(new Scene(root, 500, 400));
+        var scene = new Scene(root, 500, 400);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ESCAPE) close();
+        });
+        editProfile.setScene(scene);
         this.stage = editProfile;
         editProfile.show();
     }
