@@ -99,10 +99,13 @@ public class CredentialsStep extends SignupStep {
     private void translate() {
         app.translator()
                 .translateFrom(ui.email::setPromptText, "logon.email")
+                .translateFrom(ui.email::setAccessibleText, "logon.email")
                 .translateFrom(ui.password::setPromptText, "logon.password")
-                .translateFrom(ui.confirmPassword::setPromptText,
-                        "logon.confirmPassword")
+                .translateFrom(ui.password::setAccessibleText, "logon.password")
+                .translateFrom(ui.confirmPassword::setPromptText, "logon.confirmPassword")
+                .translateFrom(ui.confirmPassword::setAccessibleText, "logon.confirmPassword")
                 .translateFrom(ui.nextButton::setText, "logon.next")
+                .translateFrom(ui.nextButton::setAccessibleText, "logon.next")
                 .resourcesProp().addListener((_, _, _) -> translate());
     }
 
