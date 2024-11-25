@@ -130,11 +130,12 @@ public class Drawer extends VBox {
 
     private void translate() {
         app.translator()
-                .translateFrom(ui.profile::setDescription,
-                        "main.drawer.profile")
+                .translateFrom(ui.profile::setDescription, "main.drawer.profile")
+                .translateFrom(ui.profile::setAccessibleText, "main.drawer.profile")
                 .translateFrom(ui.events::setDescription, "main.drawer.events")
-                .translateFrom(ui.tickets::setDescription,
-                        "main.drawer.tickets")
+                .translateFrom(ui.events::setAccessibleText, "main.drawer.events")
+                .translateFrom(ui.tickets::setDescription, "main.drawer.tickets")
+                .translateFrom(ui.tickets::setAccessibleText, "main.drawer.tickets")
                 .resourcesProp().addListener((_, _, _) -> translate());
     }
 }
