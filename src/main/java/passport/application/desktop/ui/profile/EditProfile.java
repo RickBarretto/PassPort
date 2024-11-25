@@ -58,6 +58,7 @@ public class EditProfile {
 
         private void translate() {
             app.translator().translateFrom(save::setText, "profile.save");
+            app.translator().translateFrom(save::setAccessibleText, "profile.save");
         }
     }
 
@@ -204,7 +205,11 @@ public class EditProfile {
     }
 
     private Label $(String key) {
-        return new Label(app.translator().translationOf(key));
+        final var text = app.translator().translationOf(key);
+        var label = new Label(text);
+        label.setAccessibleText(text);
+
+        return label;
     }
 
     private Separator vsplit() {
