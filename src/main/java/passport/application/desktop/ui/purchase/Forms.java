@@ -24,6 +24,8 @@ public class Forms {
 
         // Card Number
         var cardNumber = new TextField();
+        cardNumber.setAccessibleText(
+                translator.translationOf("purchase.card.number.label"));
         inject(form,
                 new Label(
                         translator.translationOf("purchase.card.number.label")),
@@ -40,18 +42,24 @@ public class Forms {
 
         // CVV
         var cvv = new TextField();
+        cvv.setAccessibleText(
+                translator.translationOf("purchase.card.cvv.label"));
         inject(form,
                 new Label(translator.translationOf("purchase.card.cvv.label")),
                 cvv);
 
         // Amount
         var amount = amountSpinner();
+        amount.setAccessibleText(
+                translator.translationOf("purchase.amount.label"));
         inject(form,
                 new Label(translator.translationOf("purchase.amount.label")),
                 amount);
 
         // Submit Button
         var submit = new Button(
+                totalPrice(translator, ticketPrice, amount.getValue()));
+        submit.setAccessibleText(
                 totalPrice(translator, ticketPrice, amount.getValue()));
         inject(form, submit);
 
@@ -84,18 +92,24 @@ public class Forms {
 
         // PIX Key
         var pixKey = new TextField();
+        pixKey.setAccessibleText(
+                translator.translationOf("purchase.pix.key.label"));
         inject(form,
                 new Label(translator.translationOf("purchase.pix.key.label")),
                 pixKey);
 
         // Amount
         var amount = amountSpinner();
+        amount.setAccessibleText(
+                translator.translationOf("purchase.amount.label"));
         inject(form,
                 new Label(translator.translationOf("purchase.amount.label")),
                 amount);
 
         // Submit Button
         var submit = new Button(
+                totalPrice(translator, price, amount.getValue()));
+        submit.setAccessibleText(
                 totalPrice(translator, price, amount.getValue()));
         inject(form, submit);
 
