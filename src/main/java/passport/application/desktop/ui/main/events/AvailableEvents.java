@@ -174,6 +174,7 @@ public class AvailableEvents extends VBox {
         scrollPane.setFitToHeight(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setFocusTraversable(true);
 
         return scrollPane;
     }
