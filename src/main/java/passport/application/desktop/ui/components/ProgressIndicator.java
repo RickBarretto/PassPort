@@ -61,6 +61,7 @@ public class ProgressIndicator extends VBox {
     private void translate() {
         translator
                 .translateFrom(this::translateLabel, "progress.step")
+                .translateFrom(this::setAccessibleText, "progress.step")
                 .resourcesProp().addListener((_, _, _) -> translate());
     }
 }
