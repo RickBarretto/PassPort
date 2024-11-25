@@ -4,6 +4,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import passport.application.desktop.system.PassPort;
 import passport.domain.exceptions.PurchaseForInactiveEvent;
 import passport.domain.exceptions.SoldOut;
@@ -32,6 +34,9 @@ public class PurchaseWindow {
 
     private Stage newStage(Region root) {
         Scene scene = new Scene(root, 800, 600);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ESCAPE) close();
+        });
         var stage = this.newStageFromCurrent();
         stage.setScene(scene);
         return stage;
@@ -70,4 +75,6 @@ public class PurchaseWindow {
             e.printStackTrace();
         }
     }
+
+    void close() { stage.close(); }
 }
