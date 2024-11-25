@@ -68,6 +68,8 @@ public class AvailableEvents extends VBox {
     private VBox searchBox() {
         ui.searchBar
                 .setPromptText(app.translator().translationOf("prompt.search"));
+        ui.searchBar.setAccessibleText(
+                app.translator().translationOf("prompt.search"));
         ui.searchBar.setMinWidth(500);
         ui.searchBar.setPrefWidth(850);
         var searchBox = new VBox(ui.searchBar);
@@ -181,33 +183,40 @@ public class AvailableEvents extends VBox {
     }
 
     private void translate() {
-        app.translator()
-                .translateFrom(ui.eventsTitle::setText, "main.events.title")
-                .resourcesProp().addListener((_, _, _) -> this.translate());
-
-        ui.searchBar
-                .setPromptText(app.translator().translationOf("prompt.search"));
-        ui.filterButton
-                .setText(app.translator().translationOf("button.filter"));
-
+        // Setup Category FIlter
         ui.categoryFilter.getItems().clear();
-        ui.categoryFilter.getItems()
-                .add(app.translator().translationOf("category.all"));
+        ui.categoryFilter
+                .getItems()
+                .add(
+                        app.translator()
+                                .translationOf("category.all"));
+
         Stream.of(EventCategory.values())
                 .map(category -> app.translator().translationOf(
                         "category." + category.name().toLowerCase()))
                 .forEach(ui.categoryFilter.getItems()::add);
-        ui.categoryFilter
-                .setValue(app.translator().translationOf("category.all"));
 
+        // Setup sort selector
         ui.sortSelector.setItems(FXCollections.observableArrayList(
                 app.translator().translationOf("sort.title"),
                 app.translator().translationOf("sort.date")));
-        ui.sortSelector.setValue(app.translator().translationOf("sort.date"));
 
-        ui.startDatePicker.setPromptText(
-                app.translator().translationOf("prompt.start_date"));
-        ui.endDatePicker.setPromptText(
-                app.translator().translationOf("prompt.end_date"));
+        app.translator()
+                .translateFrom(ui.eventsTitle::setText, "main.events.title")
+                .translateFrom(ui.eventsTitle::setAccessibleText,
+                        "main.events.title")
+                .translateFrom(ui.searchBar::setPromptText, "prompt.search")
+                .translateFrom(ui.searchBar::setAccessibleText, "prompt.search")
+                .translateFrom(ui.filterButton::setText, "button.filter")
+                .translateFrom(ui.filterButton::setAccessibleText, "button.filter")
+                .translateFrom(ui.categoryFilter::setValue, "category.all")
+                .translateFrom(ui.categoryFilter::setAccessibleText, "category.all")
+                .translateFrom(ui.startDatePicker::setPromptText, "prompt.start_date")
+                .translateFrom(ui.startDatePicker::setAccessibleText, "prompt.start_date")
+                .translateFrom(ui.endDatePicker::setPromptText, "prompt.end_date")
+                .translateFrom(ui.endDatePicker::setAccessibleText, "prompt.end_date")
+                .translateFrom(ui.sortSelector::setValue, "sort.date")
+                .translateFrom(ui.sortSelector::setAccessibleText, "sort.date")
+                .resourcesProp().addListener((_, _, _) -> this.translate());
     }
 }
