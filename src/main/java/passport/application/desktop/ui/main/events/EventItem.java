@@ -77,9 +77,11 @@ public class EventItem extends Button {
     }
 
     private Label dateLabel() {
-        var date = new Label(DateTimeFormatter
+        final String dateFormat = DateTimeFormatter
                 .ofPattern("MMM d, yyyy")
-                .format(props.date));
+                .format(props.date);
+        var date = new Label(dateFormat);
+        date.setAccessibleText(dateFormat);
         date.getStyleClass().add("text-small");
 
         return date;
@@ -87,6 +89,8 @@ public class EventItem extends Button {
 
     private Label category() {
         var category = new Label(app.translator().translationOf(
+                props.category));
+        category.setAccessibleText(app.translator().translationOf(
                 props.category));
         category.getStyleClass().add("text-small");
         category.setPadding(new Insets(5, 0, 0, 0));
@@ -111,9 +115,12 @@ public class EventItem extends Button {
     private void translate() {
         if (!event.boxOffice().isSoldOut()) {
             this.setContent(this.formattedPrice());
+            this.setAccessibleText(this.formattedPrice());
         }
         else {
             this.setContent(app.translator().translationOf("events.sold-out"));
+            this.setAccessibleText(
+                    app.translator().translationOf("events.sold-out"));
         }
     }
 
