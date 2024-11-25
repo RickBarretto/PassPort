@@ -100,15 +100,25 @@ public class LoginForm extends VBox {
     // =~=~=~=~= =~=~=~=~= SETUP TRANSLATION =~=~=~=~= =~=~=~=~=
 
     private void translate() {
-        // @formatter:off
-        app.translator()
-            .translateFrom(ui.title::setText, "login.title")
-            .translateFrom(ui.email::setPromptText, "login.email")
-            .translateFrom(ui.password::setPromptText, "login.password")
-            .translateFrom(ui.loginButton::setText, "login.button")
-            .translateFrom(ui.switchToLogon::setText, "login.switch")
-            .resourcesProp().addListener((_, _, _) -> translate());
-        // @formatter:on
+    // @formatter:off
+    app.translator()
+        .translateFrom(ui.title::setText, "login.title")
+        .translateFrom(ui.title::setAccessibleText, "login.title")
+        
+        .translateFrom(ui.email::setPromptText, "login.email")
+        .translateFrom(ui.email::setAccessibleText, "login.email")
+        
+        .translateFrom(ui.password::setPromptText, "login.password")
+        .translateFrom(ui.password::setAccessibleText, "login.password")
+        
+        .translateFrom(ui.loginButton::setText, "login.button")
+        .translateFrom(ui.loginButton::setAccessibleText, "login.button")
+
+        .translateFrom(ui.switchToLogon::setText, "login.switch")
+        .translateFrom(ui.switchToLogon::setAccessibleText, "login.switch")
+        
+        .resourcesProp().addListener((_, _, _) -> translate());
+    // @formatter:on
     }
 
 }
