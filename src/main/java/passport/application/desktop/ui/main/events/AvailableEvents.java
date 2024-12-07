@@ -1,3 +1,10 @@
+/**
+ * Welcome to the "AvailableEvents" class, where code hygiene is a distant
+ * dream. This class is a prime example of what happens when you ignore Uncle
+ * Bob's advice. Proceed with caution, and may the refactoring gods have mercy
+ * on your soul. Please, don't judge me, I'm not proud of my old self either.
+ */
+
 package passport.application.desktop.ui.main.events;
 
 import java.time.LocalDate;
@@ -21,11 +28,17 @@ import passport.application.desktop.system.PassPort;
 import passport.domain.models.events.Event;
 import passport.domain.models.events.EventCategory;
 
+/**
+ * Displays available events and provides filters to search and sort them.
+ */
 public class AvailableEvents extends VBox {
     private final PassPort app;
     private final Components ui;
     private final ObservableList<Event> events;
 
+    /**
+     * Holds UI components for the AvailableEvents view.
+     */
     class Components {
         final Label eventsTitle = new Label();
         final TextField searchBar = new TextField();
@@ -38,6 +51,9 @@ public class AvailableEvents extends VBox {
         public Components() { this.eventsTitle.getStyleClass().add("title-1"); }
     }
 
+    /**
+     * @param app The PassPort application instance.
+     */
     public AvailableEvents(PassPort app) {
         this.app = app;
         this.ui = new Components();
@@ -48,8 +64,18 @@ public class AvailableEvents extends VBox {
         this.updateEvents(this.loadList());
     }
 
+    /**
+     * Opens the event purchase view for the given event.
+     *
+     * @param event The event to be purchased.
+     */
     private void openEvent(Event event) { app.toEventPurchase(event); }
 
+    /**
+     * Loads the list of available events starting today.
+     *
+     * @return The list of available events.
+     */
     private List<Event> loadList() {
         return app.services()
                 .eventsListing()
@@ -65,6 +91,11 @@ public class AvailableEvents extends VBox {
                 eventsBox());
     }
 
+    /**
+     * Creates the search Bar section
+     *
+     * @return A VBox containing the search bar.
+     */
     private VBox searchBox() {
         ui.searchBar
                 .setPromptText(app.translator().translationOf("prompt.search"));
@@ -78,6 +109,11 @@ public class AvailableEvents extends VBox {
         return searchBox;
     }
 
+    /**
+     * Creates the filters sections for the events.
+     *
+     * @return An HBox containing the filters.
+     */
     private HBox filtersBox() {
         var filtersBox = new HBox(10,
                 ui.categoryFilter,
@@ -101,6 +137,11 @@ public class AvailableEvents extends VBox {
         return filtersBox;
     }
 
+    /**
+     * Applies the selected filters to the events list. Observation: I wouldn't
+     * touch this if I was you... If it works, it works. I hope this works by
+     * the way, because ohhhh God, that is unreadable.
+     */
     private void applyFilters() {
         var listing = app.services()
                 .eventsListing()
@@ -144,6 +185,11 @@ public class AvailableEvents extends VBox {
         updateEvents(listing.availables());
     }
 
+    /**
+     * Creates the events scroll pane section.
+     *
+     * @return A VBox containing the events scroll pane.
+     */
     private VBox eventsBox() {
         var eventsContainer = eventsContainer();
 
@@ -154,6 +200,11 @@ public class AvailableEvents extends VBox {
         return box;
     }
 
+    /**
+     * Creates the events section.
+     *
+     * @return A VBox container for the events.
+     */
     private VBox eventsContainer() {
         var eventsContainer = new VBox(10);
         eventsContainer.setAlignment(Pos.TOP_CENTER);
@@ -168,6 +219,12 @@ public class AvailableEvents extends VBox {
         return eventsContainer;
     }
 
+    /**
+     * Creates a ScrollPane for the events container.
+     *
+     * @param eventsContainer The VBox containing the events.
+     * @return A ScrollPane for the events container.
+     */
     private ScrollPane eventsScroll(VBox eventsContainer) {
         var scrollPane = new ScrollPane(eventsContainer);
         scrollPane.setFitToWidth(true);
@@ -179,12 +236,22 @@ public class AvailableEvents extends VBox {
         return scrollPane;
     }
 
+    /**
+     * Updates the events list with new events.
+     *
+     * @param newEvents The new events to be displayed.
+     */
     public void updateEvents(List<Event> newEvents) {
         events.setAll(newEvents);
     }
 
+    /**
+     * Translates the UI components' text using the application translator.
+     * Another "What the heck was I doing it when I wrote this???", now, only
+     * God knows about how this piece of code works.
+     */
     private void translate() {
-        // Setup Category FIlter
+        // Setup Category Filter
         ui.categoryFilter.getItems().clear();
         ui.categoryFilter
                 .getItems()
