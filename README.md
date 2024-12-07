@@ -47,11 +47,11 @@ The requirements are:
 
 ## ScreenShots
 
-![Login Screen](./.github/assets/login.png)
-![Signup Screen](./.github/assets/signup.png)
-![Main Screen](./.github/assets/main.png)
-![Event Window](./.github/assets/event.png)
-![Profile Editing Window](./.github/assets/profile.png)
+![Login Screen](./assets/login.png)
+![Signup Screen](./assets/signup.png)
+![Main Screen](./assets/main.png)
+![Event Window](./assets/event.png)
+![Profile Editing Window](./assets/profile.png)
 
 ## Project's Structure
 
