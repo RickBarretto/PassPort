@@ -58,7 +58,7 @@ The requirements are:
 This project uses Clean Architecture and Domain-Driven Design (DDD) for learning purposes. 
 The choosen Architecture ensures modularity and testability by separating the code into layers. 
 With this in mind, the project's structure aligns perfectly with this approach. 
-Here's a look at the `src/java/main` structure:
+Here's a look at the `src/java/main/passport` structure:
 
 - `application`: The Application logic and UI. 
     Responsible for deal directly with the final user.
