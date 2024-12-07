@@ -29,9 +29,21 @@ import passport.infra.placeholders.ColdUsers;
 import passport.infra.virtual.EventsInMemory;
 import passport.infra.virtual.UsersInMemory;
 
+/**
+ * Classe principal da aplicação PassPort que estende {@link Application}.
+ * Inicializa e configura a aplicação a partir de diferentes modos de
+ * inicialização.
+ */
 public class App extends Application {
     private PassPort self;
 
+    /**
+     * Método de início da UI. O médoto sobreescreve o método
+     * de{@link Application}. Configura o estilo da aplicação, inicializa a
+     * janela de boas-vindas e exibe a interface.
+     * 
+     * @param root O estágio principal da aplicação.
+     */
     @Override
     public void start(Stage root) {
         startupFromCLI();
@@ -47,6 +59,11 @@ public class App extends Application {
         root.show();
     }
 
+    /**
+     * Método para inicializar a aplicação a partir dos argumentos da linha de
+     * comando. Verifica argumentos e ajusta o modo de inicialização
+     * adequadamente.
+     */
     private void startupFromCLI() {
         List<String> args = this.getParameters().getRaw();
 
@@ -62,14 +79,29 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Configura o estágio principal da aplicação com título e cena.
+     * 
+     * @param root  O estágio principal da aplicação.
+     * @param scene A cena a ser exibida no estágio principal.
+     */
     private void setupRoot(Stage root, Scene scene) {
         root.setTitle("PassPort");
         root.setScene(scene);
         self.toScene(scene);
     }
 
+    /**
+     * Método principal que inicia a aplicação.
+     * 
+     * @param args Argumentos da linha de comando.
+     */
     public static void main(String[] args) { launch(args); }
 
+    /**
+     * Exibe a mensagem de ajuda com os argumentos suportados pela linha de
+     * comando.
+     */
     private void help() { System.out.println("""
             PassPort
 
@@ -81,6 +113,12 @@ public class App extends Application {
                 --help      Show this
             """); }
 
+    /**
+     * Inicializa a aplicação no modo de execução a seco (dry-run). Nesse modo,
+     * nada será armazenado. Não será utilizado dados do banco de dados, mas
+     * dados de povoamento (no sentido de default) que serão carregados na
+     * memória RAM e somente nela.
+     */
     private void setDryrunStartup() {
         System.out.println("Starting up with Dry-run mode...");
         this.self = new PassPort(servicesOf(new Infra(
@@ -90,6 +128,12 @@ public class App extends Application {
                 new Session())));
     }
 
+    /**
+     * Inicializa a aplicação no modo frio (cold-startup). Nesse modo, os dados
+     * personalizados serão sobrescritos por dados de povoamento (no sentido de
+     * default), é utilizado o banco de dados, e os dados modificados durante o
+     * uso da aplicação serão atualizados e salvos no banco de dados.
+     */
     private void setColdStartup() {
         System.out.println("Starting up with Cold mode...");
 
@@ -106,6 +150,11 @@ public class App extends Application {
                         new Session())));
     }
 
+    /**
+     * Inicializa a aplicação no modo padrão. O modo padrão utiliza o bando de
+     * dados presente na pasta data/. Nada é sobreescrito na inicialização da
+     * aplicação.
+     */
     private void setDefaultStartup() {
         System.out.println("Starting up with Default mode...");
         this.self = new PassPort(servicesOf(
@@ -116,6 +165,14 @@ public class App extends Application {
                         new Session())));
     }
 
+    /**
+     * Configura e retorna os serviços da aplicação, de acordo com uma
+     * infraestrutura personalizada.
+     * 
+     * @param infra A infraestrutura usada para configurar os serviços.
+     * @return Uma instância de {@link Services} com todos os serviços
+     *         configurados.
+     */
     private Services servicesOf(Infra infra) {
         return new Services(
                 new SigningUp(infra.users()),
@@ -124,7 +181,8 @@ public class App extends Application {
                 new SubscribedEventsListing(infra.events()),
                 new EvaluationListing(infra.users()),
                 new EventEvaluation(infra.events(), LocalDate.now()),
-                new TicketBuying(infra.events(), infra.users(), LocalDate.now()),
+                new TicketBuying(infra.events(), infra.users(),
+                        LocalDate.now()),
                 new UserEditing(infra.users()));
     }
 }
