@@ -25,28 +25,37 @@ import passport.domain.exceptions.EmailAlreadyExists;
 import passport.domain.exceptions.InexistentUser;
 import passport.domain.models.users.values.Password;
 
+/**
+ * Manages the profile editing window.
+ */
 public class EditProfile {
     final PassPort app;
     final Components ui;
     private Stage stage;
 
+    /**
+     * Validation patterns and constants.
+     */
     static class Validation {
         private static final String CPF_PATTERN = "[0-9]{3}\\.?[0-9]{3}\\.?[0-9]{3}\\-?[0-9]{2}";
         private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@(.+)$";
         private static final int MIN_PASSWORD_LENGTH = 8;
     }
 
+    /**
+     * Holds UI components for the profile editing form.
+     */
     class Components {
-        // New Attributes
         TextField email = new TextField();
         PasswordField password = new PasswordField();
         TextField name = new TextField();
         TextField cpf = new TextField();
-
-        // Confirmation
         PasswordField confirmation = new PasswordField();
         Button save = new Button();
 
+        /**
+         * @param saveOnClick Action to save the profile changes.
+         */
         public Components(Action saveOnClick) {
             confirmation.setMaxWidth(250);
             confirmation.setPrefWidth(250);
@@ -60,10 +69,14 @@ public class EditProfile {
 
         private void translate() {
             app.translator().translateFrom(save::setText, "profile.save");
-            app.translator().translateFrom(save::setAccessibleText, "profile.save");
+            app.translator().translateFrom(save::setAccessibleText,
+                    "profile.save");
         }
     }
 
+    /**
+     * @param app The PassPort application instance.
+     */
     public EditProfile(PassPort app) {
         this.app = app;
         this.ui = new Components(this::save);
@@ -71,7 +84,6 @@ public class EditProfile {
     }
 
     private void save() {
-
         if (!isValid()) {
             return;
         }
@@ -82,7 +94,7 @@ public class EditProfile {
                 .get();
 
         try {
-            this.changeFromFieldss(app.services().profileEditing()
+            this.changeFromFields(app.services().profileEditing()
                     .of(user)
                     .changing())
                     .edit();
@@ -102,11 +114,22 @@ public class EditProfile {
         }
     }
 
+    /**
+     * Verifies if all fields are vaid. If a field is empty, this will be
+     * ignored. All rules are described internally by comments.
+     * 
+     * @return if all fields are valid.
+     */
     private boolean isValid() {
+
+        // Confirmation field is mandatory
+
         if (ui.confirmation.getText().isEmpty()) {
             app.warn().error("profile.confirmation.missing");
             return false;
         }
+
+        // Password & Password Confirmation should be the same
 
         var user = app.services().login().current().get();
         var samePassword = user.isOwnerOf(
@@ -117,6 +140,8 @@ public class EditProfile {
             return false;
         }
 
+        // Email should follow valid pattern: email@example.com
+
         var email = ui.email.getText();
         var filledEmail = !email.isEmpty();
         var invalidEmailPattern = !this.hasPattern(ui.email,
@@ -125,6 +150,8 @@ public class EditProfile {
             app.warn().error("validation.email.invalid");
             return false;
         }
+
+        // CPF should follow valid pattern: DDD.DDD.DDD-DD
 
         var cpf = ui.cpf.getText();
         var filledCPF = !cpf.isEmpty();
@@ -135,6 +162,8 @@ public class EditProfile {
             return false;
         }
 
+        // Passwords must have at least 8 characters
+
         var password = ui.password.getText();
         var filledPassword = !password.isEmpty();
         var isPasswordTooSmall = password
@@ -143,6 +172,8 @@ public class EditProfile {
             app.warn().error("validation.password.length");
             return false;
         }
+
+        // At least one field should be filled
 
         if (email.isEmpty() && cpf.isEmpty() && password.isEmpty()
                 && ui.name.getText().isEmpty()) {
@@ -157,7 +188,7 @@ public class EditProfile {
         return Pattern.matches(pattern, field.getText());
     }
 
-    private EditingWithTarget changeFromFieldss(EditingWithTarget change)
+    private EditingWithTarget changeFromFields(EditingWithTarget change)
             throws EmailAlreadyExists {
         if (this.isFilled(ui.email))
             change = change.email(ui.email.getText());
@@ -220,6 +251,14 @@ public class EditProfile {
         return widget;
     }
 
+    /**
+     * Opens the profile editing stage. This is set as
+     * {@link Modality#APPLICATION_MODAL}, so this ensures the User won't do
+     * anything else without updating their credentials or close this window,
+     * avoiding undesirable side-effects.
+     *
+     * @param root The root region of the scene.
+     */
     void openStage(Region root) {
         var editProfile = new Stage();
         editProfile.initModality(Modality.APPLICATION_MODAL);
@@ -227,13 +266,16 @@ public class EditProfile {
         editProfile.setTitle(app.translator().translationOf("profile.edit"));
         var scene = new Scene(root, 500, 400);
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.ESCAPE) close();
+            if (event.getCode() == KeyCode.ESCAPE)
+                close();
         });
         editProfile.setScene(scene);
         this.stage = editProfile;
         editProfile.show();
     }
 
+    /**
+     * Closes the profile editing window.
+     */
     void close() { stage.close(); }
-
 }
