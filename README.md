@@ -10,13 +10,39 @@ The requirements are:
 
 ## Features
 
-- **Event Creation:** Administrators can create new events. 
+- **Event Creation:** Administrators can create new events.
 - **User Management:** The system manages administrators and regular users.
 - **Ticket Sales:** Includes a ticketing system where users can buy tickets for events.
 - **Event Listings:** Users can browse through a list of available events.
 - **Event Evaluation:** After attending events, users can evaluate them.
 - **Refund Management:** The project also supports ticket refunds.
 - **Database Integration:** All the event and user data is stored in a Json database.
+
+### UI Features
+- **General**
+  - Input validation: using REGEX
+  - Translations: English, Spanish, Portuguese and Japanese
+  - Accessibility Features: by using SetAccessibleText 
+    and Github's CSS from AtlantaFX
+  - Three modes of initialization:
+    - **Hot run (default)**: Runs with the stored database.
+    - **Cold run**: Runs with a new database.
+    - **Dry run**: Runs with a new virtual database. 
+      Won't save changings.
+- **Welcome Window**
+  - Allow registration
+  - Allow login
+- **Events Window**
+  - List Available Events
+  - Filter Events by name, date or category
+  - Open Events Details
+  - Allow purchasing tickets for events
+    - Via PIX or Credit Card
+- **My Events Window**
+  - List User's owned Tickets
+  - Allow commenting owned Events
+- **My Profile Window**
+  - Updates the User Information
 
 
 ## ScreenShots
@@ -32,8 +58,11 @@ The requirements are:
 This project uses Clean Architecture and Domain-Driven Design (DDD) for learning purposes. 
 The choosen Architecture ensures modularity and testability by separating the code into layers. 
 With this in mind, the project's structure aligns perfectly with this approach. 
-Here's a look at the src/main structure:
+Here's a look at the `src/java/main` structure:
 
+- `application`: The Application logic and UI. 
+    Responsible for deal directly with the final user.
+    - `desktop`: The Desktop Application code, using JavaFX as GUI Framework.
 - `domain`: The business logic
     - `context`: Provides all context needed for the user's stories
     - `exceptions`: Contains all domain-specific exceptions
@@ -47,13 +76,13 @@ Here's a look at the src/main structure:
 
 The workspace contains three main folders:
 - `docs`: the documentation generated from Javadocs 
-- `src/main`: the source code
-- `src/test`: the test files
+- `src/java/main`: the source code
+- `src/java/test`: the test files
 
 ## Documentation (The 2nd version)
 
-* [Online Page](https://rickbarretto.github.io/events)
-* [Online Documentation](https://rickbarretto.github.io/events/docs)
+* [Online Page](https://rickbarretto.github.io/passport)
+* [Online Documentation](https://rickbarretto.github.io/passport/docs)
 * [Local Documentation](./docs/index.html)
 
 ## Java Version
@@ -71,6 +100,7 @@ JavaFX SDK 23
 Maven 3.9.9
 Gson 2.11.0
 JUnit 5.11.3
+AtlantaFX 2.0.1
 ```
 
 ## Used VsCode Extensions
