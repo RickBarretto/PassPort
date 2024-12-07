@@ -88,3 +88,8 @@ JUnit 5.11.3
 * Version: 6.3.5
 * Publisher: GitHub
 * VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=GitHub.github-vscode-theme
+
+---
+
+Having this PBL being finished, I hope I never touch this language again in my life, in special JavaFX.
+For my mental sanity, I'm out, peace! ✨
