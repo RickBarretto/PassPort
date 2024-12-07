@@ -11,7 +11,7 @@ import passport.application.desktop.ui.welcome.login.LoginForm;
 import passport.application.desktop.ui.welcome.signup.SignupForm;
 
 /**
- * Classe responsável por configurar a janela de boas-vindas da aplicação.
+ * Class responsible for setting up the welcome window of the application.
  */
 public class WelcomeWindow extends HBox {
     private final Hero hero;
@@ -20,9 +20,9 @@ public class WelcomeWindow extends HBox {
     private final LanguageSelector languageSelector;
 
     /**
-     * Inicializa a janela de boas-vindas.
+     * Initializes the welcome window.
      *
-     * @param app A instância da aplicação PassPort.
+     * @param app The instance of the PassPort application.
      */
     public WelcomeWindow(PassPort app) {
         hero = new Hero();
@@ -36,10 +36,10 @@ public class WelcomeWindow extends HBox {
     // =~=~=~=~= =~=~=~=~= SETUP ACTIONS =~=~=~=~= =~=~=~=~=
 
     /**
-     * Substitui o conteúdo do painel direito pelo nó fornecido. Isso permite a
-     * troca entre os painéis de Login e SignUp.
+     * Replaces the content of the right pane with the provided node. This
+     * allows switching between the Login and SignUp panels.
      *
-     * @param node O nó a ser exibido no painel direito.
+     * @param node The node to be displayed in the right pane.
      */
     private void rightPaneWith(Node node) {
         var rightPane = (VBox) getChildren().get(1);
@@ -48,19 +48,19 @@ public class WelcomeWindow extends HBox {
     }
 
     /**
-     * Alterna para o formulário de Signup.
+     * Switches to the Signup form.
      */
     public void switchToLogon() { this.rightPaneWith(this.signUpForm); }
 
     /**
-     * Alterna para o formulário de Login.
+     * Switches to the Login form.
      */
     public void switchToLogin() { this.rightPaneWith(this.login); }
 
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
 
     /**
-     * Configura a interface do usuário da janela de boas-vindas.
+     * Sets up the user interface of the welcome window.
      */
     private void setupUI() {
         var mainContent = mainContent();
@@ -72,10 +72,10 @@ public class WelcomeWindow extends HBox {
     }
 
     /**
-     * Cria o painel direito com o seletor de idioma e o conteúdo principal.
+     * Creates the right pane with the language selector and main content.
      *
-     * @param mainContent O conteúdo principal a ser exibido.
-     * @return Um VBox configurado como painel direito.
+     * @param mainContent The main content to be displayed.
+     * @return A VBox configured as the right pane.
      */
     private VBox rightPane(VBox mainContent) {
         VBox rightPane = new VBox();
@@ -84,9 +84,9 @@ public class WelcomeWindow extends HBox {
     }
 
     /**
-     * Cria o conteúdo principal da janela de boas-vindas.
+     * Creates the main content of the welcome window.
      *
-     * @return Um VBox configurado como conteúdo principal.
+     * @return A VBox configured as the main content.
      */
     private VBox mainContent() {
         VBox mainContent = new VBox();

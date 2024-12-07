@@ -30,19 +30,18 @@ import passport.infra.virtual.EventsInMemory;
 import passport.infra.virtual.UsersInMemory;
 
 /**
- * Classe principal da aplicação PassPort que estende {@link Application}.
- * Inicializa e configura a aplicação a partir de diferentes modos de
- * inicialização.
+ * Main class of the PassPort application that extends {@link Application}.
+ * Initializes and configures the application from different startup modes.
  */
 public class App extends Application {
     private PassPort self;
 
     /**
-     * Método de início da UI. O médoto sobreescreve o método
-     * de{@link Application}. Configura o estilo da aplicação, inicializa a
-     * janela de boas-vindas e exibe a interface.
+     * UI startup method. This method overrides the method from
+     * {@link Application}. Configures the application style, initializes the
+     * welcome window, and displays the interface.
      * 
-     * @param root O estágio principal da aplicação.
+     * @param root The main stage of the application.
      */
     @Override
     public void start(Stage root) {
@@ -60,9 +59,8 @@ public class App extends Application {
     }
 
     /**
-     * Método para inicializar a aplicação a partir dos argumentos da linha de
-     * comando. Verifica argumentos e ajusta o modo de inicialização
-     * adequadamente.
+     * Method to initialize the application from command line arguments. Checks
+     * arguments and adjusts the startup mode accordingly.
      */
     private void startupFromCLI() {
         List<String> args = this.getParameters().getRaw();
@@ -80,10 +78,10 @@ public class App extends Application {
     }
 
     /**
-     * Configura o estágio principal da aplicação com título e cena.
+     * Configures the main stage of the application with title and scene.
      * 
-     * @param root  O estágio principal da aplicação.
-     * @param scene A cena a ser exibida no estágio principal.
+     * @param root  The main stage of the application.
+     * @param scene The scene to be displayed on the main stage.
      */
     private void setupRoot(Stage root, Scene scene) {
         root.setTitle("PassPort");
@@ -92,15 +90,14 @@ public class App extends Application {
     }
 
     /**
-     * Método principal que inicia a aplicação.
+     * Main method that starts the application.
      * 
-     * @param args Argumentos da linha de comando.
+     * @param args Command line arguments.
      */
     public static void main(String[] args) { launch(args); }
 
     /**
-     * Exibe a mensagem de ajuda com os argumentos suportados pela linha de
-     * comando.
+     * Displays the help message with the supported command line arguments.
      */
     private void help() { System.out.println("""
             PassPort
@@ -114,10 +111,9 @@ public class App extends Application {
             """); }
 
     /**
-     * Inicializa a aplicação no modo de execução a seco (dry-run). Nesse modo,
-     * nada será armazenado. Não será utilizado dados do banco de dados, mas
-     * dados de povoamento (no sentido de default) que serão carregados na
-     * memória RAM e somente nela.
+     * Initializes the application in dry-run mode. In this mode, nothing will
+     * be stored. Data will not be used from the database, but instead, default
+     * data will be loaded into RAM only.
      */
     private void setDryrunStartup() {
         System.out.println("Starting up with Dry-run mode...");
@@ -129,10 +125,10 @@ public class App extends Application {
     }
 
     /**
-     * Inicializa a aplicação no modo frio (cold-startup). Nesse modo, os dados
-     * personalizados serão sobrescritos por dados de povoamento (no sentido de
-     * default), é utilizado o banco de dados, e os dados modificados durante o
-     * uso da aplicação serão atualizados e salvos no banco de dados.
+     * Initializes the application in cold-startup mode. In this mode, custom
+     * data will be overwritten by default data, the database will be used, and
+     * data modified during application use will be updated and saved to the
+     * database.
      */
     private void setColdStartup() {
         System.out.println("Starting up with Cold mode...");
@@ -151,9 +147,9 @@ public class App extends Application {
     }
 
     /**
-     * Inicializa a aplicação no modo padrão. O modo padrão utiliza o bando de
-     * dados presente na pasta data/. Nada é sobreescrito na inicialização da
-     * aplicação.
+     * Initializes the application in default mode. The default mode uses the
+     * database present in the data/ folder. Nothing is overwritten during
+     * application startup.
      */
     private void setDefaultStartup() {
         System.out.println("Starting up with Default mode...");
@@ -166,12 +162,11 @@ public class App extends Application {
     }
 
     /**
-     * Configura e retorna os serviços da aplicação, de acordo com uma
-     * infraestrutura personalizada.
+     * Configures and returns the application's services according to a
+     * customized infrastructure.
      * 
-     * @param infra A infraestrutura usada para configurar os serviços.
-     * @return Uma instância de {@link Services} com todos os serviços
-     *         configurados.
+     * @param infra The infrastructure used to configure the services.
+     * @return An instance of {@link Services} with all the services configured.
      */
     private Services servicesOf(Infra infra) {
         return new Services(

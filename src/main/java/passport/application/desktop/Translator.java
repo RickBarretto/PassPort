@@ -9,16 +9,15 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 /**
- * Responsável por gerenciar a tradução de strings em tempo de execução.
- * Observação: {@link ObjectProperty} é usado para permitir a atualização
- * dinâmica do conteúdo.
+ * Responsible for managing string translations at runtime. Note:
+ * {@link ObjectProperty} is used to allow dynamic content updates.
  */
 public class Translator {
     private final ObjectProperty<ResourceBundle> resources;
     private final ObjectProperty<Language> currentLanguage;
 
     /**
-     * Inicializa com o idioma inglês por padrão.
+     * Initializes with the English language by default.
      */
     public Translator() {
         currentLanguage = new SimpleObjectProperty<>(Language.ENGLISH);
@@ -27,9 +26,9 @@ public class Translator {
     }
 
     /**
-     * Define o idioma atual e carrega seu respectivo ResourceBundle.
+     * Sets the current language and loads its respective ResourceBundle.
      *
-     * @param language O idioma a ser definido.
+     * @param language The language to set.
      */
     public void language(Language language) {
         final var path = "passport.application.desktop.resources.messages";
@@ -42,12 +41,12 @@ public class Translator {
     }
 
     /**
-     * Configura a tradução de um texto, utilizando um setter de consumidor para
-     * aplicar a tradução.
+     * Sets up the translation of a text, using a consumer to apply the
+     * translation.
      *
-     * @param textSetter O consumidor que define o texto traduzido.
-     * @param property   A propriedade de tradução a ser utilizada.
-     * @return A instância atual do Translator.
+     * @param textSetter The consumer that sets the translated text.
+     * @param property   The translation property to be used.
+     * @return The current instance of Translator.
      */
     public Translator translateFrom(
             Consumer<String> textSetter,
@@ -57,42 +56,42 @@ public class Translator {
     }
 
     /**
-     * Retorna a tradução da propriedade especificada.
+     * Returns the translation of the specified property.
      *
-     * @param property A propriedade de tradução a ser utilizada.
-     * @return A string traduzida.
+     * @param property The translation property to be used.
+     * @return The translated string.
      */
     public String translationOf(String property) {
         return resources().getString(property);
     }
 
     /**
-     * Retorna o ResourceBundle atual.
+     * Returns the current ResourceBundle.
      *
-     * @return O ResourceBundle atual.
+     * @return The current ResourceBundle.
      */
     public ResourceBundle resources() { return resources.get(); }
 
     /**
-     * ResourceBundle como ObjectProperty.
+     * ResourceBundle as an ObjectProperty.
      *
-     * @return A propriedade do ResourceBundle.
+     * @return The ResourceBundle property.
      */
     public ObjectProperty<ResourceBundle> resourcesProp() {
         return resources;
     }
 
     /**
-     * Idioma atual.
+     * Returns the current language.
      *
-     * @return O idioma atual.
+     * @return The current language.
      */
     public Language language() { return currentLanguage.get(); }
 
     /**
-     * Idioma atual como um ObjectProperty.
+     * Current language as an ObjectProperty.
      *
-     * @return A propriedade do idioma atual.
+     * @return The current language property.
      */
     public ObjectProperty<Language> languageProp() {
         return currentLanguage;

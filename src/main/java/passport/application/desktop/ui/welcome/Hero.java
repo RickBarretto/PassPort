@@ -5,19 +5,19 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 /**
- * Pane "Hero" da janela de boas-vindas.
+ * "Hero" pane of the welcome window.
  */
 public class Hero extends StackPane {
 
     /**
-     * Inicializa a interface do componente.
+     * Initializes the component's interface.
      */
     public Hero() { setupUI(); }
 
     // =~=~=~=~= =~=~=~=~= SETUP UI =~=~=~=~= =~=~=~=~=
 
     /**
-     * Configura a interface do componente
+     * Sets up the component's interface.
      */
     void setupUI() {
         setupCss();
@@ -26,14 +26,14 @@ public class Hero extends StackPane {
     }
 
     /**
-     * Adiciona os elementos filhos.
+     * Adds the child elements.
      *
-     * @param appName O rótulo com o nome do aplicativo a ser adicionado.
+     * @param appName The label with the application name to be added.
      */
     private void addChildren(Label appName) { getChildren().add(appName); }
 
     /**
-     * Configura o estilo CSS do componente.
+     * Sets up the CSS style of the component.
      */
     private void setupCss() {
         setAlignment(Pos.CENTER);
@@ -41,9 +41,9 @@ public class Hero extends StackPane {
     }
 
     /**
-     * Retorna um Label com o nome do aplicativo.
+     * Returns a Label with the application name.
      *
-     * @return Um Label configurado com o nome do aplicativo.
+     * @return A Label configured with the application name.
      */
     private Label appName() {
         Label appName = new Label("PassPort");
