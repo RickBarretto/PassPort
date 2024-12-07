@@ -6,7 +6,7 @@
             "name": "Default (Hot Json Databse)",
             "request": "launch",
             "mainClass": "passport.application.desktop.App",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-23/lib\" --add-modules javafx.controls,javafx.fxml"        
+            "vmArgs": "--module-path \"${workspaceFolder}/dependencies/lib\" --add-modules javafx.controls,javafx.fxml"        
         },
         {
             "type": "java",
@@ -14,7 +14,7 @@
             "request": "launch",
             "args": "--dry",
             "mainClass": "passport.application.desktop.App",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-23/lib\" --add-modules javafx.controls,javafx.fxml"        
+            "vmArgs": "--module-path \"${workspaceFolder}/dependencies/lib\" --add-modules javafx.controls,javafx.fxml"        
         },
         {
             "type": "java",
@@ -22,7 +22,7 @@
             "request": "launch",
             "args": "--cold",
             "mainClass": "passport.application.desktop.App",
-            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-23/lib\" --add-modules javafx.controls,javafx.fxml"        
+            "vmArgs": "--module-path \"${workspaceFolder}/dependencies/lib\" --add-modules javafx.controls,javafx.fxml"        
         }
     ]
 }
