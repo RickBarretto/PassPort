@@ -14,17 +14,28 @@ import passport.application.desktop.system.PassPort;
 import passport.domain.exceptions.TryingToEvaluateActiveEvent;
 import passport.domain.models.events.Event;
 
+/**
+ * Manages the popup window for event details, comments, and purchasing.
+ */
 public class EventPopup {
     private final PassPort app;
     private final Event event;
     private final Components ui;
 
+    /**
+     * Holds UI components for the event popup.
+     */
     class Components {
         final VBox root;
         final EventDetails details;
         final Comments comments;
         final Button buy;
 
+        /**
+         * @param app        The PassPort application instance.
+         * @param event      The event being displayed.
+         * @param addComment Consumer for adding comments to the event.
+         */
         public Components(
                 PassPort app,
                 Event event,
@@ -54,7 +65,7 @@ public class EventPopup {
                 btn.getStyleClass().add("accent");
                 btn.setOnAction(_ -> app.toPurchaseOf(event));
             }
-          
+
             return btn;
         }
 
@@ -68,18 +79,32 @@ public class EventPopup {
         }
     }
 
+    /**
+     * @param app   The PassPort application instance.
+     * @param event The event being displayed.
+     */
     public EventPopup(PassPort app, Event event) {
         this.app = app;
         this.event = event;
         this.ui = new Components(app, event, this::comment);
     }
 
-    public EventPopup forPurchasing() {        
+    /**
+     * Sets up the UI for purchasing tickets.
+     *
+     * @return The updated EventPopup instance.
+     */
+    public EventPopup forPurchasing() {
         this.add(ui.buy);
         this.setupStage(ui.root);
         return this;
     }
 
+    /**
+     * Sets up the UI for allowing reviewing.
+     *
+     * @return The updated EventPopup instance.
+     */
     public EventPopup forReviewing() {
         this.add(ui.comments);
         this.setupStage(ui.root);
@@ -96,6 +121,12 @@ public class EventPopup {
         stage.show();
     }
 
+    /**
+     * Creates a new stage with modal properties. It uses
+     * {@link Modality#APPLICATION_MODAL} to avoid side-effects.
+     *
+     * @return The newly created modal stage.
+     */
     private Stage newStageFromCurrent() {
         Stage newStage = new Stage();
         newStage.initModality(Modality.APPLICATION_MODAL);
@@ -103,11 +134,16 @@ public class EventPopup {
         return newStage;
     }
 
+    /**
+     * Initiates the purchase process for the event.
+     */
+    public void buy() { app.toPurchaseOf(event); }
 
-    public void buy() {
-        app.toPurchaseOf(event);
-    }
-
+    /**
+     * Adds a comment to the event.
+     *
+     * @param content The content of the comment.
+     */
     public void comment(String content) {
         var author = app.services()
                 .login()
