@@ -11,19 +11,37 @@ import passport.application.desktop.system.PassPort;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
+/**
+ * Custom button used in the drawer, with an icon and a description.
+ */
 class DrawerButton extends Button {
     private final Components ui;
 
+    /**
+     * Holds UI components for the drawer button.
+     */
     class Components {
         final VBox content = new VBox(5);
         final Label description = new Label();
         final Node icon;
 
+        /**
+         * Initializes the components for the drawer button.
+         *
+         * @param iconName The name of the icon.
+         */
         public Components(String iconName) {
             this.icon = icon(iconName);
             setupLayout();
         }
 
+        /**
+         * If the ".png" file of the provided icon is not found, this will be
+         * replaced by the Label: "•".
+         * 
+         * @param name icon name
+         * @return The icon as an ImageView or Label.
+         */
         private Node icon(String name) {
             try {
                 var icon = loadImageIcon(name);
@@ -50,28 +68,50 @@ class DrawerButton extends Button {
         }
     }
 
+    /**
+     * Constructs a drawer button with the given icon and description.
+     *
+     * @param icon        The name of the icon file.
+     * @param description The description text.
+     */
     public DrawerButton(String icon, String description) {
         this.ui = new Components(icon);
         this.setGraphic(ui.content);
         this.setPrefWidth(200);
     }
 
+    /**
+     * Sets the description text.
+     *
+     * @param description The description text to set.
+     */
     public void setDescription(String description) {
         ui.description.setText(description);
     }
 
+    /**
+     * Marks the button as selected.
+     *
+     * @return The updated DrawerButton instance.
+     */
     public DrawerButton selected() {
         this.getStyleClass().add("accent");
         return this;
     }
 }
 
+/**
+ * Represents the drawer in the main window, providing navigation buttons.
+ */
 public class Drawer extends VBox {
     private final PassPort app;
     private final Components ui;
     private final Action openAllEvents;
     private final Action openMyEvents;
 
+    /**
+     * Holds UI components for the drawer.
+     */
     class Components {
         final DrawerButton profile = profile();
         final DrawerButton events = events();
@@ -99,11 +139,19 @@ public class Drawer extends VBox {
             btn.setOnAction((_) -> {
                 this.events.getStyleClass().remove("accent");
                 btn.getStyleClass().add("accent");
-                openMyEvents.exec();});
+                openMyEvents.exec();
+            });
             return btn;
         }
     }
 
+    /**
+     * Constructs the drawer with the given application instance and actions.
+     *
+     * @param app           The PassPort application instance.
+     * @param openAllEvents Action to open the available events view.
+     * @param openMyEvents  Action to open the owned events view.
+     */
     public Drawer(PassPort app, Action openAllEvents, Action openMyEvents) {
         this.app = app;
         this.ui = new Components();
