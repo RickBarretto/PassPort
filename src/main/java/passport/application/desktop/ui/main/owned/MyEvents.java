@@ -12,17 +12,28 @@ import javafx.scene.layout.VBox;
 import passport.application.desktop.system.PassPort;
 import passport.domain.models.events.Event;
 
+/**
+ * Represents the list of events owned by the user.
+ */
 public class MyEvents extends VBox {
     private final PassPort app;
     private final Components ui;
     private final ObservableList<Event> events;
 
+    /**
+     * Holds UI components for the MyEvents view.
+     */
     class Components {
         final Label eventsTitle = new Label();
 
-        public Components() { this.eventsTitle.getStyleClass().add("title-1"); }
+        public Components() {
+            this.eventsTitle.getStyleClass().add("title-1");
+        }
     }
 
+    /**
+     * @param app The PassPort application instance.
+     */
     public MyEvents(PassPort app) {
         this.app = app;
         this.ui = new Components();
@@ -33,6 +44,11 @@ public class MyEvents extends VBox {
         this.updateEvents(this.loadList());
     }
 
+    /**
+     * Opens the event review for the given event.
+     *
+     * @param event The event to be reviewed.
+     */
     private void openEvent(Event event) { app.toEventReview(event); }
 
     private List<Event> loadList() {
@@ -49,6 +65,11 @@ public class MyEvents extends VBox {
         this.getChildren().add(eventsBox());
     }
 
+    /**
+     * Creates a VBox containing the events title and the events scroll pane.
+     *
+     * @return A VBox containing the events title and the events scroll pane.
+     */
     private VBox eventsBox() {
         var eventsContainer = eventsContainer();
 
@@ -59,6 +80,11 @@ public class MyEvents extends VBox {
         return box;
     }
 
+    /**
+     * Creates a VBox container for the events.
+     *
+     * @return A VBox container for the events.
+     */
     private VBox eventsContainer() {
         var eventsContainer = new VBox(10);
         eventsContainer.setAlignment(Pos.TOP_CENTER);
@@ -73,6 +99,12 @@ public class MyEvents extends VBox {
         return eventsContainer;
     }
 
+    /**
+     * Creates a ScrollPane for the events container.
+     *
+     * @param eventsContainer The VBox containing the events.
+     * @return A ScrollPane for the events container.
+     */
     private ScrollPane eventsScroll(VBox eventsContainer) {
         var scrollPane = new ScrollPane(eventsContainer);
         scrollPane.setFitToWidth(true);
@@ -91,7 +123,8 @@ public class MyEvents extends VBox {
     private void translate() {
         app.translator()
                 .translateFrom(ui.eventsTitle::setText, "main.events.title")
-                .translateFrom(ui.eventsTitle::setAccessibleText, "main.events.title")
+                .translateFrom(ui.eventsTitle::setAccessibleText,
+                        "main.events.title")
                 .resourcesProp().addListener((_, _, _) -> this.translate());
     }
 }

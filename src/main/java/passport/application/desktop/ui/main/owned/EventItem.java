@@ -13,22 +13,40 @@ import javafx.scene.layout.Priority;
 import passport.application.desktop.system.PassPort;
 import passport.domain.models.events.Event;
 
+/**
+ * Represents an event item button in the user's owned events list.
+ */
 public class EventItem extends Button {
     final PassPort app;
     final Event event;
     final Consumer<Event> openEvent;
     final Properties props;
 
+    /**
+     * Holds properties for the event item, including title and date.
+     */
     class Properties {
         final String title;
         final LocalDate date;
-        
+
+        /**
+         * Initializes the properties for the event item.
+         *
+         * @param event The event associated with this item.
+         */
         public Properties(Event event) {
             this.title = event.poster().title();
             this.date = event.poster().date();
         }
     }
 
+    /**
+     * Private constructor for EventItem.
+     *
+     * @param app       The PassPort application instance.
+     * @param event     The event associated with this item.
+     * @param openEvent The action to open the event details.
+     */
     private EventItem(PassPort app, Event event, Consumer<Event> openEvent) {
         this.app = app;
         this.event = event;
@@ -39,16 +57,32 @@ public class EventItem extends Button {
         this.setOnAction(_ -> openEvent.accept(event));
     }
 
+    /**
+     * Creates a new EventItem instance.
+     *
+     * @param app       The PassPort application instance.
+     * @param event     The event associated with this item.
+     * @param openEvent The action to open the event details.
+     * @return A new EventItem instance.
+     */
     static EventItem of(PassPort app, Event event, Consumer<Event> openEvent) {
         return new EventItem(app, event, openEvent);
     }
 
+    /**
+     * Sets up the event item.
+     */
     private void setup() {
         this.setContent();
         this.setMinWidth(300);
         this.setPrefWidth(500);
     }
 
+    /**
+     * Creates a VBox containing the event information.
+     *
+     * @return A VBox containing the event information.
+     */
     private VBox eventInfo() {
         var title = titleLabel();
         var date = dateLabel();
@@ -58,6 +92,11 @@ public class EventItem extends Button {
         return contentBox;
     }
 
+    /**
+     * Creates a Label with the event title.
+     *
+     * @return A Label with the event title.
+     */
     private Label titleLabel() {
         var title = new Label(props.title);
         title.getStyleClass().add("title-3");
@@ -65,6 +104,11 @@ public class EventItem extends Button {
         return title;
     }
 
+    /**
+     * Creates a Label with the event date.
+     *
+     * @return A Label with the event date.
+     */
     private Label dateLabel() {
         final String dateContent = DateTimeFormatter
                 .ofPattern("MMM d, yyyy")
@@ -76,6 +120,12 @@ public class EventItem extends Button {
         return date;
     }
 
+    /**
+     * Creates an HBox container for the content.
+     *
+     * @param contentBox The content to be added to the container.
+     * @return An HBox container.
+     */
     private HBox container(VBox contentBox) {
         var container = new HBox(contentBox);
         container.setAlignment(Pos.CENTER_LEFT);
@@ -84,6 +134,9 @@ public class EventItem extends Button {
         return container;
     }
 
+    /**
+     * Sets the content of the event item.
+     */
     private void setContent() {
         var info = eventInfo();
         var container = container(info);
