@@ -1,0 +1,9 @@
+passport.context.event
+passport.context.purchase
+passport.context.user
+passport.domain.models.payment
+passport.domain.models.users
+passport.infra
+passport.resources.bdd
+passport.resources.entities
+passport.roles
