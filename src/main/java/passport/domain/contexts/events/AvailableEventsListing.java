@@ -57,7 +57,7 @@ public class AvailableEventsListing implements Context {
     /**
      * Sets the filter by exact name.
      *
-     * @param name the name to filter by
+     * @param sample the name to filter by
      * @return the updated AvailableEventsListing object
      */
     public AvailableEventsListing including(String sample) {

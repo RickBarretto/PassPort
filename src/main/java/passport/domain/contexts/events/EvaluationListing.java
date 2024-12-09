@@ -19,9 +19,9 @@ public class EvaluationListing implements Context {
     }
 
     /**
-     * Constructor with the specified events repository.
+     * Constructor with the specified users repository.
      *
-     * @param events the repository of events used for evaluation
+     * @param users the repository of users
      */
     public EvaluationListing(Users users) { this.users = users; }
 

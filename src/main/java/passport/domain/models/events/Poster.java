@@ -18,7 +18,7 @@ public class Poster {
      * @param title       the title of the event
      * @param description the description of the event
      * @param schedule    the date the event is scheduled for
-     * @param music 
+     * @param category
      */
     public Poster(String title, String description, LocalDate schedule,
             EventCategory category) {
