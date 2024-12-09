@@ -82,8 +82,8 @@ The workspace contains three main folders:
 ## Documentation (The 2nd version)
 
 * [Online Page](https://rickbarretto.github.io/passport)
-* [Online API Documentation](https://rickbarretto.github.io/PassPort/docs/allpackages-index.html)
-* [Local Documentation](./docs/allpackages-index.html)
+* [Online API Documentation](https://rickbarretto.github.io/PassPort/docs/apidocs/)
+* [Local Documentation](./docs/apidocs/)
 
 ## Java Version
 
